@@ -1,0 +1,45 @@
+
+<button type="button" [routerLink]="['']">BACK</button>
+
+<h3>Classes
+<button *ngIf="!tForm" type="button" style="float: right;" (click)="addTForm()">+</button>
+<button *ngIf="tForm" type="button" style="float: right;" (click)="closeTForm()">-</button>
+</h3>
+
+<div *ngIf="tForm">
+    <form [formGroup]="form">
+        <table>
+            <tr>
+                <td>Class Name:</td>
+                <td><input type="text" formControlName="className"></td>
+            </tr>
+            <tr>
+                <td>Teacher:</td>
+                <td>
+                    <select name="teacher" formControlName="teacherId">
+                        <option *ngFor="let t of teachers, let idx=index" value="{{idx}}" >{{t.name}}</option>
+                </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Description:</td>
+                <td><textarea formControlName="description" cols="45" rows="2"></textarea></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button (click)="closeTForm()">CANCEL</button> &nbsp;
+                    <button (click)="addClass()">ADD CLASS</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<hr>
+
+
+<div *ngIf="classes">
+    <div *ngFor="let class of classes">
+        {{ class }}
+    </div>
+</div>
