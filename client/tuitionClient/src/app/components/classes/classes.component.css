@@ -1,0 +1,7 @@
+.tuitionClass{
+    padding: 5px;
+}
+
+.tuitionClass:hover{
+    background-color: bisque;
+}

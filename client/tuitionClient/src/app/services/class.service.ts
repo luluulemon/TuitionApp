@@ -18,4 +18,8 @@ export class ClassService {
   addClass(newClass: Class){
     lastValueFrom( this.http.post('addClass', newClass))
   }
+
+  getClasses(): Promise<Class[]>{
+    return lastValueFrom( this.http.get<Class[]>('/getClasses'))
+  }
 }

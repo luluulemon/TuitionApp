@@ -28,6 +28,10 @@ public class ClassRepository {
         return jdbcTemplate.queryForRowSet(SQL_GET_TEACHERS);
     }
 
+    public SqlRowSet getClasses(){
+        return jdbcTemplate.queryForRowSet(SQL_GET_CLASSES);
+    }
+
     public int getTeacherId(int phoneNum){
         SqlRowSet rs = jdbcTemplate.queryForRowSet(SQL_GET_TEACHERID_FROM_NUM, phoneNum);
         rs.next();

@@ -22,6 +22,13 @@ public class ClassController {
     @Autowired
     private ClassService classSvc;
 
+    @GetMapping("/getClasses")
+    @ResponseBody
+    public ResponseEntity<String> getClasses(){
+        return ResponseEntity.ok(classSvc.getClasses().toString() );
+    }
+
+
     @PostMapping("/addClass")
     @ResponseBody
     public void addClass(@RequestBody String classString){

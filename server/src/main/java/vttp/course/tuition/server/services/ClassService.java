@@ -35,4 +35,22 @@ public class ClassService {
     public void addClass(JsonObject classToAdd){
         classRepo.addClass(classToAdd);
     }
+
+    public JsonArray getClasses(){
+        SqlRowSet rs = classRepo.getClasses();
+
+        JsonArrayBuilder classArray = Json.createArrayBuilder();    
+        while(rs.next()){   
+            classArray.add(                 // add each ClassJson to Array
+            Json.createObjectBuilder()      // create JsonObject for Class
+                    .add("className", rs.getString("class"))
+                    .add("description", util.defaultValue(rs.getString("description"), "") )
+                    .add("teacherId",  rs.getInt("teacherId"))
+                    .add("currentCount", rs.getInt("currentCount"))
+                    .build()
+            );
+        }
+
+        return classArray.build();
+    }
 }

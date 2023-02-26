@@ -11,7 +11,7 @@ import { ClassService } from 'src/app/services/class.service';
 export class ClassesComponent {
 
   form!: FormGroup
-  classes: string[] = []
+  classes: Class[] = []
   tForm: boolean = false
   teachers: Teacher[] = []
 
@@ -22,6 +22,10 @@ export class ClassesComponent {
     this.classSvc.getTeachers()
                   .then( v => this.teachers = v )
                   .catch( error => console.error('get teachers error :', error))
+
+    this.classSvc.getClasses()
+                  .then( v => this.classes = v)
+                  .catch( error => console.error('get classes error: ', error))
   }
 
   createTForm(){
