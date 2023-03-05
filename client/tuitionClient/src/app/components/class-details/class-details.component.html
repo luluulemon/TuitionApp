@@ -1,0 +1,79 @@
+<div class="mainPage">
+    
+    <mat-tab-group animationDuration="0ms">
+        <mat-tab label="Attendance">
+            <div class="schedules">
+                <mat-list *ngIf="schedules" >
+                    <mat-list-item *ngFor="let s of schedules" class="schedule"> {{s}} </mat-list-item>
+                </mat-list>
+            </div>
+        </mat-tab>
+
+
+        <mat-tab label="Edit Schedule">
+            <div>
+                <h4>Schedules
+                    <button type="button" style="float:right" *ngIf="!addSchedule" (click)="openAddSchedule()">+</button>
+                    <button type="button" style="float:right" *ngIf="addSchedule" (click)="closeAddSchedule()">-</button>
+                </h4>
+            </div>
+            <hr>
+        
+            <div *ngIf="addSchedule" >
+                <form [formGroup]="form">
+        
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput  [matDatepicker]="picker" 
+                            [min]="todaysDate"    formControlName="scheduleDate">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <br>
+        
+                    <mat-form-field>
+                        <mat-label>Hour</mat-label>
+                        <input matInput type="number" min="0" max="23" formControlName="hour">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Minutes</mat-label>
+                        <input matInput type="number" min="0" max="59" formControlName="minute">
+                    </mat-form-field>
+                    <br>
+        
+                    <mat-form-field appearance="fill">
+                        <mat-label>Repeat Schedule</mat-label>
+                        <mat-select formControlName="repeat">
+                        <mat-option  value="No">No Repeat</mat-option>
+                        <mat-option  value="Month">For the month</mat-option>
+                        <mat-option  value="Year">For whole year</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <br>
+        
+                    <button type="button" mat-raised-button color="primary" 
+                        [disabled]="form.invalid"   (click)="saveSchedule()">
+                        <mat-icon>save</mat-icon> SAVE
+                    </button>
+                </form>
+            </div>
+            <div *ngIf="updateMsg">
+                <div *ngIf="updateMsg=='Schedule saved'">
+                    Successfully added schedule for {{ currentClass }}
+                </div>
+            </div>
+        
+        
+            <div class="schedules">
+                <div *ngIf="schedules" >
+                    <div *ngFor="let s of schedules" class="schedule"> {{s}} </div>
+                </div>
+            </div>
+        </mat-tab>
+
+        <mat-tab label="Third">Class Details</mat-tab>
+    </mat-tab-group>
+    
+
+</div>

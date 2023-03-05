@@ -5,3 +5,7 @@
 .tuitionClass:hover{
     background-color: bisque;
 }
+
+.classPage{
+    width: 500px;
+}

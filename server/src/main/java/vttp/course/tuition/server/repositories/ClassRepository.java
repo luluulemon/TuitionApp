@@ -37,4 +37,14 @@ public class ClassRepository {
         rs.next();
         return rs.getInt("teacherId");
     }
+
+    public int addSchedule(JsonObject scheduleJson){
+        return jdbcTemplate.update(SQL_ADD_SCHEDULE, 
+                            scheduleJson.getString("classDate"), 
+                            scheduleJson.getString("className"));
+    }
+
+    public SqlRowSet getSchedules(String className){
+        return jdbcTemplate.queryForRowSet(SQL_GET_SCHEDULES, className);
+    }
 }

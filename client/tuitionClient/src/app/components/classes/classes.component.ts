@@ -23,9 +23,7 @@ export class ClassesComponent {
                   .then( v => this.teachers = v )
                   .catch( error => console.error('get teachers error :', error))
 
-    this.classSvc.getClasses()
-                  .then( v => this.classes = v)
-                  .catch( error => console.error('get classes error: ', error))
+    this.getClasses()
   }
 
   createTForm(){
@@ -42,10 +40,17 @@ export class ClassesComponent {
     this.createTForm()
   }
 
-  addClass(){
+  getClasses(){
+    this.classSvc.getClasses()
+    .then( v => {   this.classes = v    })
+    .catch( error => console.error('get classes error: ', error))
+  }
+
+  addClass(){   // get teacherId from index
     this.form.value.teacherId = this.teachers[this.form.value.teacherId].teacherId
     const newClass: Class = this.form.value
-    console.info('check form value after changing to teacherId',this.form.value)
     this.classSvc.addClass(newClass)
+              .then(v =>  this.getClasses() )
   }
+  
 }

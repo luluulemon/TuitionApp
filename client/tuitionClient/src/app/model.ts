@@ -12,3 +12,16 @@ export interface Class{
     teacherId: number
     totalCount: number
 }
+
+
+export interface User{
+    name: string
+    phoneNum: number
+    email: string
+    type: string
+}
+
+export interface Schedule{
+    className: string
+    classDate: string
+}

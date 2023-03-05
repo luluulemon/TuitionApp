@@ -9,12 +9,19 @@ import { ClassesComponent } from './components/classes/classes.component';
 import { Routes, RouterModule } from '@angular/router';
 import { StudentsComponent } from './components/students/students.component'
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import { ClassDetailsComponent } from './components/class-details/class-details.component';
+import { UsersComponent } from './components/users/users.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { MaterialModule } from './material';
+import { DatePipe } from '@angular/common'
 
 const appRoutes:Routes = [
   { path: '', component: MainComponent  },
   { path: 'classes', component: ClassesComponent},
-  { path: 'students', component: StudentsComponent }
+  { path: 'students', component: StudentsComponent },
+  { path: 'classDetails/:className', component: ClassDetailsComponent },
+  { path: 'users', component: UsersComponent }
 ]
 
 @NgModule({
@@ -22,16 +29,20 @@ const appRoutes:Routes = [
     AppComponent,
     MainComponent,
     ClassesComponent,
-    StudentsComponent
+    StudentsComponent,
+    ClassDetailsComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot(appRoutes, {useHash: true}),
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

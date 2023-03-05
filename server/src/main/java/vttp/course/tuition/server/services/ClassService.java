@@ -1,6 +1,9 @@
 package vttp.course.tuition.server.services;
 
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
@@ -9,6 +12,7 @@ import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
+import vttp.course.tuition.server.models.Schedule;
 import vttp.course.tuition.server.repositories.ClassRepository;
 
 @Service
@@ -43,14 +47,26 @@ public class ClassService {
         while(rs.next()){   
             classArray.add(                 // add each ClassJson to Array
             Json.createObjectBuilder()      // create JsonObject for Class
-                    .add("className", rs.getString("class"))
+                    .add("className", rs.getString("className"))
                     .add("description", util.defaultValue(rs.getString("description"), "") )
                     .add("teacherId",  rs.getInt("teacherId"))
                     .add("currentCount", rs.getInt("currentCount"))
                     .build()
             );
         }
-
         return classArray.build();
+    }
+
+    public int addSchedule(JsonObject scheduleJson){
+        return classRepo.addSchedule(scheduleJson);
+    }
+
+    public JsonArray getSchedules(String className){
+        JsonArrayBuilder scheduleArray = Json.createArrayBuilder();
+        SqlRowSet rs = classRepo.getSchedules(className);
+        while(rs.next()){   // List of class Dates
+            scheduleArray.add(rs.getString("classDate"));
+        }
+        return scheduleArray.build();
     }
 }

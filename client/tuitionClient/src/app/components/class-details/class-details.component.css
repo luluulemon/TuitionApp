@@ -1,0 +1,17 @@
+.schedules{
+    margin-top: 10px;
+}
+
+.mainPage{
+    width: 500px;
+    margin: 10px;
+}
+
+.schedule{
+    margin-top: 5px;
+}
+
+.schedule:hover{
+    background-color: bisque;
+}
+

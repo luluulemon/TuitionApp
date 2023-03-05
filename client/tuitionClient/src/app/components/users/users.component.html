@@ -1,0 +1,42 @@
+<button type="button" [routerLink]="['']">BACK TO MAIN</button>
+<br><br>
+<div>
+    <span (click)="newUser()">New User</span>
+    <br>
+    <span>Delete User</span>
+</div>
+
+<div *ngIf="newUserSelect">
+    <form [formGroup]="form">
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" formControlName="name"></td>
+            </tr>
+            <tr>
+                <td>Phone Number:</td>
+                <td><input type="number" formControlName="phoneNum"></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="email" formControlName="email"></td>
+            </tr>
+            <tr>
+                <td>Type:</td>
+                <td><select formControlName="type">
+                    <option value="teacher">Teacher</option>
+                    <option value="student">Student</option>
+                    <option value="admin">Admin</option>
+                </select></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="button" (click)="saveUser()" [disabled]=form.invalid>SUBMIT</button>
+                    <button type="button" (click)="userUnselect()">CANCEL</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <h3> {{ insertMsg }}</h3>
+</div>
