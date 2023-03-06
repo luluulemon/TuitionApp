@@ -14,4 +14,6 @@ public class Queries {
 
     public static String SQL_ADD_SCHEDULE = "insert into schedules(classDate, className) values(?, ?)";
     public static String SQL_GET_SCHEDULES = "select * from schedules where className=?";
+
+    public static String SQL_GET_STUDENTS = "select * from students";
 }

@@ -47,4 +47,8 @@ public class ClassRepository {
     public SqlRowSet getSchedules(String className){
         return jdbcTemplate.queryForRowSet(SQL_GET_SCHEDULES, className);
     }
+
+    public SqlRowSet getStudents(){
+        return jdbcTemplate.queryForRowSet(SQL_GET_STUDENTS);
+    }
 }

@@ -13,6 +13,7 @@ import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import vttp.course.tuition.server.models.Schedule;
+import vttp.course.tuition.server.models.Student;
 import vttp.course.tuition.server.repositories.ClassRepository;
 
 @Service
@@ -68,5 +69,14 @@ public class ClassService {
             scheduleArray.add(rs.getString("classDate"));
         }
         return scheduleArray.build();
+    }
+
+    public JsonArray getStudents(){
+        JsonArrayBuilder studentsArray = Json.createArrayBuilder();
+        SqlRowSet rs = classRepo.getStudents();
+        while(rs.next()){
+            studentsArray.add( Student.studentRsToJson(rs) );
+        }
+        return studentsArray.build();
     }
 }

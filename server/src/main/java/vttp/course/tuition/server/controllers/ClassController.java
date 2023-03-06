@@ -78,4 +78,12 @@ public class ClassController {
     }
 
 
+    @GetMapping("/getStudents")
+    @ResponseBody
+    public ResponseEntity<String> getStudents(){
+        JsonArray students = classSvc.getStudents();
+        return ResponseEntity.ok(students.toString());
+    }
+
+
 }

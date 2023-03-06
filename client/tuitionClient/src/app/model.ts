@@ -25,3 +25,11 @@ export interface Schedule{
     className: string
     classDate: string
 }
+
+
+export interface Student{
+    studentId: number
+    name: string
+    phoneNum: number
+    joinDate: string
+}

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Schedule } from 'src/app/model';
+import { Schedule, Student } from 'src/app/model';
 import { ClassService } from 'src/app/services/class.service';
 
 
@@ -20,7 +20,10 @@ export class ClassDetailsComponent {
   currentClass: string = '' // for storing className
   updateMsg: string = ''    // for storing add Schedule msg/error
   schedules: string[] = []
-  todaysDate: Date = new Date;
+  todaysDate: Date = new Date;  // for having min Date for schedule
+
+  students: Student[] = []                  // for students tab -> add students
+  columnsToDisplay = ['studentId', 'name', 'phoneNum', 'joinDate'];   // for students tab table
 
   constructor(private fb: FormBuilder, private datepipe: DatePipe,
             private activatedRoute: ActivatedRoute, private classSvc:ClassService){}
@@ -69,6 +72,22 @@ export class ClassDetailsComponent {
   getSchedules(){
     this.classSvc.getSchedules(this.currentClass)
                   .then(v => this.schedules = v)
+  }
+
+
+  studentSearchForm!: FormGroup
+  startStudentTab(){
+    this.createSearchForm()
+    this.getStudents()
+  }
+
+  createSearchForm(){ 
+    this.studentSearchForm = this.fb.group({ searchName: this.fb.control('') })}
+
+  getStudents(){    this.classSvc.getStudents().then(v => this.students = v)  }
+
+  addStudent(s: Student){
+    console.info(s)
   }
 
 }

@@ -10,7 +10,7 @@
         </mat-tab>
 
 
-        <mat-tab label="Edit Schedule">
+        <mat-tab label="Schedule">
             <div>
                 <h4>Schedules
                     <button type="button" style="float:right" *ngIf="!addSchedule" (click)="openAddSchedule()">+</button>
@@ -64,7 +64,6 @@
                 </div>
             </div>
         
-        
             <div class="schedules">
                 <div *ngIf="schedules" >
                     <div *ngFor="let s of schedules" class="schedule"> {{s}} </div>
@@ -72,7 +71,47 @@
             </div>
         </mat-tab>
 
-        <mat-tab label="Third">Class Details</mat-tab>
+        <mat-tab label="Details">Class Details</mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span (click)="startStudentTab()">Students</span>  
+                <!-- get students on tab click -->
+            </ng-template>
+            <div>
+                <h4>Students
+                    <button type="button" mat-raised-button color="primary" style="float:right">
+                        <mat-icon>add</mat-icon>
+                        ADD STUDENT
+                    </button>
+                </h4>
+            </div>
+            <div>
+                <form [formGroup]="studentSearchForm">
+
+                        <mat-form-field>
+                            <mat-label>Search Student</mat-label>
+                            <input matInput type="text" formControlName="searchName">
+                        </mat-form-field>
+
+                    <button type="button" mat-raised-button color="primary">
+                        <mat-icon>search</mat-icon>
+                        SEARCH
+                    </button>
+                </form>
+                <table mat-table [dataSource]="students">
+                    <mat-text-column name="studentId"></mat-text-column>
+                    <mat-text-column name="name"></mat-text-column>
+                    <mat-text-column name="phoneNum"></mat-text-column>
+                    <mat-text-column name="joinDate"></mat-text-column>
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                    <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"
+                    (click)="addStudent(myRowData)"></tr>
+                </table>
+            </div>
+            <!-- <mat-list *ngIf="schedules" >   Select * from enrollments where class= className
+                <mat-list-item *ngFor="let s of schedules" class="schedule"> {{s}} </mat-list-item>
+            </mat-list> -->
+        </mat-tab>
     </mat-tab-group>
     
 
