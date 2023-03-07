@@ -71,7 +71,10 @@
             </div>
         </mat-tab>
 
-        <mat-tab label="Details">Class Details</mat-tab>
+        <mat-tab label="Details">
+            Class Details
+        </mat-tab>
+
         <mat-tab>
             <ng-template mat-tab-label>
                 <span (click)="startStudentTab()">Students</span>  
@@ -87,18 +90,18 @@
             </div>
             <div>
                 <form [formGroup]="studentSearchForm">
-
-                        <mat-form-field>
+                    <div style="font-size: 10px">
+                        <mat-form-field appearance="outline">
                             <mat-label>Search Student</mat-label>
                             <input matInput type="text" formControlName="searchName">
                         </mat-form-field>
-
-                    <button type="button" mat-raised-button color="primary">
+                    </div>
+                    <button type="button" mat-raised-button color="primary" (click)="searchStudents()">
                         <mat-icon>search</mat-icon>
                         SEARCH
                     </button>
                 </form>
-                <table mat-table [dataSource]="students">
+                <table mat-table [dataSource]="studentsDisplay">
                     <mat-text-column name="studentId"></mat-text-column>
                     <mat-text-column name="name"></mat-text-column>
                     <mat-text-column name="phoneNum"></mat-text-column>
@@ -107,6 +110,14 @@
                     <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"
                     (click)="addStudent(myRowData)"></tr>
                 </table>
+                <button *ngIf="offset>0" type="button" mat-raised-button color="primary" 
+                    (click)="previousPage()">
+                    <mat-icon>skip_previous</mat-icon>
+                </button>
+                <button *ngIf="next" type="button" mat-raised-button color="primary" 
+                    (click)="nextPage()">
+                    <mat-icon>skip_next</mat-icon>
+                </button>
             </div>
             <!-- <mat-list *ngIf="schedules" >   Select * from enrollments where class= className
                 <mat-list-item *ngFor="let s of schedules" class="schedule"> {{s}} </mat-list-item>

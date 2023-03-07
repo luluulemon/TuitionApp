@@ -85,5 +85,12 @@ public class ClassController {
         return ResponseEntity.ok(students.toString());
     }
 
+    @GetMapping("/searchStudents/{searchString}")
+    @ResponseBody
+    public ResponseEntity<String> searchStudent(@PathVariable String searchString){
+        JsonArray students = classSvc.getStudents(searchString);
+        return ResponseEntity.ok(students.toString());
+    }
+
 
 }

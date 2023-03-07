@@ -79,4 +79,13 @@ public class ClassService {
         }
         return studentsArray.build();
     }
+
+    public JsonArray getStudents(String searchString){
+        JsonArrayBuilder studentsArray = Json.createArrayBuilder();
+        SqlRowSet rs = classRepo.getStudents(searchString);
+        while(rs.next()){
+            studentsArray.add( Student.studentRsToJson(rs) );
+        }
+        return studentsArray.build();
+    }
 }

@@ -22,8 +22,7 @@ export class ClassDetailsComponent {
   schedules: string[] = []
   todaysDate: Date = new Date;  // for having min Date for schedule
 
-  students: Student[] = []                  // for students tab -> add students
-  columnsToDisplay = ['studentId', 'name', 'phoneNum', 'joinDate'];   // for students tab table
+
 
   constructor(private fb: FormBuilder, private datepipe: DatePipe,
             private activatedRoute: ActivatedRoute, private classSvc:ClassService){}
@@ -32,6 +31,7 @@ export class ClassDetailsComponent {
     console.info('Init called now')
     this.currentClass = this.activatedRoute.snapshot.params['className']
     this.getSchedules()
+    this.createSearchForm()
   }
 
   openAddSchedule(){  
@@ -76,18 +76,66 @@ export class ClassDetailsComponent {
 
 
   studentSearchForm!: FormGroup
+  students: Student[] = []                  // for students tab -> add students
+  studentsDisplay: Student[] = []
+  columnsToDisplay = ['studentId', 'name', 'phoneNum', 'joinDate'];   // for students tab table
+  offset: number = 0
+  next: boolean = false
+
   startStudentTab(){
-    this.createSearchForm()
     this.getStudents()
+    this.createSearchForm()
   }
 
   createSearchForm(){ 
-    this.studentSearchForm = this.fb.group({ searchName: this.fb.control('') })}
+    this.studentSearchForm = this.fb.group({ searchName: this.fb.control('') })
+  }
 
-  getStudents(){    this.classSvc.getStudents().then(v => this.students = v)  }
+  getStudents(){    
+    this.classSvc.getStudents()
+                  .then(v => 
+                    { 
+                      this.students = v 
+                      if(this.students.length>5)        // create pagination
+                      { this.studentsDisplay = [ ... this.students ].splice(0,5)  
+                        this.next = true
+                      }
+                      else{ this.studentsDisplay = this.students  }
+                    })  }
+
+  nextPage(){
+    this.offset += 5
+    if(this.offset + 5 > this.students.length){ this.next = false }
+    this.studentsDisplay = [ ... this.students ].splice(this.offset, Math.min(5, this.students.length-5))
+  }
+
+  previousPage(){
+    this.offset -= 5
+    this.studentsDisplay = [ ... this.students ].splice(this.offset, 5)
+    this.next = true
+  }
+  
+  searchStudents(){   
+    console.info('in search Students')
+    console.info(this.studentSearchForm.value.searchName)
+    this.classSvc.searchStudents(this.studentSearchForm.value.searchName)
+                  .then( v =>
+                    { 
+                      this.students = v 
+                      console.info(this.students.length>5)
+                      if(this.students.length>5)        // create pagination
+                      { this.studentsDisplay = [ ... this.students ].splice(0,5)  
+                        this.next = true
+                      }
+                      else{ this.studentsDisplay = this.students 
+                            this.next = false 
+                          }
+                    } )  
+  }
 
   addStudent(s: Student){
     console.info(s)
   }
+
 
 }

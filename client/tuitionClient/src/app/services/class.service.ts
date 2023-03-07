@@ -36,4 +36,8 @@ export class ClassService {
   getStudents(): Promise<Student[]>{
     return lastValueFrom(this.http.get<Student[]>('/api/class/getStudents'))
   }
+
+  searchStudents(searchString: string): Promise<Student[]>{
+    return lastValueFrom(this.http.get<Student[]>(`/api/class/searchStudents/${searchString}`))
+  }
 }

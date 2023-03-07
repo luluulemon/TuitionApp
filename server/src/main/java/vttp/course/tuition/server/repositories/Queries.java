@@ -16,4 +16,5 @@ public class Queries {
     public static String SQL_GET_SCHEDULES = "select * from schedules where className=?";
 
     public static String SQL_GET_STUDENTS = "select * from students";
+    public static String SQL_SEARCH_STUDENTS = "select * from students where name like CONCAT(?,'%')";
 }
