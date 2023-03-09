@@ -1,9 +1,6 @@
 package vttp.course.tuition.server.services;
 
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
@@ -12,7 +9,6 @@ import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
-import vttp.course.tuition.server.models.Schedule;
 import vttp.course.tuition.server.models.Student;
 import vttp.course.tuition.server.repositories.ClassRepository;
 

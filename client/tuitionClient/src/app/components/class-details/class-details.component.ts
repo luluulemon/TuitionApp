@@ -76,19 +76,27 @@ export class ClassDetailsComponent {
 
 
   studentSearchForm!: FormGroup
+  addStudentForm!: FormGroup
   students: Student[] = []                  // for students tab -> add students
   studentsDisplay: Student[] = []
   columnsToDisplay = ['studentId', 'name', 'phoneNum', 'joinDate'];   // for students tab table
   offset: number = 0
-  next: boolean = false
+  nextPageBoolean: boolean = false
+  addStudentStatement: string = ''
+  selectedStudent!: Student
 
   startStudentTab(){
     this.getStudents()
     this.createSearchForm()
+    this.createAddStudentForm()
   }
 
   createSearchForm(){ 
     this.studentSearchForm = this.fb.group({ searchName: this.fb.control('') })
+  }
+
+  createAddStudentForm(){
+    this.addStudentForm = this.fb.group({ startDate: this.fb.control<string>('', Validators.required)})
   }
 
   getStudents(){    
@@ -98,21 +106,21 @@ export class ClassDetailsComponent {
                       this.students = v 
                       if(this.students.length>5)        // create pagination
                       { this.studentsDisplay = [ ... this.students ].splice(0,5)  
-                        this.next = true
+                        this.nextPageBoolean = true
                       }
                       else{ this.studentsDisplay = this.students  }
                     })  }
 
   nextPage(){
     this.offset += 5
-    if(this.offset + 5 > this.students.length){ this.next = false }
+    if(this.offset + 5 > this.students.length){ this.nextPageBoolean = false }
     this.studentsDisplay = [ ... this.students ].splice(this.offset, Math.min(5, this.students.length-5))
   }
 
   previousPage(){
     this.offset -= 5
     this.studentsDisplay = [ ... this.students ].splice(this.offset, 5)
-    this.next = true
+    this.nextPageBoolean = true
   }
   
   searchStudents(){   
@@ -125,17 +133,30 @@ export class ClassDetailsComponent {
                       console.info(this.students.length>5)
                       if(this.students.length>5)        // create pagination
                       { this.studentsDisplay = [ ... this.students ].splice(0,5)  
-                        this.next = true
+                        this.nextPageBoolean = true
                       }
                       else{ this.studentsDisplay = this.students 
-                            this.next = false 
+                            this.nextPageBoolean = false 
                           }
                     } )  
   }
 
   addStudent(s: Student){
     console.info(s)
+    this.selectedStudent = s
+    this.addStudentStatement = `Adding ${s.name} to ${this.currentClass}: `
   }
 
+  confirmAddStudent(){  
+    let e = { phoneNum: this.selectedStudent.phoneNum,
+              className: this.currentClass,
+              expiryDate: this.addStudentForm.value.startDate  
+            }
+    console.info(e)
+    this.classSvc.addEnrollment(e)
+    this.addStudentStatement = ''
+  } 
+
+  cancelAddStudent(){ this.addStudentStatement = '' }
 
 }

@@ -1,8 +1,5 @@
 package vttp.course.tuition.server.repositories;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -55,4 +52,5 @@ public class ClassRepository {
     public SqlRowSet getStudents(String searchString){
         return jdbcTemplate.queryForRowSet(SQL_SEARCH_STUDENTS, searchString);
     }
+
 }
