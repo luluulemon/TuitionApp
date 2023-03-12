@@ -33,3 +33,12 @@ export interface Student{
     phoneNum: number
     joinDate: string
 }
+
+export interface Enrollment{
+    studentId: number
+    name: string
+    phoneNum: number
+    status: string
+    expiryDate: string
+    present: boolean
+}

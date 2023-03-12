@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Schedule, Student } from 'src/app/model';
+import { Enrollment, Schedule, Student } from 'src/app/model';
 import { ClassService } from 'src/app/services/class.service';
+import { EnrolService } from 'src/app/services/enrol.service';
 
 
 @Component({
@@ -17,19 +18,20 @@ export class ClassDetailsComponent {
 
   addSchedule: boolean = false;
   form!: FormGroup
-  currentClass: string = '' // for storing className
+  currentClassName: string = '' // for storing className
   updateMsg: string = ''    // for storing add Schedule msg/error
-  schedules: string[] = []
+  schedules: string[] = []      // store schedules of currentClass
   todaysDate: Date = new Date;  // for having min Date for schedule
 
 
 
   constructor(private fb: FormBuilder, private datepipe: DatePipe,
-            private activatedRoute: ActivatedRoute, private classSvc:ClassService){}
+            private activatedRoute: ActivatedRoute, private classSvc:ClassService,
+            private enrolSvc: EnrolService ){}
 
   ngOnInit(){
     console.info('Init called now')
-    this.currentClass = this.activatedRoute.snapshot.params['className']
+    this.currentClassName = this.activatedRoute.snapshot.params['className']
     this.getSchedules()
     this.createSearchForm()
   }
@@ -58,7 +60,7 @@ export class ClassDetailsComponent {
     let datetime = `${latest_date} ${this.form.value.hour}:${this.form.value.minute}:00`
     console.info('check datetime entry: ',datetime)
 
-    const schedule: Schedule = {  className: this.currentClass, classDate: datetime }
+    const schedule: Schedule = {  className: this.currentClassName, classDate: datetime }
     this.classSvc.addSchedule(schedule)
                 .then(v => 
                   { 
@@ -70,25 +72,28 @@ export class ClassDetailsComponent {
   }
 
   getSchedules(){
-    this.classSvc.getSchedules(this.currentClass)
+    this.classSvc.getSchedules(this.currentClassName)
                   .then(v => this.schedules = v)
   }
 
 
   studentSearchForm!: FormGroup
   addStudentForm!: FormGroup
-  students: Student[] = []                  // for students tab -> add students
-  studentsDisplay: Student[] = []
+  students: Student[] = []            // for students tab -> add students
+  studentsDisplay: Student[] = []     // students search table pagination (limit to 5)
   columnsToDisplay = ['studentId', 'name', 'phoneNum', 'joinDate'];   // for students tab table
   offset: number = 0
   nextPageBoolean: boolean = false
   addStudentStatement: string = ''
   selectedStudent!: Student
+  enrolsColumnsToDisplay = ['studentId', 'name', 'phoneNum','status' ,'expiryDate'];
+  enrollments: Enrollment[] = []         // contain enrollments of currentClass (call at TabClick)
 
   startStudentTab(){
     this.getStudents()
     this.createSearchForm()
     this.createAddStudentForm()
+    this.getEnrollments()
   }
 
   createSearchForm(){ 
@@ -97,6 +102,12 @@ export class ClassDetailsComponent {
 
   createAddStudentForm(){
     this.addStudentForm = this.fb.group({ startDate: this.fb.control<string>('', Validators.required)})
+  }
+
+  getEnrollments(){
+    this.enrolSvc.getEnrollments(this.currentClassName)
+                    .then(e => this.enrollments = e)
+                    .catch(error => console.error('error in getEnrollments: ', error))
   }
 
   getStudents(){    
@@ -144,16 +155,20 @@ export class ClassDetailsComponent {
   addStudent(s: Student){
     console.info(s)
     this.selectedStudent = s
-    this.addStudentStatement = `Adding ${s.name} to ${this.currentClass}: `
+    this.addStudentStatement = `Adding ${s.name} to ${this.currentClassName}: `
   }
 
   confirmAddStudent(){  
     let e = { phoneNum: this.selectedStudent.phoneNum,
-              className: this.currentClass,
+              className: this.currentClassName,
               expiryDate: this.addStudentForm.value.startDate  
             }
     console.info(e)
-    this.classSvc.addEnrollment(e)
+    this.enrolSvc.addEnrollment(e)
+            .then(msg => 
+              { console.info(msg)           // Log to show if insert happens
+                this.enrolSvc.getEnrollments(this.currentClassName) // refresh enrollment list
+              })                                  
     this.addStudentStatement = ''
   } 
 

@@ -19,4 +19,13 @@ public class Queries {
     public static String SQL_SEARCH_STUDENTS = "select * from students where name like CONCAT(?,'%')";
 
     public static String SQL_ADD_ENROLLMENT = "insert into enrollments values(?, ?, ?, ?)";
+    public static String SQL_GET_EXISTING_ENROLLMENT = "select * from enrollments where phoneNum=? and expiryDate>=?";
+    public static String SQL_GET_ENROLLMENT_BY_CLASS = 
+        "select * from enrollments inner join students on enrollments.phoneNum = students.phoneNum where enrollments.className=?";
+
+    public static String SQL_ADD_ATTENDANCE = 
+        "insert into attendance(date, className, phoneNum) values(?, ?, ?)";
+    public static String SQL_GET_ATTENDANCE =
+        "select * from attendance where className=? and date=?";
+
 }

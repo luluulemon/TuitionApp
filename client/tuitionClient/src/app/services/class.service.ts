@@ -43,8 +43,8 @@ export class ClassService {
     return lastValueFrom(this.http.get<Student[]>(`/api/class/searchStudents/${searchString}`))
   }
 
-  addEnrollment(enrolJson: any){
-    return lastValueFrom( this.http.post('api/enrol/newEnrollment', enrolJson))
-  }
+  // addEnrollment(enrolJson: any){
+  //   return lastValueFrom( this.http.post('api/enrol/newEnrollment', enrolJson))
+  // }
   
 }

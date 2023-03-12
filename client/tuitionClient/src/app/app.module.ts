@@ -14,13 +14,15 @@ import { ClassDetailsComponent } from './components/class-details/class-details.
 import { UsersComponent } from './components/users/users.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MaterialModule } from './material';
-import { DatePipe } from '@angular/common'
+import { DatePipe } from '@angular/common';
+import { AttendanceComponent } from './components/class-details/attendance/attendance.component'
 
 const appRoutes:Routes = [
   { path: '', component: MainComponent  },
   { path: 'classes', component: ClassesComponent},
   { path: 'students', component: StudentsComponent },
   { path: 'classDetails/:className', component: ClassDetailsComponent },
+  { path: 'attendance/:className/:schedule', component: AttendanceComponent },
   { path: 'users', component: UsersComponent }
 ]
 
@@ -31,7 +33,8 @@ const appRoutes:Routes = [
     ClassesComponent,
     StudentsComponent,
     ClassDetailsComponent,
-    UsersComponent
+    UsersComponent,
+    AttendanceComponent
   ],
   imports: [
     BrowserModule,

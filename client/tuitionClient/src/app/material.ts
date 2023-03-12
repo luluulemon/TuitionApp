@@ -11,10 +11,11 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatListModule} from '@angular/material/list';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatTableModule} from '@angular/material/table';
+import {MatCardModule} from '@angular/material/card';
 
-const matModules: any[] = [ MatToolbarModule, MatFormFieldModule, MatInputModule, 
+const matModules: any[] = [ MatFormFieldModule, MatInputModule, MatCardModule,
                             MatIconModule, MatDatepickerModule, MatNativeDateModule, 
-                            MatButtonModule, MatSelectModule, MatRadioModule, 
+                            MatButtonModule, MatSelectModule,  
                             MatListModule, MatTabsModule, MatTableModule]
 
 @NgModule({ imports: matModules, exports: matModules})

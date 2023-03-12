@@ -1,0 +1,34 @@
+<mat-card style="width: 400px;">
+    <mat-card-header>
+        <mat-card-title>Attendance</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+        <mat-list>
+            <mat-list-item *ngFor="let s of classStudents" >
+                <div *ngIf="s.present">
+                    <span>Student Id: {{ s.studentId}}, Name: {{ s.name }}  </span>
+                    <span> PRESENT </span>
+                </div>
+
+                <div *ngIf="!s.present" (click)="markAttendance(s.phoneNum)">
+                    Student Id: {{ s.studentId}}, Name: {{ s.name }}
+                </div>
+            </mat-list-item>
+        </mat-list>
+    </mat-card-content>
+
+    <mat-card-actions>
+        <button mat-raised-button [routerLink]="['/classDetails', currentClassName]">
+            BACK TO {{ currentClassName }} 
+        </button>
+        &nbsp;
+        <button mat-raised-button [routerLink]="['']">BACK TO MAIN</button>
+    </mat-card-actions>
+
+
+
+</mat-card>
+
+
+

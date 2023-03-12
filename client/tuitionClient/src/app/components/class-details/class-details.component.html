@@ -4,7 +4,10 @@
         <mat-tab label="Attendance">
             <div class="schedules">
                 <mat-list *ngIf="schedules" >
-                    <mat-list-item *ngFor="let s of schedules" class="schedule"> {{s}} </mat-list-item>
+                    <mat-list-item *ngFor="let s of schedules" class="schedule" 
+                            [routerLink]="['/attendance', currentClassName, s]"> 
+                        {{s}} 
+                    </mat-list-item>
                 </mat-list>
             </div>
         </mat-tab>
@@ -60,7 +63,7 @@
             </div>
             <div *ngIf="updateMsg">
                 <div *ngIf="updateMsg=='Schedule saved'">
-                    Successfully added schedule for {{ currentClass }}
+                    Successfully added schedule for {{ currentClassName }}
                 </div>
             </div>
         
@@ -75,18 +78,17 @@
             Class Details
         </mat-tab>
 
+        <!-- Students Tab -->
+        <!-- Last Tab -->
+            <!-- Show students in current class/ search on top to add students to current class -->
         <mat-tab>
             <ng-template mat-tab-label>
                 <span (click)="startStudentTab()">Students</span>  
                 <!-- get students on tab click -->
             </ng-template>
             <div>
-                <h4>Students
-                    <button type="button" mat-raised-button color="primary" style="float:right">
-                        <mat-icon>add</mat-icon>
-                        ADD STUDENT
-                    </button>
-                </h4>
+
+
             </div>
             <div>
                 <form [formGroup]="studentSearchForm">
@@ -95,11 +97,12 @@
                             <mat-label>Search Student</mat-label>
                             <input matInput type="text" formControlName="searchName">
                         </mat-form-field>
+
+                        <button type="button" mat-raised-button color="primary" (click)="searchStudents()">
+                            <mat-icon>search</mat-icon>
+                            SEARCH
+                        </button>
                     </div>
-                    <button type="button" mat-raised-button color="primary" (click)="searchStudents()">
-                        <mat-icon>search</mat-icon>
-                        SEARCH
-                    </button>
                 </form>
                 <table mat-table [dataSource]="studentsDisplay">
                     <mat-text-column name="studentId"></mat-text-column>
@@ -134,6 +137,34 @@
                         <button type="button" mat-raised-button (click)="cancelAddStudent()">CANCEL</button>
                     </form>
                 </div>
+            </div>
+
+            <div *ngIf="enrollments">
+                <mat-card>
+                    <mat-card-header>
+                            <mat-card-title>Class Students</mat-card-title> &nbsp;
+                            <button type="button" mat-raised-button color="primary">
+                                <mat-icon>add</mat-icon>
+                                ADD STUDENT
+                            </button>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <table mat-table [dataSource]="enrollments">
+                            <mat-text-column name="studentId"></mat-text-column>
+                            <mat-text-column name="name"></mat-text-column>
+                            <mat-text-column name="phoneNum"></mat-text-column>
+                            <mat-text-column name="status"></mat-text-column>
+                            <mat-text-column name="expiryDate"></mat-text-column>
+                            <tr mat-header-row *matHeaderRowDef="enrolsColumnsToDisplay"></tr>
+                            <tr mat-row *matRowDef="let myRowData; columns: enrolsColumnsToDisplay"
+                            (click)="addStudent(myRowData)"></tr>
+                        </table>
+                        <!-- <mat-list>
+                            <mat-list-item *ngFor="let e of enrollments"> {{ e.name }}</mat-list-item>
+                        </mat-list> -->
+                    </mat-card-content>
+                </mat-card>
+
             </div>
             <!-- <mat-list *ngIf="schedules" >   Select * from enrollments where class= className
                 <mat-list-item *ngFor="let s of schedules" class="schedule"> {{s}} </mat-list-item>
