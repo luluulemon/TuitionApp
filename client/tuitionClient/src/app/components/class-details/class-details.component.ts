@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Enrollment, Schedule, Student } from 'src/app/model';
+import { ClassDetail, Enrollment, Schedule, Student } from 'src/app/model';
 import { ClassService } from 'src/app/services/class.service';
 import { EnrolService } from 'src/app/services/enrol.service';
 
@@ -22,7 +22,7 @@ export class ClassDetailsComponent {
   updateMsg: string = ''    // for storing add Schedule msg/error
   schedules: string[] = []      // store schedules of currentClass
   todaysDate: Date = new Date;  // for having min Date for schedule
-
+  classDetails!: ClassDetail
 
 
   constructor(private fb: FormBuilder, private datepipe: DatePipe,
@@ -34,6 +34,7 @@ export class ClassDetailsComponent {
     this.currentClassName = this.activatedRoute.snapshot.params['className']
     this.getSchedules()
     this.createSearchForm()
+    this.getClassDetails()
   }
 
   openAddSchedule(){  
@@ -74,6 +75,11 @@ export class ClassDetailsComponent {
   getSchedules(){
     this.classSvc.getSchedules(this.currentClassName)
                   .then(v => this.schedules = v)
+  }
+
+  getClassDetails(){
+    this.classSvc.getClassDetails(this.currentClassName)
+                  .then(v => this.classDetails = v)
   }
 
 

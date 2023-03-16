@@ -92,5 +92,12 @@ public class ClassController {
         return ResponseEntity.ok(students.toString());
     }
 
+    @GetMapping("/classDetails/{className}")
+    @ResponseBody
+    public ResponseEntity<String> getClassDetails(@PathVariable String className){
+        JsonObject detailsObj = classSvc.getClassDetails(className);
+        return ResponseEntity.ok(detailsObj.toString());
+    }
+
 
 }

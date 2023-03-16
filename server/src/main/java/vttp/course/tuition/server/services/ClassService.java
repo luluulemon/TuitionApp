@@ -84,4 +84,15 @@ public class ClassService {
         }
         return studentsArray.build();
     }
+
+    public JsonObject getClassDetails(String className){
+        SqlRowSet rs = classRepo.getClassDetails(className);
+        rs.next();  // only one row of data
+        System.out.println("Check name" + rs.getString("name"));
+        System.out.println("Check session: " +rs.getInt("totalSessions"));
+        return Json.createObjectBuilder()
+                .add("teacherName", rs.getString("name"))
+                .add("totalSessions", rs.getInt("totalSessions"))
+                .build();
+    }
 }

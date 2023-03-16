@@ -75,7 +75,17 @@
         </mat-tab>
 
         <mat-tab label="Details">
-            Class Details
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Class Details</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div> Teacher: <span *ngIf="classDetails"> {{ classDetails.teacherName }} </span></div>
+                    <div> No. of Students: {{ enrollments.length }}</div>
+                    <div> Start date: </div>
+                    <div> Total sessions: <span *ngIf="classDetails"> {{ classDetails.totalSessions }} </span> </div>
+                </mat-card-content>
+            </mat-card>
         </mat-tab>
 
         <!-- Students Tab -->
@@ -172,5 +182,9 @@
         </mat-tab>
     </mat-tab-group>
     
-
+    <div>
+        <button mat-raised-button type="button" [routerLink]="['/classes']">BACK TO CLASSES</button>
+        &nbsp;
+        <button mat-raised-button type="button" [routerLink]="['']">BACK TO MAIN</button>
+    </div>
 </div>

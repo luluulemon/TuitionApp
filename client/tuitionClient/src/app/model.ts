@@ -42,3 +42,8 @@ export interface Enrollment{
     expiryDate: string
     present: boolean
 }
+
+export interface ClassDetail{
+    teacherName: string
+    totalSessions: number
+}

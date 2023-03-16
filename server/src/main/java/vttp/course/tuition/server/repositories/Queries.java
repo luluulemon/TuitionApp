@@ -27,5 +27,11 @@ public class Queries {
         "insert into attendance(date, className, phoneNum) values(?, ?, ?)";
     public static String SQL_GET_ATTENDANCE =
         "select * from attendance where className=? and date=?";
+    
+    public static String SQL_GET_CLASS_DETAILS =
+        "select teachers.name, count(schedules.classDate) as totalSessions from classes join teachers on classes.teacherId=teachers.teacherId join schedules on classes.className=schedules.className where classes.className=? and schedules.classDate<now()";
+    //select teachers.name, count(schedules.classDate) from classes join teachers on classes.teacherId=teachers.teacherId 
+    // join schedules on classes.className=schedules.className
+    // where classes.className=? and schedules.classDate<now();
 
 }

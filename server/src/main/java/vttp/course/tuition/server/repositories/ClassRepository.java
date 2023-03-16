@@ -53,4 +53,8 @@ public class ClassRepository {
         return jdbcTemplate.queryForRowSet(SQL_SEARCH_STUDENTS, searchString);
     }
 
+    public SqlRowSet getClassDetails(String className){
+        return jdbcTemplate.queryForRowSet(SQL_GET_CLASS_DETAILS, className);
+    }
+
 }

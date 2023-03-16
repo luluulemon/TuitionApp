@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { Class, Schedule, Student, Teacher } from '../model';
+import { Class, ClassDetail, Schedule, Student, Teacher } from '../model';
 
 @Injectable({
   providedIn: 'root'
@@ -43,8 +43,10 @@ export class ClassService {
     return lastValueFrom(this.http.get<Student[]>(`/api/class/searchStudents/${searchString}`))
   }
 
-  // addEnrollment(enrolJson: any){
-  //   return lastValueFrom( this.http.post('api/enrol/newEnrollment', enrolJson))
-  // }
+
+  getClassDetails(className: string): Promise<ClassDetail>{
+    return lastValueFrom(this.http.get<ClassDetail>(`/api/class/classDetails/${className}`))
+  }
+
   
 }
