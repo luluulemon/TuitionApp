@@ -5,6 +5,8 @@
 .mainPage{
     /* width: 500px; */
     margin: 10px;
+    margin: 5px;
+    padding: 5px;
 }
 
 .schedule{
@@ -17,5 +19,9 @@
 
 .addStudent{
     margin-top: 10px;
+}
+
+.mainButtonGroup{
+    margin-top: 20px;
 }
 

@@ -25,4 +25,6 @@ public class AttendanceRepository {
     public SqlRowSet getAttendance(String className, String dateTime){
         return jdbcTemplate.queryForRowSet(SQL_GET_ATTENDANCE, className, dateTime);
     }
+
+
 }

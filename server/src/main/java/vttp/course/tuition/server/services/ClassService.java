@@ -67,6 +67,16 @@ public class ClassService {
         return scheduleArray.build();
     }
 
+    public void updateSchedule(JsonObject scheduleJson){
+
+        classRepo.updateSchedule(scheduleJson.getString("oldDateTime"),
+                                    scheduleJson.getString("newDateTime"));
+    }
+
+    public void deleteSchedule(String dateTime){
+        classRepo.deleteSchedule(dateTime);
+    }
+
     public JsonArray getStudents(){
         JsonArrayBuilder studentsArray = Json.createArrayBuilder();
         SqlRowSet rs = classRepo.getStudents();
@@ -89,10 +99,11 @@ public class ClassService {
         SqlRowSet rs = classRepo.getClassDetails(className);
         rs.next();  // only one row of data
         System.out.println("Check name" + rs.getString("name"));
-        System.out.println("Check session: " +rs.getInt("totalSessions"));
+
         return Json.createObjectBuilder()
                 .add("teacherName", rs.getString("name"))
                 .add("totalSessions", rs.getInt("totalSessions"))
+                .add("startDate", rs.getString("startDate"))
                 .build();
     }
 }

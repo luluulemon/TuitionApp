@@ -17,4 +17,6 @@ export class AttendanceService {
     getAttendance(className: string, schedule: string): Promise<Enrollment[]>{
         return lastValueFrom( this.http.get<Enrollment[]>(`api/attendance/get/${className}/${schedule}`))
     }
+
+
 }

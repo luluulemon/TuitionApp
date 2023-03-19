@@ -1,29 +1,33 @@
 <div class="mainPage">
     
     <mat-tab-group animationDuration="0ms">
+
+        <!-- Tab for marking attendance, editing schedules -->
+            <!-- Can only edit future classes -->
         <mat-tab label="Attendance">
             <div class="schedules">
                 <mat-list *ngIf="schedules" >
-                    <mat-list-item *ngFor="let s of schedules" class="schedule" 
-                            [routerLink]="['/attendance', currentClassName, s]"> 
-                        {{s}} 
+                    <mat-list-item *ngFor="let s of schedules" class="schedule"> 
+                        
+                        <div *ngIf="!compareDate(s)" [routerLink]="['/attendance', currentClassName, s]">
+                            <span>{{s | date: 'EEEE, d/M/yy, h:mm a'}} </span>  
+                        </div>
+                        <div *ngIf="compareDate(s)"> 
+                            <span [routerLink]="['/attendance', currentClassName, s]">
+                                {{s | date: 'EEEE, d/M/yy, h:mm a'}} 
+                            </span>                       
+                            <mat-icon style="float:right" (click)="openUpdateSchedule(s)">edit </mat-icon> &nbsp;
+                            <mat-icon style="float:right" (click)="deleteSchedule(s)">delete </mat-icon>
+                        </div>
                     </mat-list-item>
                 </mat-list>
             </div>
-        </mat-tab>
 
+            <button mat-raised-button type="button" (click)="openAddSchedule()">ADD SCHEDULE</button>
 
-        <mat-tab label="Schedule">
-            <div>
-                <h4>Schedules
-                    <button type="button" style="float:right" *ngIf="!addSchedule" (click)="openAddSchedule()">+</button>
-                    <button type="button" style="float:right" *ngIf="addSchedule" (click)="closeAddSchedule()">-</button>
-                </h4>
-            </div>
-            <hr>
-        
-            <div *ngIf="addSchedule" >
-                <form [formGroup]="form">
+            <div *ngIf="addSchedule || editSchedule" >
+                <mat-icon (click)="closeAddSchedule()" style="float:right">close</mat-icon>
+                <form [formGroup]="scheduleForm">
         
                     <mat-form-field class="example-full-width" appearance="fill">
                         <mat-label>Choose a date</mat-label>
@@ -45,7 +49,7 @@
                     </mat-form-field>
                     <br>
         
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appearance="fill" *ngIf="addSchedule">
                         <mat-label>Repeat Schedule</mat-label>
                         <mat-select formControlName="repeat">
                         <mat-option  value="No">No Repeat</mat-option>
@@ -55,9 +59,13 @@
                     </mat-form-field>
                     <br>
         
-                    <button type="button" mat-raised-button color="primary" 
-                        [disabled]="form.invalid"   (click)="saveSchedule()">
+                    <button type="button" mat-raised-button color="primary" *ngIf="addSchedule"
+                        [disabled]="scheduleForm.invalid"   (click)="saveSchedule()">
                         <mat-icon>save</mat-icon> SAVE
+                    </button>
+                    <button type="button" mat-raised-button color="primary" *ngIf="editSchedule"
+                    [disabled]="scheduleForm.invalid"   (click)="updateSchedule()">
+                    <mat-icon>edit</mat-icon> EDIT
                     </button>
                 </form>
             </div>
@@ -66,13 +74,9 @@
                     Successfully added schedule for {{ currentClassName }}
                 </div>
             </div>
-        
-            <div class="schedules">
-                <div *ngIf="schedules" >
-                    <div *ngFor="let s of schedules" class="schedule"> {{s}} </div>
-                </div>
-            </div>
         </mat-tab>
+
+
 
         <mat-tab label="Details">
             <mat-card>
@@ -82,11 +86,11 @@
                 <mat-card-content>
                     <div> Teacher: <span *ngIf="classDetails"> {{ classDetails.teacherName }} </span></div>
                     <div> No. of Students: {{ enrollments.length }}</div>
-                    <div> Start date: </div>
+                    <div> Start date: <span *ngIf="classDetails">{{ classDetails.startDate | date:'EEEE, d/M/yy, h:mm a' }} </span></div>
                     <div> Total sessions: <span *ngIf="classDetails"> {{ classDetails.totalSessions }} </span> </div>
                 </mat-card-content>
             </mat-card>
-        </mat-tab>
+        </mat-tab> 
 
         <!-- Students Tab -->
         <!-- Last Tab -->
@@ -182,7 +186,7 @@
         </mat-tab>
     </mat-tab-group>
     
-    <div>
+    <div class="mainButtonGroup">
         <button mat-raised-button type="button" [routerLink]="['/classes']">BACK TO CLASSES</button>
         &nbsp;
         <button mat-raised-button type="button" [routerLink]="['']">BACK TO MAIN</button>

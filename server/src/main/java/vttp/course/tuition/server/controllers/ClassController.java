@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -77,6 +78,19 @@ public class ClassController {
         return ResponseEntity.ok(schedules.toString());
     }
 
+    @PutMapping("/updateSchedule")
+    @ResponseBody
+    public void updateSchedule(@RequestBody String schedules){
+        JsonReader reader = Json.createReader(new StringReader(schedules));
+        JsonObject scheduleObj = reader.readObject(); 
+        classSvc.updateSchedule(scheduleObj);
+    }
+
+    @GetMapping("/deleteSchedule/{dateTime}")
+    @ResponseBody
+    public void deleteSchedule(@PathVariable String dateTime){
+        classSvc.deleteSchedule(dateTime);
+    }
 
     @GetMapping("/getStudents")
     @ResponseBody

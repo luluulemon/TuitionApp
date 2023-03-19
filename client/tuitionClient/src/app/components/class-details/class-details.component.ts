@@ -16,11 +16,11 @@ export class ClassDetailsComponent {
 
   // Check for clashed schedules
 
-  addSchedule: boolean = false;
-  form!: FormGroup
+  addSchedule: boolean = false;   editSchedule: boolean = false;
+  scheduleForm!: FormGroup
   currentClassName: string = '' // for storing className
   updateMsg: string = ''    // for storing add Schedule msg/error
-  schedules: string[] = []      // store schedules of currentClass
+  schedules: Date[] = []      // store schedules of currentClass
   todaysDate: Date = new Date;  // for having min Date for schedule
   classDetails!: ClassDetail
 
@@ -37,15 +37,23 @@ export class ClassDetailsComponent {
     this.getClassDetails()
   }
 
-  openAddSchedule(){  
+  compareDate(date: Date): boolean{     // used in attendance -> only allow edit for future classes
+    return new Date(date) > new Date
+  }
+
+  openAddSchedule(){        // Open schedule form
     this.addSchedule = true
     this.createForm()       // reset form
     this.updateMsg = ''     // reset updateMsg
    }
-  closeAddSchedule(){ this.addSchedule = false  }
+  closeAddSchedule(){ 
+    this.addSchedule = false
+    this.editSchedule = false
+  }   // Close schedule form
 
-  createForm(){
-    this.form = this.fb.group({
+
+  createForm(){             // form for add & edit schedule
+    this.scheduleForm = this.fb.group({
       scheduleDate: this.fb.control('', Validators.required),
       hour: this.fb.control<number>(0, Validators.required),
       minute: this.fb.control<number>(0, Validators.required),
@@ -53,12 +61,12 @@ export class ClassDetailsComponent {
     })
   }
 
-  saveSchedule(){
-    console.info(this.form.value)
+  saveSchedule(){         
+    console.info(this.scheduleForm.value)
     // try converting date
-    let latest_date =this.datepipe.transform(this.form.value.scheduleDate, 'yyyy-MM-dd');
+    let latest_date =this.datepipe.transform(this.scheduleForm.value.scheduleDate, 'yyyy-MM-dd');
     // create SQL datetime string
-    let datetime = `${latest_date} ${this.form.value.hour}:${this.form.value.minute}:00`
+    let datetime = `${latest_date} ${this.scheduleForm.value.hour}:${this.scheduleForm.value.minute}:00`
     console.info('check datetime entry: ',datetime)
 
     const schedule: Schedule = {  className: this.currentClassName, classDate: datetime }
@@ -69,7 +77,35 @@ export class ClassDetailsComponent {
                     this.updateMsg =  v['Update Msg'] 
                     this.createForm()
                   })
+  }
+
+  openUpdateSchedule(s: Date){ 
+    this.editSchedule = true 
+    this.scheduleOldDateTime = s
+    let schedule = new Date(s)
+    this.scheduleForm = this.fb.group({
+      scheduleDate: this.fb.control<Date>(schedule, Validators.required),
+      hour: this.fb.control<number>(schedule.getHours(), Validators.required),
+      minute: this.fb.control<number>(schedule.getMinutes(), Validators.required),
+    }) 
+  }
+
+  scheduleOldDateTime: Date = new Date
+  updateSchedule(){       // set up form input to required SQL input format
+    let latest_date =this.datepipe.transform(this.scheduleForm.value.scheduleDate, 'yyyy-MM-dd');
+    let updateDateTime = { oldDateTime: this.scheduleOldDateTime, 
+      newDateTime: `${latest_date} ${this.scheduleForm.value.hour}:${this.scheduleForm.value.minute}:00`}
     
+    console.info(updateDateTime)
+    this.classSvc.updateSchedule(updateDateTime)
+                  .then(( ) =>  this.getSchedules())
+    this.editSchedule = false
+   
+  }
+
+  deleteSchedule(s: Date){  
+    this.classSvc.deleteSchedule(s)
+                .then(() => this.getSchedules())
   }
 
   getSchedules(){

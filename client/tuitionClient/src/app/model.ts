@@ -46,4 +46,5 @@ export interface Enrollment{
 export interface ClassDetail{
     teacherName: string
     totalSessions: number
+    startDate: Date
 }

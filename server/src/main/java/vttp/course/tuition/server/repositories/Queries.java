@@ -13,7 +13,10 @@ public class Queries {
     public static String SQL_ADD_STUDENT = "insert into students(name, phoneNum, joinDate) values(?, ?, ?)";
 
     public static String SQL_ADD_SCHEDULE = "insert into schedules(classDate, className) values(?, ?)";
-    public static String SQL_GET_SCHEDULES = "select * from schedules where className=?";
+    public static String SQL_GET_SCHEDULES = "select * from schedules where className=? order by classDate";
+    public static String SQL_UPDATE_SCHEDULE = "update schedules set classDate=? where classDate=?";
+    public static String SQL_UPDATE_ATTENDANCE_W_SCHEDULE = "update attendance set classDate=? where classDate=?";
+    public static String SQL_DELETE_SCHEDULE = "delete from schedules where classDate=?";
 
     public static String SQL_GET_STUDENTS = "select * from students";
     public static String SQL_SEARCH_STUDENTS = "select * from students where name like CONCAT(?,'%')";
@@ -29,7 +32,7 @@ public class Queries {
         "select * from attendance where className=? and date=?";
     
     public static String SQL_GET_CLASS_DETAILS =
-        "select teachers.name, count(schedules.classDate) as totalSessions from classes join teachers on classes.teacherId=teachers.teacherId join schedules on classes.className=schedules.className where classes.className=? and schedules.classDate<now()";
+        "select teachers.name, count(schedules.classDate) as totalSessions, min(schedules.classDate) as startDate from classes join teachers on classes.teacherId=teachers.teacherId join schedules on classes.className=schedules.className where classes.className=? and schedules.classDate<now()";
     //select teachers.name, count(schedules.classDate) from classes join teachers on classes.teacherId=teachers.teacherId 
     // join schedules on classes.className=schedules.className
     // where classes.className=? and schedules.classDate<now();

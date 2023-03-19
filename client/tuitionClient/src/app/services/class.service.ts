@@ -29,9 +29,17 @@ export class ClassService {
     return lastValueFrom( this.http.post('/api/class/addSchedule', s))
   }
 
-  getSchedules(className: string): Promise<string[]>{
-    return lastValueFrom(this.http.get<string[]>(`/api/class/getSchedules/${className}`))
+  getSchedules(className: string): Promise<Date[]>{
+    return lastValueFrom(this.http.get<Date[]>(`/api/class/getSchedules/${className}`))
   }
+
+  updateSchedule(schedules: any): any{
+    return lastValueFrom( this.http.put('/api/class/updateSchedule', schedules))
+  }
+
+  deleteSchedule(s: Date): any{ 
+    return lastValueFrom( this.http.get(`/api/class/deleteSchedule/${s}`))
+}
 
   getStudents(): Promise<Student[]>{
     return lastValueFrom(this.http.get<Student[]>('/api/class/getStudents'))

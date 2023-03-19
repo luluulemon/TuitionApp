@@ -5,13 +5,22 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
+
 import jakarta.json.JsonObject;
 
 import static vttp.course.tuition.server.repositories.Queries.*;
 
+
 @Repository
 public class ClassRepository {
     
+    // @Value("${spring.datasource.url}")
+    // private String jdbcUrl;
+    // @Value("${spring.datasource.username}")
+    // private String username;
+    // @Value("${spring.datasource.password}")
+    // private String password;
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -45,6 +54,28 @@ public class ClassRepository {
         return jdbcTemplate.queryForRowSet(SQL_GET_SCHEDULES, className);
     }
 
+    public void updateSchedule(String oldDateTime, String newDateTime){
+        
+        // try{
+        // Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
+        // connection.setAutoCommit(false);
+         
+        // Statement statement = connection.createStatement(); 
+        // statement.ad
+        // statement.addBatch(SQL_UPDATE_SCHEDULE, newDateTime, oldDateTime);
+        // statement.addBatch("INSERT INTO EMP_ADDRESS(ID, EMP_ID, ADDRESS) "
+        // + "VALUES ('10','1','Address')");
+        // statement.executeBatch();
+        // } catch(SQLException SQLex){    SQLex.printStackTrace();    }
+        jdbcTemplate.update(SQL_UPDATE_SCHEDULE, newDateTime, oldDateTime);
+        jdbcTemplate.update(SQL_UPDATE_ATTENDANCE_W_SCHEDULE, newDateTime, oldDateTime);
+
+    }
+
+    public void deleteSchedule(String dateTime){
+        jdbcTemplate.update(SQL_DELETE_SCHEDULE, dateTime);
+    }
+
     public SqlRowSet getStudents(){
         return jdbcTemplate.queryForRowSet(SQL_GET_STUDENTS);
     }
@@ -56,5 +87,7 @@ public class ClassRepository {
     public SqlRowSet getClassDetails(String className){
         return jdbcTemplate.queryForRowSet(SQL_GET_CLASS_DETAILS, className);
     }
+
+
 
 }
