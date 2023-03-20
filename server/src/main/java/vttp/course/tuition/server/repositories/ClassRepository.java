@@ -68,12 +68,12 @@ public class ClassRepository {
         // statement.executeBatch();
         // } catch(SQLException SQLex){    SQLex.printStackTrace();    }
         jdbcTemplate.update(SQL_UPDATE_SCHEDULE, newDateTime, oldDateTime);
-        jdbcTemplate.update(SQL_UPDATE_ATTENDANCE_W_SCHEDULE, newDateTime, oldDateTime);
-
+        jdbcTemplate.update(SQL_UPDATE_SCHEDULE_W_ATTENDANCE, newDateTime, oldDateTime);
     }
 
     public void deleteSchedule(String dateTime){
         jdbcTemplate.update(SQL_DELETE_SCHEDULE, dateTime);
+        jdbcTemplate.update(SQL_DELETE_SCHEDULE_W_ATTENDANCE, dateTime);
     }
 
     public SqlRowSet getStudents(){

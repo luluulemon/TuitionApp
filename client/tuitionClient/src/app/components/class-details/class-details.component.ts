@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ClassDetail, Enrollment, Schedule, Student } from 'src/app/model';
 import { ClassService } from 'src/app/services/class.service';
 import { EnrolService } from 'src/app/services/enrol.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -27,17 +28,28 @@ export class ClassDetailsComponent {
 
   constructor(private fb: FormBuilder, private datepipe: DatePipe,
             private activatedRoute: ActivatedRoute, private classSvc:ClassService,
-            private enrolSvc: EnrolService ){}
+            private enrolSvc: EnrolService, private msgSnackBar: MatSnackBar ){}
 
+
+  
   ngOnInit(){
     console.info('Init called now')
     this.currentClassName = this.activatedRoute.snapshot.params['className']
     this.getSchedules()
     this.createSearchForm()
     this.getClassDetails()
+    this.getEnrollments()   // display students in class Details
   }
 
-  compareDate(date: Date): boolean{     // used in attendance -> only allow edit for future classes
+  openSnackBar() {
+    // this.msgSnackBar.openFromComponent(SnackBarMsgComponent, {
+    //   duration: 5 * 1000,
+    // });
+    console.info(this.updateMsg)
+    this.msgSnackBar.open(this.updateMsg, "X" , { duration: 7000, panelClass: ['classSnackbar']})
+  }
+
+  compareDate(date: Date): boolean{     // used in schedules -> only allow edit for future classes
     return new Date(date) > new Date
   }
 
@@ -46,7 +58,7 @@ export class ClassDetailsComponent {
     this.createForm()       // reset form
     this.updateMsg = ''     // reset updateMsg
    }
-  closeAddSchedule(){ 
+  closeAddEditSchedule(){ 
     this.addSchedule = false
     this.editSchedule = false
   }   // Close schedule form
@@ -69,14 +81,25 @@ export class ClassDetailsComponent {
     let datetime = `${latest_date} ${this.scheduleForm.value.hour}:${this.scheduleForm.value.minute}:00`
     console.info('check datetime entry: ',datetime)
 
+    const clash: boolean = 
+        this.classSvc.checkClashingSchedules(datetime, this.schedules)  // check clashing schedules
+    if(clash){      
+      this.updateMsg = 'CLASH WITH OTHER SCHEDULE'
+      this.openSnackBar()
+    }
+
+    else{
     const schedule: Schedule = {  className: this.currentClassName, classDate: datetime }
     this.classSvc.addSchedule(schedule)
                 .then(v => 
                   { 
                     this.getSchedules()
-                    this.updateMsg =  v['Update Msg'] 
-                    this.createForm()
+                    this.updateMsg =  `Added schedule: ${ this.datepipe.transform(new Date(datetime), 'M/d/yy, h:mm a' )}`
+                    this.openSnackBar()
+                    //this.createForm()
+                    this.closeAddEditSchedule()
                   })
+    }
   }
 
   openUpdateSchedule(s: Date){ 
@@ -90,22 +113,40 @@ export class ClassDetailsComponent {
     }) 
   }
 
-  scheduleOldDateTime: Date = new Date
+  scheduleOldDateTime: Date = new Date  // to use for updateSchedule below
+
   updateSchedule(){       // set up form input to required SQL input format
     let latest_date =this.datepipe.transform(this.scheduleForm.value.scheduleDate, 'yyyy-MM-dd');
     let updateDateTime = { oldDateTime: this.scheduleOldDateTime, 
       newDateTime: `${latest_date} ${this.scheduleForm.value.hour}:${this.scheduleForm.value.minute}:00`}
     
-    console.info(updateDateTime)
+    const clash: boolean = this.classSvc.checkClashingSchedules(updateDateTime.newDateTime, this.schedules)
+    if(clash){
+      this.updateMsg = 'CLASH WITH OTHER SCHEDULE'
+      this.openSnackBar()
+    }
+
+    else{
     this.classSvc.updateSchedule(updateDateTime)
-                  .then(( ) =>  this.getSchedules())
-    this.editSchedule = false
-   
+                  .then(() => { this.getSchedules()
+                                this.updateMsg = 
+                                  `updated ${ this.datepipe.transform(new Date(this.scheduleOldDateTime), 'M/d/yy, h:mm a' )} 
+                                    to ${ this.datepipe.transform( updateDateTime.newDateTime, 'M/d/yy, h:mm a' )}`
+                                this.editSchedule = false
+                                this.openSnackBar()
+                              })
+    }
   }
 
   deleteSchedule(s: Date){  
     this.classSvc.deleteSchedule(s)
-                .then(() => this.getSchedules())
+                .then(() => 
+                {
+                  this.getSchedules()
+                  this.updateMsg = 
+                    `Deleted ${ this.datepipe.transform(new Date(s), 'M/d/yy, h:mm a' )}`
+                  this.openSnackBar()
+                })
   }
 
   getSchedules(){
@@ -135,7 +176,7 @@ export class ClassDetailsComponent {
     this.getStudents()
     this.createSearchForm()
     this.createAddStudentForm()
-    this.getEnrollments()
+    //this.getEnrollments()
   }
 
   createSearchForm(){ 

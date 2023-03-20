@@ -26,7 +26,7 @@
             <button mat-raised-button type="button" (click)="openAddSchedule()">ADD SCHEDULE</button>
 
             <div *ngIf="addSchedule || editSchedule" >
-                <mat-icon (click)="closeAddSchedule()" style="float:right">close</mat-icon>
+                <mat-icon (click)="closeAddEditSchedule()" style="float:right">close</mat-icon>
                 <form [formGroup]="scheduleForm">
         
                     <mat-form-field class="example-full-width" appearance="fill">
@@ -74,6 +74,7 @@
                     Successfully added schedule for {{ currentClassName }}
                 </div>
             </div>
+
         </mat-tab>
 
 
@@ -90,6 +91,30 @@
                     <div> Total sessions: <span *ngIf="classDetails"> {{ classDetails.totalSessions }} </span> </div>
                 </mat-card-content>
             </mat-card>
+            <div *ngIf="enrollments">
+                <mat-card>
+                    <mat-card-header>
+                            <mat-card-title>Class Students</mat-card-title> &nbsp;
+                            <button type="button" mat-raised-button color="primary">
+                                <mat-icon>add</mat-icon>
+                                ADD STUDENT
+                            </button>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <table mat-table [dataSource]="enrollments">
+                            <mat-text-column name="studentId"></mat-text-column>
+                            <mat-text-column name="name"></mat-text-column>
+                            <mat-text-column name="phoneNum"></mat-text-column>
+                            <mat-text-column name="status"></mat-text-column>
+                            <mat-text-column name="expiryDate"></mat-text-column>
+                            <tr mat-header-row *matHeaderRowDef="enrolsColumnsToDisplay"></tr>
+                            <tr mat-row *matRowDef="let myRowData; columns: enrolsColumnsToDisplay"
+                            (click)="addStudent(myRowData)"></tr>
+                        </table>
+                        
+                    </mat-card-content>
+                </mat-card>
+            </div>
         </mat-tab> 
 
         <!-- Students Tab -->

@@ -39,7 +39,28 @@ export class ClassService {
 
   deleteSchedule(s: Date): any{ 
     return lastValueFrom( this.http.get(`/api/class/deleteSchedule/${s}`))
-}
+  }
+
+  checkClashingSchedules(newDateTime: string, schedules: Date[]): boolean{
+    // Checks for schedule one hour before and one hour after
+    const clashArray: number[] = []
+    let newSchedule = new Date(newDateTime)
+    let newSchedulePlusOne = new Date( newSchedule.setHours(newSchedule.getHours() + 1) )
+    let newScheduleMinusOne = new Date( newSchedule.setHours(newSchedule.getHours() - 2) )
+
+    console.info('Check plus one: ', newSchedulePlusOne)
+    console.info('Check minus one', newScheduleMinusOne) 
+
+    for(let i=0; i<schedules.length; i++){
+      if(new Date(schedules[i]) > newScheduleMinusOne && new Date(schedules[i]) < newSchedulePlusOne)
+      { clashArray.push(i)  
+        console.info(`index ${i} clash`)
+        return true;
+      }
+    }
+
+    return false;
+  }
 
   getStudents(): Promise<Student[]>{
     return lastValueFrom(this.http.get<Student[]>('/api/class/getStudents'))
