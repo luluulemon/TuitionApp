@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MaterialModule } from './material';
 import { DatePipe } from '@angular/common';
 import { AttendanceComponent } from './components/class-details/attendance/attendance.component';
+import { EnrollmentComponent } from './components/class-details/enrollment/enrollment.component';
 
 
 const appRoutes:Routes = [
@@ -36,6 +37,7 @@ const appRoutes:Routes = [
     ClassDetailsComponent,
     UsersComponent,
     AttendanceComponent,
+    EnrollmentComponent,
   ],
   imports: [
     BrowserModule,
