@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Student } from 'src/app/model';
 import { ClassService } from 'src/app/services/class.service';
@@ -12,8 +13,9 @@ import { EnrolService } from 'src/app/services/enrol.service';
 })
 export class EnrollmentComponent {
 
-  constructor(private fb:FormBuilder, private classSvc: ClassService
-              , private enrolSvc: EnrolService, private activatedRoute: ActivatedRoute){}
+  constructor(private fb:FormBuilder, private classSvc: ClassService,
+              private enrolSvc: EnrolService, private activatedRoute: ActivatedRoute,
+              private msgSnackBar: MatSnackBar){}
 
   studentSearchForm!: FormGroup
   addStudentForm!: FormGroup
@@ -29,6 +31,7 @@ export class EnrollmentComponent {
   ngOnInit(){
     this.createSearchForm()
     this.createAddStudentForm()
+    this.getStudents()
     this.currentClassName = this.activatedRoute.snapshot.params['className']
   }
 
@@ -86,9 +89,18 @@ export class EnrollmentComponent {
     console.info(s)
     this.selectedStudent = s
     this.addStudentStatement = `Adding ${s.name} to ${this.currentClassName}: `
+    //this.msgSnackBar.open(this.addStudentStatement, 'X')
   }
 
   confirmAddStudent(){  
+    console.info('inside Confirm')
+    if( this.classSvc.enrollments.find((enrol) => enrol.phoneNum == this.selectedStudent.phoneNum) )
+    { console.info('duplicate enrolment: ', this.selectedStudent)  
+      this.msgSnackBar.open(`Duplicate entry for ${this.selectedStudent.name}`, 'X', {duration: 7000})  // change to dialog
+    }
+
+    else
+    {     // if not duplicate enrollment
     let e = { phoneNum: this.selectedStudent.phoneNum,
               className: this.currentClassName,
               expiryDate: this.addStudentForm.value.startDate  
@@ -97,9 +109,11 @@ export class EnrollmentComponent {
     this.enrolSvc.addEnrollment(e)
             .then(msg => 
               { console.info(msg)           // Log to show if insert happens
+                this.msgSnackBar.open(msg.toString(), 'X', { duration: 7000 }) 
                 this.enrolSvc.getEnrollments(this.currentClassName) // refresh enrollment list
               })                                  
     this.addStudentStatement = ''
+    }
   } 
 
   cancelAddStudent(){ this.addStudentStatement = '' }

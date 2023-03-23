@@ -1,46 +1,62 @@
 <div class="classPage">
-    <button type="button" [routerLink]="['']">BACK</button>
+    
 
     <h3>Classes
-    <button *ngIf="!tForm" type="button" style="float: right;" (click)="addTForm()">+</button>
-    <button *ngIf="tForm" type="button" style="float: right;" (click)="closeTForm()">-</button>
+    <button *ngIf="!tForm" type="button" style="float: right;" (click)="addClassForm()">+</button>
+    <button *ngIf="tForm" type="button" style="float: right;" (click)="closeClassForm()">-</button>
     </h3>
 
     <div *ngIf="tForm">
-        <form [formGroup]="form">
-            <table>
-                <tr>
-                    <td>Class Name:</td>
-                    <td><input type="text" formControlName="className"></td>
-                </tr>
-                <tr>
-                    <td>Teacher:</td>
-                    <td>
-                        <select name="teacher" formControlName="teacherId">
-                            <option *ngFor="let t of teachers, let idx=index" value="{{idx}}" >{{t.name}}</option>
-                    </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Description:</td>
-                    <td><textarea formControlName="description" cols="45" rows="2"></textarea></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <button (click)="closeTForm()">CANCEL</button> &nbsp;
-                        <button (click)="addClass()">ADD CLASS</button>
-                    </td>
-                </tr>
-            </table>
-        </form>
+        <mat-card class="addClassForm">
+            <mat-card-header>
+                <mat-card-title>Add Class</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <form [formGroup]="form">
+                        <mat-form-field>
+                            <mat-label>Class Name</mat-label>
+                            <input matInput type="text" formControlName="className">
+                            <mat-hint align="end">Enter class name</mat-hint>
+                        </mat-form-field>
+                        <br>
+                        <mat-form-field>
+                            <mat-label>Teacher</mat-label>
+                            <mat-select formControlName="teacherId">
+                                <mat-option *ngFor="let t of teachers, let idx=index" value="{{idx}}">{{t.name}}</mat-option>
+                            </mat-select>
+                            <mat-hint align="end">Select teacher</mat-hint>
+                        </mat-form-field>
+                        &nbsp;
+                        <mat-form-field>
+                            <mat-label>Class Year</mat-label>
+                            <mat-select formControlName="classYear">
+                                <mat-option value="thisYear">This Year</mat-option>
+                                <mat-option value="nextYear">Next Year</mat-option>
+                            </mat-select>
+                            <mat-hint align="end">Select year</mat-hint>
+                        </mat-form-field>
+                        <br>
+                        <mat-form-field>
+                            <mat-label>Description</mat-label>
+                            <textarea matInput formControlName="description" cols="20" rows="2"></textarea>
+                            <mat-hint align="end">Add description (Optional)</mat-hint>
+                        </mat-form-field>
+                </form>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button (click)="closeClassForm()">CANCEL</button> &nbsp;
+                <button mat-raised-button (click)="addClass()">ADD CLASS</button>
+            </mat-card-actions>
+        </mat-card>
     </div>
     <hr>
 
 
-    <div *ngIf="classes">
-        <div *ngFor="let class of classes" class="tuitionClass" [routerLink]="['/classDetails', class.className]">
+    <mat-list *ngIf="classes">   
+        <mat-list-item *ngFor="let class of classes" class="tuitionClass" [routerLink]="['/classDetails', class.className]">
             {{ class.className }}
-        </div>
-    </div>
+        </mat-list-item>
+    </mat-list>
+
+    <button mat-raised-button type="button" [routerLink]="['']">BACK TO MAIN</button>
 </div>

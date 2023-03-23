@@ -189,7 +189,9 @@ export class ClassDetailsComponent {
 
   getEnrollments(){
     this.enrolSvc.getEnrollments(this.currentClassName)
-                    .then(e => this.enrollments = e)
+                    .then(e => {this.classSvc.enrollments = e     // put enrollments in Svc: for enrollment component
+                                this.enrollments = e
+                              })
                     .catch(error => console.error('error in getEnrollments: ', error))
   }
 

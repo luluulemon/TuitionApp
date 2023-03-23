@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { Class, ClassDetail, Schedule, Student, Teacher } from '../model';
+import { Class, ClassDetail, Enrollment, Schedule, Student, Teacher } from '../model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,8 @@ export class ClassService {
 
 
   constructor(private http: HttpClient) { }
+  
+  enrollments: Enrollment[] = []
 
   getTeachers():Promise<Teacher[]>{
     console.info('called get Teachers Svc')

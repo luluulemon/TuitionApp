@@ -9,3 +9,8 @@
 .classPage{
     width: 500px;
 }
+
+.addClassForm{
+    margin: 20px;
+    padding: 10px;
+}

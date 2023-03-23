@@ -10,6 +10,7 @@ export interface Class{
     className: string
     description: string
     teacherId: number
+    classYear: number
     totalCount: number
 }
 

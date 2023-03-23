@@ -95,9 +95,10 @@
                 <mat-card>
                     <mat-card-header>
                             <mat-card-title>Class Students</mat-card-title> &nbsp;
-                            <button type="button" mat-raised-button color="primary">
-                                <mat-icon>add</mat-icon>
-                                ADD STUDENT
+                            <button type="button" mat-raised-button color="primary" 
+                                [routerLink]="['/enrollment/', currentClassName]">
+                                    <mat-icon>add</mat-icon>
+                                    ADD STUDENT
                             </button>
                     </mat-card-header>
                     <mat-card-content>
@@ -111,104 +112,13 @@
                             <tr mat-row *matRowDef="let myRowData; columns: enrolsColumnsToDisplay"
                             (click)="addStudent(myRowData)"></tr>
                         </table>
-                        
+
                     </mat-card-content>
                 </mat-card>
             </div>
         </mat-tab> 
 
-        <!-- Students Tab -->
-        <!-- Last Tab -->
-            <!-- Show students in current class/ search on top to add students to current class -->
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <span (click)="startStudentTab()">Students</span>  
-                <!-- get students on tab click -->
-            </ng-template>
-            <div>
 
-
-            </div>
-            <div>
-                <form [formGroup]="studentSearchForm">
-                    <div style="font-size: 10px">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Search Student</mat-label>
-                            <input matInput type="text" formControlName="searchName">
-                        </mat-form-field>
-
-                        <button type="button" mat-raised-button color="primary" (click)="searchStudents()">
-                            <mat-icon>search</mat-icon>
-                            SEARCH
-                        </button>
-                    </div>
-                </form>
-                <table mat-table [dataSource]="studentsDisplay">
-                    <mat-text-column name="studentId"></mat-text-column>
-                    <mat-text-column name="name"></mat-text-column>
-                    <mat-text-column name="phoneNum"></mat-text-column>
-                    <mat-text-column name="joinDate"></mat-text-column>
-                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-                    <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"
-                    (click)="addStudent(myRowData)"></tr>
-                </table>
-                <button *ngIf="offset>0" type="button" mat-raised-button color="primary" 
-                    (click)="previousPage()">
-                    <mat-icon>skip_previous</mat-icon>
-                </button>
-                <button *ngIf="nextPageBoolean" type="button" mat-raised-button color="primary" 
-                    (click)="nextPage()">
-                    <mat-icon>skip_next</mat-icon>
-                </button>
-
-                <div *ngIf="addStudentStatement" class="addStudent">
-                    <span style="font-size: 20px;">{{ addStudentStatement }} </span>
-
-                    <form [formGroup]="addStudentForm">
-                        <mat-form-field appearance="fill">
-                            <mat-label>Start Date</mat-label>
-                            <mat-select formControlName="startDate">
-                            <mat-option  value="This">This Month</mat-option>
-                            <mat-option  value="Next">Next Month</mat-option>
-                            </mat-select>
-                        </mat-form-field>   &nbsp;
-                        <button type="button" mat-raised-button (click)="confirmAddStudent()">ADD</button> &nbsp;
-                        <button type="button" mat-raised-button (click)="cancelAddStudent()">CANCEL</button>
-                    </form>
-                </div>
-            </div>
-
-            <div *ngIf="enrollments">
-                <mat-card>
-                    <mat-card-header>
-                            <mat-card-title>Class Students</mat-card-title> &nbsp;
-                            <button type="button" mat-raised-button color="primary">
-                                <mat-icon>add</mat-icon>
-                                ADD STUDENT
-                            </button>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <table mat-table [dataSource]="enrollments">
-                            <mat-text-column name="studentId"></mat-text-column>
-                            <mat-text-column name="name"></mat-text-column>
-                            <mat-text-column name="phoneNum"></mat-text-column>
-                            <mat-text-column name="status"></mat-text-column>
-                            <mat-text-column name="expiryDate"></mat-text-column>
-                            <tr mat-header-row *matHeaderRowDef="enrolsColumnsToDisplay"></tr>
-                            <tr mat-row *matRowDef="let myRowData; columns: enrolsColumnsToDisplay"
-                            (click)="addStudent(myRowData)"></tr>
-                        </table>
-                        <!-- <mat-list>
-                            <mat-list-item *ngFor="let e of enrollments"> {{ e.name }}</mat-list-item>
-                        </mat-list> -->
-                    </mat-card-content>
-                </mat-card>
-
-            </div>
-            <!-- <mat-list *ngIf="schedules" >   Select * from enrollments where class= className
-                <mat-list-item *ngFor="let s of schedules" class="schedule"> {{s}} </mat-list-item>
-            </mat-list> -->
-        </mat-tab>
     </mat-tab-group>
     
     <div class="mainButtonGroup">

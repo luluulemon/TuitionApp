@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Class, Teacher } from 'src/app/model';
 import { ClassService } from 'src/app/services/class.service';
 
@@ -15,10 +16,11 @@ export class ClassesComponent {
   tForm: boolean = false
   teachers: Teacher[] = []
 
-  constructor(private classSvc:ClassService, private fb:FormBuilder){}
+  constructor(private classSvc:ClassService, private fb:FormBuilder,
+              private msgSnackBar:MatSnackBar){}
   
   ngOnInit(){
-    this.createTForm()
+    //this.createTForm()
     this.classSvc.getTeachers()
                   .then( v => this.teachers = v )
                   .catch( error => console.error('get teachers error :', error))
@@ -26,18 +28,20 @@ export class ClassesComponent {
     this.getClasses()
   }
 
-  createTForm(){
+  createAddClassForm(){
     this.form = this.fb.group({
       className: this.fb.control<string>('', Validators.required),
       teacherId: this.fb.control<string>('', Validators.required),
+      classYear: this.fb.control<string>('', Validators.required),
       description: this.fb.control<string>('')
     })
   }
 
-  addTForm(){  this.tForm = true  }
-  closeTForm(){ 
+  addClassForm(){  this.tForm = true
+                this.createAddClassForm()  }
+  closeClassForm(){ 
     this.tForm = false;
-    this.createTForm()
+    //this.createTForm()
   }
 
   getClasses(){
@@ -49,8 +53,18 @@ export class ClassesComponent {
   addClass(){   // get teacherId from index
     this.form.value.teacherId = this.teachers[this.form.value.teacherId].teacherId
     const newClass: Class = this.form.value
-    this.classSvc.addClass(newClass)
-              .then(v =>  this.getClasses() )
+
+    if( this.classes.find( (Class) => Class.className == newClass.className) )
+    { this.msgSnackBar.open(`Duplicate class: ${newClass.className} already exists`, 'X', { duration: 7000})}
+
+    else{
+      this.classSvc.addClass(newClass)
+                .then(() => 
+                      { this.getClasses() 
+                        this.msgSnackBar.open(`Added class ${newClass.className}`, 'X', { duration: 7000})
+                        this.closeClassForm()
+                      })
+    }
   }
   
 }

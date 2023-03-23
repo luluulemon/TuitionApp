@@ -25,6 +25,7 @@ const appRoutes:Routes = [
   { path: 'students', component: StudentsComponent },
   { path: 'classDetails/:className', component: ClassDetailsComponent },
   { path: 'attendance/:className/:schedule', component: AttendanceComponent },
+  { path: 'enrollment/:className', component: EnrollmentComponent},
   { path: 'users', component: UsersComponent }
 ]
 

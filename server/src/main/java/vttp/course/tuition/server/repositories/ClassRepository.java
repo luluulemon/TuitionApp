@@ -10,6 +10,8 @@ import jakarta.json.JsonObject;
 
 import static vttp.course.tuition.server.repositories.Queries.*;
 
+import java.time.Year;
+
 
 @Repository
 public class ClassRepository {
@@ -25,9 +27,14 @@ public class ClassRepository {
     private JdbcTemplate jdbcTemplate;
 
     public void addClass(JsonObject classToAdd){
+        int classYear;
+        if(classToAdd.getString("classYear").equals("thisYear"))
+        {   classYear = Year.now().getValue(); }
+        else
+        {   classYear = Year.now().getValue() + 1;  }
         jdbcTemplate.update(SQL_ADD_CLASS, classToAdd.getString("className"), 
             classToAdd.getString("description"), 
-            classToAdd.getInt("teacherId"), 0);
+            classToAdd.getInt("teacherId"), classYear);
     }
 
     public SqlRowSet getTeachers(){
