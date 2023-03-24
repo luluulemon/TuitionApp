@@ -37,7 +37,7 @@ public class ClassService {
         classRepo.addClass(classToAdd);
     }
 
-    public JsonArray getClasses(){
+    public JsonObject getClasses(){
         SqlRowSet rs = classRepo.getClasses();
 
         JsonArrayBuilder classArray = Json.createArrayBuilder();    
@@ -47,11 +47,21 @@ public class ClassService {
                     .add("className", rs.getString("className"))
                     .add("description", util.defaultValue(rs.getString("description"), "") )
                     .add("teacherId",  rs.getInt("teacherId"))
-                    .add("currentCount", rs.getInt("currentCount"))
+                    .add("classYear", rs.getInt("classYear"))
                     .build()
             );
         }
-        return classArray.build();
+
+        JsonArrayBuilder classYearArray = Json.createArrayBuilder();
+        SqlRowSet classYearRs = classRepo.getClassYears();
+        while(classYearRs.next()){                   // Array for list of years
+            classYearArray.add( classYearRs.getInt("classYear") );
+        }
+
+        return
+        Json.createObjectBuilder().add("classArray", classArray)
+                                    .add("classYearArray", classYearArray)
+                                    .build();
     }
 
     public int addSchedule(JsonObject scheduleJson){

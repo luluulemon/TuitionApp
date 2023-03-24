@@ -2,6 +2,14 @@
     
 
     <h3>Classes
+    <form [formGroup]="classYearForm">
+        <mat-form-field>
+            <mat-select formControlName="classYear">
+                <mat-option *ngFor="let year of classYears" value="{{year}}">{{year}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+
     <button *ngIf="!tForm" type="button" style="float: right;" (click)="addClassForm()">+</button>
     <button *ngIf="tForm" type="button" style="float: right;" (click)="closeClassForm()">-</button>
     </h3>
@@ -53,9 +61,15 @@
 
 
     <mat-list *ngIf="classes">   
-        <mat-list-item *ngFor="let class of classes" class="tuitionClass" [routerLink]="['/classDetails', class.className]">
-            {{ class.className }}
-        </mat-list-item>
+        <div *ngFor="let class of classes" class="tuitionClass" >
+            <div *ngIf="class.classYear == selectedClassYear">
+                <mat-list-item  
+                [routerLink]="['/classDetails', class.className]">
+                    {{ class.className }}
+                </mat-list-item>
+            </div>
+            
+        </div>
     </mat-list>
 
     <button mat-raised-button type="button" [routerLink]="['']">BACK TO MAIN</button>

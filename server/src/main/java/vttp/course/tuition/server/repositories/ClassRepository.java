@@ -45,6 +45,10 @@ public class ClassRepository {
         return jdbcTemplate.queryForRowSet(SQL_GET_CLASSES);
     }
 
+    public SqlRowSet getClassYears(){
+        return jdbcTemplate.queryForRowSet(SQL_GET_UNIQUECLASSYEAR);
+    }
+
     public int getTeacherId(int phoneNum){
         SqlRowSet rs = jdbcTemplate.queryForRowSet(SQL_GET_TEACHERID_FROM_NUM, phoneNum);
         rs.next();

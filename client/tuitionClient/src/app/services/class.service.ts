@@ -23,8 +23,8 @@ export class ClassService {
     return lastValueFrom( this.http.post('/api/class/addClass', newClass))
   }
 
-  getClasses(): Promise<Class[]>{
-    return lastValueFrom( this.http.get<Class[]>('/api/class/getClasses'))
+  getClasses(): Promise<any>{
+    return lastValueFrom( this.http.get<any>('/api/class/getClasses'))
   }
 
   addSchedule(s: Schedule): Promise<any>{

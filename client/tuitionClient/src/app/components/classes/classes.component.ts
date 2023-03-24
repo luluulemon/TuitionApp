@@ -12,7 +12,10 @@ import { ClassService } from 'src/app/services/class.service';
 export class ClassesComponent {
 
   form!: FormGroup
+  classYearForm!: FormGroup
+  selectedClassYear: number = new Date().getFullYear()
   classes: Class[] = []
+  classYears: number[] = []
   tForm: boolean = false
   teachers: Teacher[] = []
 
@@ -20,12 +23,25 @@ export class ClassesComponent {
               private msgSnackBar:MatSnackBar){}
   
   ngOnInit(){
-    //this.createTForm()
+    this.createClassYearForm()  // for selecting class Year
+
+    this.classYearForm.controls['classYear'].valueChanges.subscribe(val => 
+      { // subscribe to class Year selection
+        this.selectedClassYear = val  
+        console.info('check change in year: ', this.selectedClassYear)
+      } )
     this.classSvc.getTeachers()
                   .then( v => this.teachers = v )
                   .catch( error => console.error('get teachers error :', error))
 
     this.getClasses()
+  }
+
+
+
+  createClassYearForm(){
+    this.classYearForm = this.fb.group ({ 
+      classYear: this.fb.control<number>( new Date().getFullYear(), Validators.required) } )
   }
 
   createAddClassForm(){
@@ -46,7 +62,9 @@ export class ClassesComponent {
 
   getClasses(){
     this.classSvc.getClasses()
-    .then( v => {   this.classes = v    })
+    .then( v => {   this.classes = v.classArray
+                    this.classYears = v.classYearArray
+                })
     .catch( error => console.error('get classes error: ', error))
   }
 
@@ -66,5 +84,7 @@ export class ClassesComponent {
                       })
     }
   }
+
+
   
 }
