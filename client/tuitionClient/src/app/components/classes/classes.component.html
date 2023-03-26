@@ -1,18 +1,20 @@
 <div class="classPage">
     
-
-    <h3>Classes
     <form [formGroup]="classYearForm">
-        <mat-form-field>
-            <mat-select formControlName="classYear">
-                <mat-option *ngFor="let year of classYears" value="{{year}}">{{year}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-    </form>
+        <h2><span>Classes</span> &nbsp;   
+            <mat-form-field>
+                <mat-label>Class Year</mat-label>
+                <mat-select formControlName="classYear">
+                    <mat-option *ngFor="let year of classYears" value="{{year}}">{{year}}</mat-option>
+                </mat-select>
+                <mat-hint align="end">Select Class Year</mat-hint>
+            </mat-form-field>
 
-    <button *ngIf="!tForm" type="button" style="float: right;" (click)="addClassForm()">+</button>
-    <button *ngIf="tForm" type="button" style="float: right;" (click)="closeClassForm()">-</button>
-    </h3>
+            <button mat-raised-button *ngIf="!tForm" type="button" style="float: right;" (click)="addClassForm()">+</button>
+            <button mat-raised-button *ngIf="tForm" type="button" style="float: right;" (click)="closeClassForm()">-</button>
+        </h2>
+    </form>
+    
 
     <div *ngIf="tForm">
         <mat-card class="addClassForm">
@@ -64,11 +66,10 @@
         <div *ngFor="let class of classes" class="tuitionClass" >
             <div *ngIf="class.classYear == selectedClassYear">
                 <mat-list-item  
-                [routerLink]="['/classDetails', class.className]">
+                [routerLink]="['/classDetails', class.className, class.classYear]">
                     {{ class.className }}
                 </mat-list-item>
             </div>
-            
         </div>
     </mat-list>
 

@@ -15,9 +15,10 @@ export class EnrolService {
         return lastValueFrom( this.http.post('api/enrol/newEnrollment', enrolJson))
     }
 
-    getEnrollments(className: string): Promise<Enrollment[]>{
+    getEnrollments(classYear:number, className: string): Promise<Enrollment[]>{
         const requestParams: HttpParams = new HttpParams()
             .set("className", className)
+            .set("classYear", classYear)
         console.info('inside getEnrol svc: ', className)
 
         return lastValueFrom( 

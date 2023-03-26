@@ -37,6 +37,9 @@ public class UserController {
 
             if(userJson.getString("type").equals("student"))
             {   userSvc.addStudent(userJson);   }
+
+            if(userJson.getString("type").equals("admin"))
+            {   userSvc.addAdmin(userJson);     }
         }
         catch(UserInsertException e){   
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
@@ -45,7 +48,9 @@ public class UserController {
         }
 
         return ResponseEntity.ok( 
-            Json.createObjectBuilder().add("Insert Msg", "ok")
-                                    .build().toString());
+            Json.createObjectBuilder()
+                .add("Insert Msg", 
+                    "added %s %s".formatted(userJson.getString("type"), userJson.getString("name")))
+                .build().toString());
     }
 }

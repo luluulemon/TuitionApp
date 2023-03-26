@@ -13,7 +13,7 @@
                             <span>{{s | date: 'EEEE, d/M/yy, h:mm a'}} </span>  
                         </div>
                         <div *ngIf="compareDate(s)"> 
-                            <span [routerLink]="['/attendance', currentClassName, s]">
+                            <span [routerLink]="['/attendance', currentClassName, currentClassYear, s]">
                                 {{s | date: 'EEEE, d/M/yy, h:mm a'}} 
                             </span>                       
                             <mat-icon style="float:right" (click)="openUpdateSchedule(s)">edit </mat-icon> &nbsp;
@@ -69,11 +69,6 @@
                     </button>
                 </form>
             </div>
-            <div *ngIf="updateMsg">
-                <div *ngIf="updateMsg=='Schedule saved'">
-                    Successfully added schedule for {{ currentClassName }}
-                </div>
-            </div>
 
         </mat-tab>
 
@@ -87,8 +82,9 @@
                 <mat-card-content>
                     <div> Teacher: <span *ngIf="classDetails"> {{ classDetails.teacherName }} </span></div>
                     <div> No. of Students: {{ enrollments.length }}</div>
-                    <div> Start date: <span *ngIf="classDetails">{{ classDetails.startDate | date:'EEEE, d/M/yy, h:mm a' }} </span></div>
-                    <div> Total sessions: <span *ngIf="classDetails"> {{ classDetails.totalSessions }} </span> </div>
+                    <div *ngIf="classStartDate"> Start date: <span >{{ classStartDate | date:'EEEE, d/M/yy, h:mm a' }} </span></div>
+                    <div *ngIf="!classStartDate"> Start date: <span > NA </span></div>
+                    <div> Total sessions: <span> {{ totalSessions }} </span> </div>
                 </mat-card-content>
             </mat-card>
             <div *ngIf="enrollments">
@@ -96,7 +92,7 @@
                     <mat-card-header>
                             <mat-card-title>Class Students</mat-card-title> &nbsp;
                             <button type="button" mat-raised-button color="primary" 
-                                [routerLink]="['/enrollment/', currentClassName]">
+                                [routerLink]="['/enrollment/', currentClassName, currentClassYear]">
                                     <mat-icon>add</mat-icon>
                                     ADD STUDENT
                             </button>
@@ -110,7 +106,7 @@
                             <mat-text-column name="expiryDate"></mat-text-column>
                             <tr mat-header-row *matHeaderRowDef="enrolsColumnsToDisplay"></tr>
                             <tr mat-row *matRowDef="let myRowData; columns: enrolsColumnsToDisplay"
-                            (click)="addStudent(myRowData)"></tr>
+                            [routerLink]="['/students', myRowData.phoneNum]"></tr>
                         </table>
 
                     </mat-card-content>

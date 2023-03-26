@@ -22,10 +22,10 @@ import { EnrollmentComponent } from './components/class-details/enrollment/enrol
 const appRoutes:Routes = [
   { path: '', component: MainComponent  },
   { path: 'classes', component: ClassesComponent},
-  { path: 'students', component: StudentsComponent },
-  { path: 'classDetails/:className', component: ClassDetailsComponent },
-  { path: 'attendance/:className/:schedule', component: AttendanceComponent },
-  { path: 'enrollment/:className', component: EnrollmentComponent},
+  { path: 'students/:phoneNum', component: StudentsComponent },
+  { path: 'classDetails/:className/:classYear', component: ClassDetailsComponent },
+  { path: 'attendance/:className/:classYear/:schedule', component: AttendanceComponent },
+  { path: 'enrollment/:className/:classYear', component: EnrollmentComponent},
   { path: 'users', component: UsersComponent }
 ]
 

@@ -30,7 +30,7 @@ public class AttendanceService {
         
     }
 
-    public JsonArray getAttendance(String className, String dateTime){
+    public JsonArray getAttendance(int classYear, String className, String dateTime){
         List<Integer> studentsPresent = new LinkedList<>();
         SqlRowSet rs = attendanceRepo.getAttendance(className, dateTime);
         while(rs.next()){
@@ -38,10 +38,11 @@ public class AttendanceService {
         }
 
         JsonArrayBuilder attendanceArray = Json.createArrayBuilder();
-        SqlRowSet enrolsRS = enrollmentRepo.getEnrollmentByClass(className);
+        SqlRowSet enrolsRS = enrollmentRepo.getEnrollmentByClass(classYear, className);
         while(enrolsRS.next()){     // add classStudents together with their attendance
             attendanceArray.add( Enrollment.attendanceRSToJson(enrolsRS, studentsPresent) );
         }
+        
         return attendanceArray.build();
     }
 

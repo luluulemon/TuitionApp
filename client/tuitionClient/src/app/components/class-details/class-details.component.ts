@@ -20,11 +20,14 @@ export class ClassDetailsComponent {
   addSchedule: boolean = false;   editSchedule: boolean = false;
   scheduleForm!: FormGroup
   currentClassName: string = '' // for storing className
+  currentClassYear: number = 0  // for story classYear
   updateMsg: string = ''    // for storing add Schedule msg/error
   schedules: Date[] = []      // store schedules of currentClass
   todaysDate: Date = new Date;  // for having min Date for schedule
-  classDetails!: ClassDetail
 
+  classDetails!: ClassDetail
+  classStartDate!: Date             // part of classDetails
+  totalSessions: number = 0         // part of classDetails
 
   constructor(private fb: FormBuilder, private datepipe: DatePipe,
             private activatedRoute: ActivatedRoute, private classSvc:ClassService,
@@ -35,8 +38,9 @@ export class ClassDetailsComponent {
   ngOnInit(){
     console.info('Init called now')
     this.currentClassName = this.activatedRoute.snapshot.params['className']
-    this.getSchedules()
-    this.createSearchForm()
+    this.currentClassYear = this.activatedRoute.snapshot.params['classYear']
+    this.getSchedules()     // List schedules for class
+    //this.createSearchForm()
     this.getClassDetails()
     this.getEnrollments()   // display students in class Details
   }
@@ -89,14 +93,16 @@ export class ClassDetailsComponent {
     }
 
     else{
-    const schedule: Schedule = {  className: this.currentClassName, classDate: datetime }
+    const schedule: 
+      Schedule = {  className: this.currentClassName, 
+                    classYear: this.currentClassYear, 
+                    classDate: datetime }
     this.classSvc.addSchedule(schedule)
                 .then(v => 
                   { 
                     this.getSchedules()
                     this.updateMsg =  `Added schedule: ${ this.datepipe.transform(new Date(datetime), 'M/d/yy, h:mm a' )}`
                     this.openSnackBar()
-                    //this.createForm()
                     this.closeAddEditSchedule()
                   })
     }
@@ -127,7 +133,7 @@ export class ClassDetailsComponent {
     }
 
     else{
-    this.classSvc.updateSchedule(updateDateTime)
+    this.classSvc.updateSchedule(this.currentClassYear, this.currentClassName, updateDateTime)
                   .then(() => { this.getSchedules()
                                 this.updateMsg = 
                                   `updated ${ this.datepipe.transform(new Date(this.scheduleOldDateTime), 'M/d/yy, h:mm a' )} 
@@ -139,7 +145,7 @@ export class ClassDetailsComponent {
   }
 
   deleteSchedule(s: Date){  
-    this.classSvc.deleteSchedule(s)
+    this.classSvc.deleteSchedule(this.currentClassYear, this.currentClassName, s)
                 .then(() => 
                 {
                   this.getSchedules()
@@ -150,12 +156,24 @@ export class ClassDetailsComponent {
   }
 
   getSchedules(){
-    this.classSvc.getSchedules(this.currentClassName)
-                  .then(v => this.schedules = v)
+    console.info('Get Schedules now')
+    this.classSvc.getSchedules(this.currentClassYear, this.currentClassName)
+                  .then(v => 
+                    {
+                      this.schedules = v 
+                      if(this.schedules.length > 0){
+                        console.info('working on schedules')
+                        this.classStartDate=      // get min Date: set class Start Date
+                          this.schedules.reduce(function (a, b) {return a < b ? a : b; })
+                        this.totalSessions =      // count past classes: set total Sessions
+                          this.schedules.filter(e => new Date(e) < this.todaysDate ).length
+                        }
+                    }
+                  )
   }
 
   getClassDetails(){
-    this.classSvc.getClassDetails(this.currentClassName)
+    this.classSvc.getClassDetails(this.currentClassYear, this.currentClassName)
                   .then(v => this.classDetails = v)
   }
 
@@ -173,90 +191,27 @@ export class ClassDetailsComponent {
   enrollments: Enrollment[] = []         // contain enrollments of currentClass (call at TabClick)
 
   startStudentTab(){
-    this.getStudents()
-    this.createSearchForm()
-    this.createAddStudentForm()
+    //this.getStudents()
+    //this.createSearchForm()
+    //this.createAddStudentForm()
     //this.getEnrollments()
   }
 
-  createSearchForm(){ 
-    this.studentSearchForm = this.fb.group({ searchName: this.fb.control('') })
-  }
+  // createSearchForm(){ 
+  //   this.studentSearchForm = this.fb.group({ searchName: this.fb.control('') })
+  // }
 
-  createAddStudentForm(){
-    this.addStudentForm = this.fb.group({ startDate: this.fb.control<string>('', Validators.required)})
-  }
+  // createAddStudentForm(){
+  //   this.addStudentForm = this.fb.group({ startDate: this.fb.control<string>('', Validators.required)})
+  // }
 
   getEnrollments(){
-    this.enrolSvc.getEnrollments(this.currentClassName)
+    this.enrolSvc.getEnrollments(this.currentClassYear, this.currentClassName)
                     .then(e => {this.classSvc.enrollments = e     // put enrollments in Svc: for enrollment component
                                 this.enrollments = e
                               })
                     .catch(error => console.error('error in getEnrollments: ', error))
   }
 
-  getStudents(){    
-    this.classSvc.getStudents()
-                  .then(v => 
-                    { 
-                      this.students = v 
-                      if(this.students.length>5)        // create pagination
-                      { this.studentsDisplay = [ ... this.students ].splice(0,5)  
-                        this.nextPageBoolean = true
-                      }
-                      else{ this.studentsDisplay = this.students  }
-                    })  }
-
-  nextPage(){
-    this.offset += 5
-    if(this.offset + 5 > this.students.length){ this.nextPageBoolean = false }
-    this.studentsDisplay = [ ... this.students ].splice(this.offset, Math.min(5, this.students.length-5))
-  }
-
-  previousPage(){
-    this.offset -= 5
-    this.studentsDisplay = [ ... this.students ].splice(this.offset, 5)
-    this.nextPageBoolean = true
-  }
-  
-  searchStudents(){   
-    console.info('in search Students')
-    console.info(this.studentSearchForm.value.searchName)
-    this.classSvc.searchStudents(this.studentSearchForm.value.searchName)
-                  .then( v =>
-                    { 
-                      this.students = v 
-                      console.info(this.students.length>5)
-                      if(this.students.length>5)        // create pagination
-                      { this.studentsDisplay = [ ... this.students ].splice(0,5)  
-                        this.nextPageBoolean = true
-                      }
-                      else{ this.studentsDisplay = this.students 
-                            this.nextPageBoolean = false 
-                          }
-                    } )  
-  }
-
-  addStudent(s: Student){
-    console.info(s)
-    this.selectedStudent = s
-    this.addStudentStatement = `Adding ${s.name} to ${this.currentClassName}: `
-  }
-
-  confirmAddStudent(){  
-    let e = { phoneNum: this.selectedStudent.phoneNum,
-              className: this.currentClassName,
-              expiryDate: this.addStudentForm.value.startDate  
-            }
-    console.info(e)
-    this.enrolSvc.addEnrollment(e)
-            .then(msg => 
-              { console.info(msg)           // Log to show if insert happens
-                this.enrolSvc.getEnrollments(this.currentClassName) // refresh enrollment list
-              })                                  
-    this.addStudentStatement = ''
-  } 
-
-  cancelAddStudent(){ this.addStudentStatement = '' }
 
 }

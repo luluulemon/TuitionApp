@@ -31,16 +31,16 @@ export class ClassService {
     return lastValueFrom( this.http.post('/api/class/addSchedule', s))
   }
 
-  getSchedules(className: string): Promise<Date[]>{
-    return lastValueFrom(this.http.get<Date[]>(`/api/class/getSchedules/${className}`))
+  getSchedules(classYear:number, className: string): Promise<Date[]>{
+    return lastValueFrom(this.http.get<Date[]>(`/api/class/getSchedules/${classYear}/${className}`))
   }
 
-  updateSchedule(schedules: any): any{
-    return lastValueFrom( this.http.put('/api/class/updateSchedule', schedules))
+  updateSchedule(classYear: number, className: string, schedules: any): any{
+    return lastValueFrom( this.http.put(`/api/class/updateSchedule/${classYear}/${className}`, schedules))
   }
 
-  deleteSchedule(s: Date): any{ 
-    return lastValueFrom( this.http.get(`/api/class/deleteSchedule/${s}`))
+  deleteSchedule(classYear:number, className: string, s: Date): any{ 
+    return lastValueFrom( this.http.get(`/api/class/deleteSchedule/${classYear}/${className}/${s}`))
   }
 
   checkClashingSchedules(newDateTime: string, schedules: Date[]): boolean{
@@ -75,8 +75,8 @@ export class ClassService {
   }
 
 
-  getClassDetails(className: string): Promise<ClassDetail>{
-    return lastValueFrom(this.http.get<ClassDetail>(`/api/class/classDetails/${className}`))
+  getClassDetails(classYear:number, className: string): Promise<ClassDetail>{
+    return lastValueFrom(this.http.get<ClassDetail>(`/api/class/classDetails/${classYear}/${className}`))
   }
 
   

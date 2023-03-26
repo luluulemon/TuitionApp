@@ -15,17 +15,19 @@ export class AttendanceComponent {
               private attendanceSvc: AttendanceService){  }
 
   currentClassName: string = ''   // store current className
+  currentClassYear: number = 0    // store current classYear
   currentSchedule: string = ''    // store current schedule
   classStudents: Enrollment[] = []
 
   ngOnInit(){
     this.currentClassName = this.activatedRoute.snapshot.params['className']
+    this.currentClassYear = this.activatedRoute.snapshot.params['classYear']
     this.currentSchedule = this.activatedRoute.snapshot.params['schedule']
     this.getAttendance()
   }
 
   getAttendance(){
-    this.attendanceSvc.getAttendance(this.currentClassName, this.currentSchedule)
+    this.attendanceSvc.getAttendance(this.currentClassYear, this.currentClassName, this.currentSchedule)
                         .then(e => this.classStudents = e)
   }
 
@@ -34,7 +36,8 @@ export class AttendanceComponent {
     let attendanceObj = {
         phoneNum: phoneNum,
         className: this.currentClassName,
-        date: this.currentSchedule
+        classYear: this.currentClassYear,
+        classDate: this.currentSchedule
       }
     console.info('Check the attendanceObj: ', attendanceObj)
     this.attendanceSvc.markAttendance(attendanceObj)

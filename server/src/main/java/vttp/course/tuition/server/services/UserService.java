@@ -19,4 +19,8 @@ public class UserService {
     public void addStudent(JsonObject userJson) throws UserInsertException{
         userRepo.addStudent(userJson);
     }
+
+    public void addAdmin(JsonObject userJson){
+        userRepo.addAdmin(userJson);
+    }
 }

@@ -27,12 +27,14 @@ export class EnrollmentComponent {
   addStudentStatement: string = ''
   selectedStudent!: Student
   currentClassName: string = ''
+  currentClassYear: number = 0
 
   ngOnInit(){
     this.createSearchForm()
     this.createAddStudentForm()
     this.getStudents()
     this.currentClassName = this.activatedRoute.snapshot.params['className']
+    this.currentClassYear = this.activatedRoute.snapshot.params['classYear']
   }
 
   createSearchForm(){ 
@@ -103,14 +105,17 @@ export class EnrollmentComponent {
     {     // if not duplicate enrollment
     let e = { phoneNum: this.selectedStudent.phoneNum,
               className: this.currentClassName,
+              classYear: this.currentClassYear,
               expiryDate: this.addStudentForm.value.startDate  
             }
     console.info(e)
     this.enrolSvc.addEnrollment(e)
             .then(msg => 
               { console.info(msg)           // Log to show if insert happens
-                this.msgSnackBar.open(msg.toString(), 'X', { duration: 7000 }) 
-                this.enrolSvc.getEnrollments(this.currentClassName) // refresh enrollment list
+                this.msgSnackBar.open(
+                  `Inserted ${this.selectedStudent.name} to ${this.currentClassName}`,
+                   'X', { duration: 7000 }) 
+                this.enrolSvc.getEnrollments(this.currentClassYear, this.currentClassName) // refresh enrollment list
               })                                  
     this.addStudentStatement = ''
     }

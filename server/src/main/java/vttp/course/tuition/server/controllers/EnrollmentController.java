@@ -44,9 +44,15 @@ public class EnrollmentController {
 
     @GetMapping("/getEnrollments")
     @ResponseBody
-    public ResponseEntity<String> getEnrollmentByClass(@RequestParam String className){
-        JsonArray enrolArray = enrolSvc.getEnrollmentByClass(className.replace("%20", " "));
+    public ResponseEntity<String> getEnrollmentByClass(@RequestParam String className, @RequestParam int classYear){
+        JsonArray enrolArray = enrolSvc.getEnrollmentByClass(classYear, className);
               
         return ResponseEntity.ok(enrolArray.toString());
+    }
+
+    @GetMapping("/validateStatus")
+    @ResponseBody
+    public void validateStatus(){
+        enrolSvc.validateEnrolStatus();
     }
 }

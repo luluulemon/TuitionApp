@@ -17,9 +17,10 @@ public class AttendanceRepository {
 
     public void markAttendance(JsonObject attendanceJson){
         jdbcTemplate.update(SQL_ADD_ATTENDANCE,  
-            attendanceJson.getString("date"),
+            attendanceJson.getString("classDate"),
             attendanceJson.getString("className"),
-            attendanceJson.getInt("phoneNum"));
+            attendanceJson.getInt("phoneNum"),
+            attendanceJson.getString("classYear"));
     }
 
     public SqlRowSet getAttendance(String className, String dateTime){

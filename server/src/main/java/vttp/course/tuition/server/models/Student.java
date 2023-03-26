@@ -11,7 +11,9 @@ public class Student {
     private String name;
     private int phoneNum;
     private String joinDate;
+    private String profilePic;
 
+   
     public int getStudentId() {        return studentId;    }
     public void setStudentId(int studentId) {        this.studentId = studentId;   }
 
@@ -23,6 +25,9 @@ public class Student {
 
     public String getJoinDate() {        return joinDate;    }
     public void setJoinDate(String joinDate) {        this.joinDate = joinDate;    }
+
+    public String getProfilePic() {        return profilePic;    }
+    public void setProfilePic(String profilePic) {        this.profilePic = profilePic;    }
 
     public static JsonObject studentRsToJson(SqlRowSet rs){
         return

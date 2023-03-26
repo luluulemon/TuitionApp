@@ -35,10 +35,12 @@ public class AttendanceController {
                                         .build().toString());
     }
 
-    @GetMapping("/get/{className}/{dateTime}")
-    public ResponseEntity<String> getAttendance(@PathVariable String className, @PathVariable String dateTime){
+    @GetMapping("/get/{classYear}/{className}/{dateTime}")
+    public ResponseEntity<String> getAttendance(@PathVariable String className,
+                                                @PathVariable int classYear, 
+                                                @PathVariable String dateTime){
 
-        JsonArray attendJson = attendanceSvc.getAttendance(className, dateTime);
+        JsonArray attendJson = attendanceSvc.getAttendance(classYear, className, dateTime);
     
         return ResponseEntity.ok(attendJson.toString());
     }

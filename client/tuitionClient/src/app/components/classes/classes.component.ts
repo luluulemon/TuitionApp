@@ -72,7 +72,10 @@ export class ClassesComponent {
     this.form.value.teacherId = this.teachers[this.form.value.teacherId].teacherId
     const newClass: Class = this.form.value
 
-    if( this.classes.find( (Class) => Class.className == newClass.className) )
+    if( this.classes.find( 
+      (Class) => {  Class.className == newClass.className 
+                    Class.classYear == newClass.classYear
+                  }) )
     { this.msgSnackBar.open(`Duplicate class: ${newClass.className} already exists`, 'X', { duration: 7000})}
 
     else{

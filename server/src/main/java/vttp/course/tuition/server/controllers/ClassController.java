@@ -71,25 +71,28 @@ public class ClassController {
         }
     }
 
-    @GetMapping("/getSchedules/{className}")
+    @GetMapping("/getSchedules/{classYear}/{className}")
     @ResponseBody
-    public ResponseEntity<String> getSchedule(@PathVariable String className){
-        JsonArray schedules = classSvc.getSchedules(className);
+    public ResponseEntity<String> getSchedule(
+        @PathVariable String className, @PathVariable int classYear){
+        JsonArray schedules = classSvc.getSchedules(classYear, className);
         return ResponseEntity.ok(schedules.toString());
     }
 
-    @PutMapping("/updateSchedule")
+    @PutMapping("/updateSchedule/{classYear}/{className}")
     @ResponseBody
-    public void updateSchedule(@RequestBody String schedules){
+    public void updateSchedule(@RequestBody String schedules, 
+                                @PathVariable int classYear, @PathVariable String className){
         JsonReader reader = Json.createReader(new StringReader(schedules));
         JsonObject scheduleObj = reader.readObject(); 
-        classSvc.updateSchedule(scheduleObj);
+        classSvc.updateSchedule(classYear, className, scheduleObj);
     }
 
-    @GetMapping("/deleteSchedule/{dateTime}")
+    @GetMapping("/deleteSchedule/{classYear}/{className}/{dateTime}")
     @ResponseBody
-    public void deleteSchedule(@PathVariable String dateTime){
-        classSvc.deleteSchedule(dateTime);
+    public void deleteSchedule(
+        @PathVariable int classYear, @PathVariable String className, @PathVariable String dateTime){
+        classSvc.deleteSchedule(classYear, className, dateTime);
     }
 
     @GetMapping("/getStudents")
@@ -106,10 +109,10 @@ public class ClassController {
         return ResponseEntity.ok(students.toString());
     }
 
-    @GetMapping("/classDetails/{className}")
+    @GetMapping("/classDetails/{classYear}/{className}")
     @ResponseBody
-    public ResponseEntity<String> getClassDetails(@PathVariable String className){
-        JsonObject detailsObj = classSvc.getClassDetails(className);
+    public ResponseEntity<String> getClassDetails(@PathVariable int classYear, @PathVariable String className){
+        JsonObject detailsObj = classSvc.getClassDetails(classYear, className);
         return ResponseEntity.ok(detailsObj.toString());
     }
 

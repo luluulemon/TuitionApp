@@ -14,8 +14,8 @@ export class AttendanceService {
         return lastValueFrom( this.http.post('api/attendance/add', attendanceObj))
     }
 
-    getAttendance(className: string, schedule: string): Promise<Enrollment[]>{
-        return lastValueFrom( this.http.get<Enrollment[]>(`api/attendance/get/${className}/${schedule}`))
+    getAttendance(classYear:number, className: string, schedule: string): Promise<Enrollment[]>{
+        return lastValueFrom( this.http.get<Enrollment[]>(`api/attendance/get/${classYear}/${className}/${schedule}`))
     }
 
 

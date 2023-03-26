@@ -24,6 +24,7 @@ export interface User{
 
 export interface Schedule{
     className: string
+    classYear: number
     classDate: string
 }
 
@@ -38,9 +39,12 @@ export interface Student{
 export interface Enrollment{
     studentId: number
     name: string
+    className: string
+    classYear: number
     phoneNum: number
     status: string
     expiryDate: string
+    startDate: string
     present: boolean
 }
 

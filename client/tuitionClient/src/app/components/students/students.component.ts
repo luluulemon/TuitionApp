@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-students',
@@ -7,4 +8,15 @@ import { Component } from '@angular/core';
 })
 export class StudentsComponent {
 
+  constructor(private activatedRoute:ActivatedRoute){}
+
+  selectedStudentNum: number = 0
+
+  ngOnInit(){
+    this.selectedStudentNum = this.activatedRoute.snapshot.params['phoneNum']
+  }
+
+  getStudentDetails(){
+    
+  }
 }

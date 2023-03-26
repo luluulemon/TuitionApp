@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'src/app/model';
 import { UserService } from 'src/app/services/user.service';
 
@@ -14,7 +15,8 @@ export class UsersComponent {
   newUserSelect: boolean = false
   insertMsg: string = ''
 
-  constructor(private fb:FormBuilder, private userSvc: UserService){}
+  constructor(private fb:FormBuilder, private userSvc: UserService,
+              private msgSnackBar: MatSnackBar){}
 
   ngOnInit(){}
 
@@ -37,7 +39,7 @@ export class UsersComponent {
     const newUser: User = this.form.value
     this.userSvc.addUser(newUser)
                   .then(v => {console.info(v)
-                    this.insertMsg = v['Insert Msg']
+                    this.msgSnackBar.open( v['Insert Msg'], 'X', { duration: 7000 } )
                   })
     this.createForm();
   }

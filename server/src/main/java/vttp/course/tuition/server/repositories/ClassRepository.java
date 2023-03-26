@@ -58,14 +58,16 @@ public class ClassRepository {
     public int addSchedule(JsonObject scheduleJson){
         return jdbcTemplate.update(SQL_ADD_SCHEDULE, 
                             scheduleJson.getString("classDate"), 
-                            scheduleJson.getString("className"));
+                            scheduleJson.getString("className"),
+                            Integer.parseInt( scheduleJson.getString("classYear")) );
     }
 
-    public SqlRowSet getSchedules(String className){
-        return jdbcTemplate.queryForRowSet(SQL_GET_SCHEDULES, className);
+    public SqlRowSet getSchedules(int classYear, String className){
+        return jdbcTemplate.queryForRowSet(SQL_GET_SCHEDULES, classYear, className);
     }
 
-    public void updateSchedule(String oldDateTime, String newDateTime){
+    public void updateSchedule(int classYear, String className,
+                                 String oldDateTime, String newDateTime){
         
         // try{
         // Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
@@ -78,12 +80,12 @@ public class ClassRepository {
         // + "VALUES ('10','1','Address')");
         // statement.executeBatch();
         // } catch(SQLException SQLex){    SQLex.printStackTrace();    }
-        jdbcTemplate.update(SQL_UPDATE_SCHEDULE, newDateTime, oldDateTime);
-        jdbcTemplate.update(SQL_UPDATE_SCHEDULE_W_ATTENDANCE, newDateTime, oldDateTime);
+        jdbcTemplate.update(SQL_UPDATE_SCHEDULE, newDateTime, classYear, className, oldDateTime);
+        jdbcTemplate.update(SQL_UPDATE_SCHEDULE_W_ATTENDANCE, newDateTime, classYear, className, oldDateTime);
     }
 
-    public void deleteSchedule(String dateTime){
-        jdbcTemplate.update(SQL_DELETE_SCHEDULE, dateTime);
+    public void deleteSchedule(int classYear, String className, String dateTime){
+        jdbcTemplate.update(SQL_DELETE_SCHEDULE, classYear, className, dateTime);
         jdbcTemplate.update(SQL_DELETE_SCHEDULE_W_ATTENDANCE, dateTime);
     }
 
@@ -95,8 +97,8 @@ public class ClassRepository {
         return jdbcTemplate.queryForRowSet(SQL_SEARCH_STUDENTS, searchString);
     }
 
-    public SqlRowSet getClassDetails(String className){
-        return jdbcTemplate.queryForRowSet(SQL_GET_CLASS_DETAILS, className);
+    public SqlRowSet getClassDetails(int classYear, String className){
+        return jdbcTemplate.queryForRowSet(SQL_GET_CLASS_DETAILS, classYear, className);
     }
 
 

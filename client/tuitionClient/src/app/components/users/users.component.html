@@ -7,36 +7,50 @@
 </div>
 
 <div *ngIf="newUserSelect">
-    <form [formGroup]="form">
-        <table>
-            <tr>
-                <td>Name:</td>
-                <td><input type="text" formControlName="name"></td>
-            </tr>
-            <tr>
-                <td>Phone Number:</td>
-                <td><input type="number" formControlName="phoneNum"></td>
-            </tr>
-            <tr>
-                <td>Email:</td>
-                <td><input type="email" formControlName="email"></td>
-            </tr>
-            <tr>
-                <td>Type:</td>
-                <td><select formControlName="type">
-                    <option value="teacher">Teacher</option>
-                    <option value="student">Student</option>
-                    <option value="admin">Admin</option>
-                </select></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <button type="button" (click)="saveUser()" [disabled]=form.invalid>SUBMIT</button>
-                    <button type="button" (click)="userUnselect()">CANCEL</button>
-                </td>
-            </tr>
-        </table>
-    </form>
+    <mat-card class="newUserForm">    
+        <form [formGroup]="form">
+        
+            <mat-card-header>
+                <mat-card-title>New User</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <mat-form-field>
+                    <mat-label>Name</mat-label>
+                    <input matInput type="text" formControlName="name">
+                    <mat-hint align="end">Enter Username</mat-hint>
+                </mat-form-field>   <br>
+
+                <mat-form-field>
+                    <mat-label>Phone Number:</mat-label>
+                    <input matInput type="number" formControlName="phoneNum">
+                    <mat-hint align="end">Enter Phone Number</mat-hint>
+                </mat-form-field>   <br>
+
+                <mat-form-field>
+                    <mat-label>Email</mat-label>
+                    <input matInput type="text" formControlName="email">
+                    <mat-hint align="end">Enter Email</mat-hint>
+                </mat-form-field>   <br>
+
+                <mat-form-field>
+                    <mat-select formControlName="type">
+                        <mat-option value="teacher">Teacher</mat-option>
+                        <mat-option value="student">Student</mat-option>
+                        <mat-option value="admin">Admin</mat-option>
+                    </mat-select>
+                    <mat-hint align="end">Select User Type</mat-hint>
+                </mat-form-field>
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button type="button" mat-raised-button (click)="saveUser()" [disabled]=form.invalid>SUBMIT</button>
+                &nbsp;
+                <button type="button" mat-raised-button (click)="userUnselect()">CANCEL</button>
+            </mat-card-actions>
+        </form>
+    </mat-card>
+
+    
     <h3> {{ insertMsg }}</h3>
 </div>

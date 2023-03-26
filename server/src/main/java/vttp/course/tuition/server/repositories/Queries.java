@@ -9,32 +9,40 @@ public class Queries {
     public static String SQL_GET_CLASSES = "select * from classes";
     public static String SQL_GET_UNIQUECLASSYEAR = "select distinct classYear from classes";
 
-    public static String SQL_ADD_USER = "insert into auth values(?, ?, ?, ?)";
+    public static String SQL_ADD_USER = "insert into auth values(?, ?, ?, ?, ?)";
     public static String SQL_ADD_TEACHER = "insert into teachers(name, phoneNum, joinDate) values(?, ?, ?)";
     public static String SQL_ADD_STUDENT = "insert into students(name, phoneNum, joinDate) values(?, ?, ?)";
 
-    public static String SQL_ADD_SCHEDULE = "insert into schedules(classDate, className) values(?, ?)";
-    public static String SQL_GET_SCHEDULES = "select * from schedules where className=? order by classDate";
-    public static String SQL_UPDATE_SCHEDULE = "update schedules set classDate=? where classDate=?";
-    public static String SQL_UPDATE_SCHEDULE_W_ATTENDANCE = "update attendance set classDate=? where classDate=?";
-    public static String SQL_DELETE_SCHEDULE = "delete from schedules where classDate=?";
-    public static String SQL_DELETE_SCHEDULE_W_ATTENDANCE = "delete from attendance where classDate=?";
+    public static String SQL_ADD_SCHEDULE = "insert into schedules(classDate, className, classYear) values(?, ?, ?)";
+    public static String SQL_GET_SCHEDULES = "select * from schedules where classYear=? and className=? order by classDate";
+    public static String SQL_UPDATE_SCHEDULE = "update schedules set classDate=? where classYear=? and className=? and classDate=?";
+    public static String SQL_UPDATE_SCHEDULE_W_ATTENDANCE = "update attendance set classDate=? where classYear=? and className=? and classDate=?";
+    public static String SQL_DELETE_SCHEDULE = "delete from schedules where classYear=? and className=? and classDate=?";
+    public static String SQL_DELETE_SCHEDULE_W_ATTENDANCE = "delete from attendance where classYear=? and className=? and classDate=?";
 
     public static String SQL_GET_STUDENTS = "select * from students";
     public static String SQL_SEARCH_STUDENTS = "select * from students where name like CONCAT(?,'%')";
 
-    public static String SQL_ADD_ENROLLMENT = "insert into enrollments values(?, ?, ?, ?)";
+    public static String SQL_ADD_ENROLLMENT = "insert into enrollments values(?, ?, ?, ?, ?, ?)";
     public static String SQL_GET_EXISTING_ENROLLMENT = "select * from enrollments where phoneNum=? and expiryDate>=?";
     public static String SQL_GET_ENROLLMENT_BY_CLASS = 
-        "select * from enrollments inner join students on enrollments.phoneNum = students.phoneNum where enrollments.className=?";
+        "select * from enrollments inner join students on enrollments.phoneNum = students.phoneNum where enrollments.classYear=? and enrollments.className=? and status=?";
+    public static String SQL_GET_ENROL_BY_STATUS = 
+        "select * from enrollments where status='current' and expiryDate<now() OR status='pending' and startDate<now()";
+    public static String SQL_UPDATE_STATUSSS = "update enrollments set status=? where phoneNum=?";
 
     public static String SQL_ADD_ATTENDANCE = 
-        "insert into attendance(classDate, className, phoneNum) values(?, ?, ?)";
+        "insert into attendance(classDate, className, phoneNum, classYear) values(?, ?, ?, ?)";
     public static String SQL_GET_ATTENDANCE =
         "select * from attendance where className=? and classDate=?";
+
+    public static String SQL_GET_STUDENT_DETAILS =
+        "select * from students join enrollments on students.phoneNum = enrollments.phoneNum where students.phoneNum=?";
     
     public static String SQL_GET_CLASS_DETAILS =
-        "select teachers.name, count(schedules.classDate) as totalSessions, min(schedules.classDate) as startDate from classes join teachers on classes.teacherId=teachers.teacherId join schedules on classes.className=schedules.className where classes.className=? and schedules.classDate<now()";
+        "select teachers.name from classes join teachers on classes.teacherId=teachers.teacherId where classYear=? and className=?";
+
+        //"select teachers.name, count(schedules.classDate) as totalSessions, min(schedules.classDate) as startDate from classes join teachers on classes.teacherId=teachers.teacherId join schedules on classes.className=schedules.className where classes.className=? and schedules.classDate<now()";
     //select teachers.name, count(schedules.classDate) from classes join teachers on classes.teacherId=teachers.teacherId 
     // join schedules on classes.className=schedules.className
     // where classes.className=? and schedules.classDate<now();

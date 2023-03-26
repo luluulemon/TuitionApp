@@ -68,23 +68,24 @@ public class ClassService {
         return classRepo.addSchedule(scheduleJson);
     }
 
-    public JsonArray getSchedules(String className){
+    public JsonArray getSchedules(int classYear, String className){
         JsonArrayBuilder scheduleArray = Json.createArrayBuilder();
-        SqlRowSet rs = classRepo.getSchedules(className);
+        SqlRowSet rs = classRepo.getSchedules(classYear, className);
         while(rs.next()){   // List of class Dates
             scheduleArray.add(rs.getString("classDate"));
         }
         return scheduleArray.build();
     }
 
-    public void updateSchedule(JsonObject scheduleJson){
+    public void updateSchedule(int classYear, String className, JsonObject scheduleJson){
 
-        classRepo.updateSchedule(scheduleJson.getString("oldDateTime"),
+        classRepo.updateSchedule(classYear, className,
+                                    scheduleJson.getString("oldDateTime"),
                                     scheduleJson.getString("newDateTime"));
     }
 
-    public void deleteSchedule(String dateTime){
-        classRepo.deleteSchedule(dateTime);
+    public void deleteSchedule(int classYear, String className, String dateTime){
+        classRepo.deleteSchedule(classYear, className, dateTime);
     }
 
     public JsonArray getStudents(){
@@ -105,15 +106,13 @@ public class ClassService {
         return studentsArray.build();
     }
 
-    public JsonObject getClassDetails(String className){
-        SqlRowSet rs = classRepo.getClassDetails(className);
+    public JsonObject getClassDetails(int classYear, String className){
+        SqlRowSet rs = classRepo.getClassDetails(classYear, className);
         rs.next();  // only one row of data
         System.out.println("Check name" + rs.getString("name"));
 
         return Json.createObjectBuilder()
                 .add("teacherName", rs.getString("name"))
-                .add("totalSessions", rs.getInt("totalSessions"))
-                .add("startDate", rs.getString("startDate"))
                 .build();
     }
 }
