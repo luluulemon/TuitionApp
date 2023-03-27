@@ -3,6 +3,7 @@ package vttp.course.tuition.server.models;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import jakarta.json.Json;
+import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 
 public class Student {
@@ -36,6 +37,17 @@ public class Student {
             .add("name", rs.getString("name"))
             .add("phoneNum", rs.getInt("phoneNum"))
             .add("joinDate", rs.getString("joinDate"))
+            .build();
+    }
+
+    public static JsonObject studentWEnrolRsToJson(SqlRowSet rs, JsonArray enrolArray){
+        return
+        Json.createObjectBuilder()
+            .add("studentId", rs.getInt("studentId"))
+            .add("name", rs.getString("name"))
+            .add("phoneNum", rs.getInt("phoneNum"))
+            .add("joinDate", rs.getString("joinDate"))
+            .add("enrollments", enrolArray)
             .build();
     }
 

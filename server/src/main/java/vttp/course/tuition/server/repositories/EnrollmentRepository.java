@@ -18,11 +18,13 @@ public class EnrollmentRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public int addEnrollment(JsonObject enrolJson, 
-                                LocalDate startDate, LocalDate expiryDate, String enrolStatus){
+    public int addEnrollment(JsonObject enrolJson, LocalDate startDate, 
+                                LocalDate expiryDate, String enrolStatus){
         // check if there is already an existing enrollment --> Double check: alr check at frontend
         SqlRowSet rs = jdbcTemplate.queryForRowSet(SQL_GET_EXISTING_ENROLLMENT, 
-                                    enrolJson.getInt("phoneNum"), expiryDate);
+                                    enrolJson.getInt("phoneNum"), 
+                                    enrolJson.getString("className"),
+                                    expiryDate);
         if(rs.next()){  return 0;   }
 
         jdbcTemplate.update(SQL_ADD_ENROLLMENT, 

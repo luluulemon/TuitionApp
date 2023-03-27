@@ -36,7 +36,7 @@ public class Enrollment {
     public String getExpiryDate() {        return expiryDate;    }
     public void setExpiryDate(String expiryDate) {        this.expiryDate = expiryDate;    }
 
-    public static JsonObject enrolRsToJson(SqlRowSet rs){
+    public static JsonObject enrolWNameRsToJson(SqlRowSet rs){
         return
         Json.createObjectBuilder()
             .add("status", rs.getString("status"))
@@ -56,6 +56,18 @@ public class Enrollment {
             .add("expiryDate", rs.getString("expiryDate"))
             .add("studentId", rs.getInt("studentId") ) 
             .add("present", studentsPresent.contains( rs.getInt("phoneNum") ) )
+            .build();
+    }
+
+    public static JsonObject enrolRsToJson(SqlRowSet rs){
+        return
+        Json.createObjectBuilder()
+            .add("status", rs.getString("status"))
+            .add("className", rs.getString("className"))
+            .add("classYear", rs.getInt("classYear"))
+            .add("phoneNum", rs.getInt("phoneNum"))
+            .add("expiryDate", rs.getString("expiryDate"))
+            .add("studentId", rs.getString("startDate"))
             .build();
     }
 }

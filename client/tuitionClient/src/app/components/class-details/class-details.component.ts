@@ -6,6 +6,7 @@ import { ClassDetail, Enrollment, Schedule, Student } from 'src/app/model';
 import { ClassService } from 'src/app/services/class.service';
 import { EnrolService } from 'src/app/services/enrol.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { StudentService } from 'src/app/services/student.service';
 
 
 @Component({
@@ -30,8 +31,8 @@ export class ClassDetailsComponent {
   totalSessions: number = 0         // part of classDetails
 
   constructor(private fb: FormBuilder, private datepipe: DatePipe,
-            private activatedRoute: ActivatedRoute, private classSvc:ClassService,
-            private enrolSvc: EnrolService, private msgSnackBar: MatSnackBar ){}
+                private activatedRoute: ActivatedRoute, private classSvc:ClassService,
+                private enrolSvc: EnrolService, private msgSnackBar: MatSnackBar){}
 
 
   
@@ -178,32 +179,18 @@ export class ClassDetailsComponent {
   }
 
 
-  studentSearchForm!: FormGroup
-  addStudentForm!: FormGroup
-  students: Student[] = []            // for students tab -> add students
-  studentsDisplay: Student[] = []     // students search table pagination (limit to 5)
-  columnsToDisplay = ['studentId', 'name', 'phoneNum', 'joinDate'];   // for students tab table
-  offset: number = 0
-  nextPageBoolean: boolean = false
-  addStudentStatement: string = ''
+  // studentSearchForm!: FormGroup
+  // addStudentForm!: FormGroup
+  // students: Student[] = []            // for students tab -> add students
+  // studentsDisplay: Student[] = []     // students search table pagination (limit to 5)
+  // columnsToDisplay = ['studentId', 'name', 'phoneNum', 'joinDate'];   // for students tab table
+  // offset: number = 0
+  // nextPageBoolean: boolean = false
+  // addStudentStatement: string = ''
   selectedStudent!: Student
   enrolsColumnsToDisplay = ['studentId', 'name', 'phoneNum','status' ,'expiryDate'];
-  enrollments: Enrollment[] = []         // contain enrollments of currentClass (call at TabClick)
+  enrollments: Enrollment[] = []         // contain enrollments of currentClass
 
-  startStudentTab(){
-    //this.getStudents()
-    //this.createSearchForm()
-    //this.createAddStudentForm()
-    //this.getEnrollments()
-  }
-
-  // createSearchForm(){ 
-  //   this.studentSearchForm = this.fb.group({ searchName: this.fb.control('') })
-  // }
-
-  // createAddStudentForm(){
-  //   this.addStudentForm = this.fb.group({ startDate: this.fb.control<string>('', Validators.required)})
-  // }
 
   getEnrollments(){
     this.enrolSvc.getEnrollments(this.currentClassYear, this.currentClassName)
@@ -212,6 +199,7 @@ export class ClassDetailsComponent {
                               })
                     .catch(error => console.error('error in getEnrollments: ', error))
   }
+
 
 
 }

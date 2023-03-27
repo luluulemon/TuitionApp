@@ -16,4 +16,8 @@ public class StudentRepository {
     public SqlRowSet getStudentDetails(int phoneNum){
         return jdbcTemplate.queryForRowSet(SQL_GET_STUDENT_DETAILS, phoneNum);
     }
+
+    public SqlRowSet getStudentEnrollments(int phoneNum){
+        return jdbcTemplate.queryForRowSet(SQL_GET_STUDENT_ENROLMENTS, phoneNum);
+    }
 }

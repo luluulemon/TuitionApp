@@ -50,7 +50,7 @@ public class EnrollmentController {
         return ResponseEntity.ok(enrolArray.toString());
     }
 
-    @GetMapping("/validateStatus")
+    @GetMapping("/validateStatus")      // to update enrollment status on Init
     @ResponseBody
     public void validateStatus(){
         enrolSvc.validateEnrolStatus();

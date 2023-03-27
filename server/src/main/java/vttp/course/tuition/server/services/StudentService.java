@@ -20,23 +20,17 @@ public class StudentService {
     private StudentRepository studentRepo;
 
     public JsonObject getStudentDetails(int phoneNum){
-        SqlRowSet rs = studentRepo.getStudentDetails(phoneNum);
-        if(rs.next()){
-            JsonObjectBuilder studentObj = Json.createObjectBuilder();
-            JsonArrayBuilder enrolArray = Json.createArrayBuilder();
-            JsonObject student = Student.studentRsToJson(rs);
-
-            enrolArray.add( Enrollment.enrolRsToJson(rs));
-
-            while(rs.next()){
-                enrolArray.add( Enrollment.enrolRsToJson(rs));
-            }
-
-            return studentObj.add("studentDetails", student)
-                                .add("enrolArray", enrolArray)
-                                .build();
+        
+        SqlRowSet enrolRs = studentRepo.getStudentEnrollments(phoneNum);
+        JsonArrayBuilder enrolArray = Json.createArrayBuilder();
+        while(enrolRs.next()){
+            enrolArray.add( Enrollment.enrolRsToJson(enrolRs));
         }
 
-        return null;
+        SqlRowSet studentDetailRs = studentRepo.getStudentDetails(phoneNum);
+        studentDetailRs.next();
+
+        return
+            Student.studentWEnrolRsToJson(studentDetailRs, enrolArray.build());
     }
 }

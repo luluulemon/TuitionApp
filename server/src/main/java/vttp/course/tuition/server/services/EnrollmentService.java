@@ -47,7 +47,7 @@ public class EnrollmentService {
         SqlRowSet rs = enrolRepo.getEnrollmentByClass(classYear, className);
 
         while(rs.next()){
-            enrolArray.add( Enrollment.enrolRsToJson(rs) );
+            enrolArray.add( Enrollment.enrolWNameRsToJson(rs) );
         }
         return enrolArray.build();
     }
