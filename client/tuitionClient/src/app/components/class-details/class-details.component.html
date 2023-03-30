@@ -106,7 +106,7 @@
                             <mat-text-column name="expiryDate"></mat-text-column>
                             <tr mat-header-row *matHeaderRowDef="enrolsColumnsToDisplay"></tr>
                             <tr mat-row *matRowDef="let myRowData; columns: enrolsColumnsToDisplay"
-                            [routerLink]="['/students', myRowData.phoneNum]"></tr>
+                            [routerLink]="['/students', myRowData.phoneNum, currentClassName, currentClassYear]"></tr>
                         </table>
 
                     </mat-card-content>

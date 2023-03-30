@@ -1,1 +1,29 @@
-<p>students works!</p>
+<div *ngIf="student">
+    <mat-card class="mainCardStyle">
+
+        <mat-card-header>
+            <mat-card-title>{{student.name}}</mat-card-title>
+        </mat-card-header>
+    
+        <mat-card-content>
+            <span>Student Id: {{ student.studentId}}</span><br>
+            <span>Phone Number: {{ student.phoneNum }}</span><br>
+            <span>Email</span><br>
+            <span>Join Date: {{student.joinDate}}</span><br>
+
+            <mat-list *ngFor="let enrol of student.enrollments">
+                <div>
+                    <span>{{ enrol.className }}, {{ enrol.classYear}}</span>
+                    <span>Start Date: {{ enrol.startDate}}, Expiry Date: {{ enrol.expiryDate}}</span>
+                    <button mat-raised-button type="button" (click)="extendEnrollment(enrol)">Extend</button>
+                </div>
+            </mat-list>
+        </mat-card-content>
+    </mat-card>
+</div>
+<div>
+    <button mat-raised-button type="button" [routerLink]="['/classDetails', currentClassName, currentClassYear]">
+        BACK TO {{ currentClassName }}</button>
+    &nbsp;
+    <button mat-raised-button type="button" [routerLink]="['']">BACK TO MAIN</button>
+</div>
