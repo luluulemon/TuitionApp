@@ -13,11 +13,12 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatTableModule} from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatDividerModule } from "@angular/material/divider";
 
 const matModules: any[] = [ MatFormFieldModule, MatInputModule, MatCardModule,
                             MatIconModule, MatDatepickerModule, MatNativeDateModule, 
                             MatButtonModule, MatSelectModule, MatSnackBarModule,
-                            MatListModule, MatTabsModule, MatTableModule]
+                            MatListModule, MatTabsModule, MatTableModule, MatDividerModule]
 
 @NgModule({ imports: matModules, exports: matModules})
 

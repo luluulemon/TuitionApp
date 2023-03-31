@@ -35,6 +35,8 @@ export interface Student{
     phoneNum: number
     email: string
     joinDate: string
+    profilePic: string
+    notes: string
     enrollments: Enrollment[]
 }
 

@@ -48,4 +48,14 @@ public class EnrollmentRepository {
     public void batchUpdateStatus(List<Object[]> params){
         jdbcTemplate.batchUpdate(SQL_UPDATE_STATUSSS, params);
     }
+
+    public void extendEnrollment(LocalDate newExpiryDate, JsonObject enrolJson){    
+         // for extending enrollment by one month
+        jdbcTemplate.update(SQL_EXTEND_ENROLLMENT, 
+                            newExpiryDate, 
+                            enrolJson.getInt("phoneNum"),
+                            enrolJson.getInt("classYear"),
+                            enrolJson.getString("className"));
+    }
+
 }

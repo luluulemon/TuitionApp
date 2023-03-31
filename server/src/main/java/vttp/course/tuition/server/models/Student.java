@@ -5,6 +5,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
+import vttp.course.tuition.server.services.util;
 
 public class Student {
     
@@ -47,6 +48,9 @@ public class Student {
             .add("name", rs.getString("name"))
             .add("phoneNum", rs.getInt("phoneNum"))
             .add("joinDate", rs.getString("joinDate"))
+            .add("email", rs.getString("email"))
+            .add("profilePic", util.defaultValue(rs.getString("profilePic"), "NA"))
+            .add("notes", util.defaultValue(rs.getString("notes"), "NA"))
             .add("enrollments", enrolArray)
             .build();
     }

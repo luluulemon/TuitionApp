@@ -25,4 +25,8 @@ export class EnrolService {
             this.http.get<Enrollment[]>(`api/enrol/getEnrollments`, { params: requestParams }))
     }
 
+    extendEnrollment(enrollment: Enrollment){
+        return lastValueFrom( this.http.put('api/enrol/extendEnrollment', enrollment))
+    }
+
 }  

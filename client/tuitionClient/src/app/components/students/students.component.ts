@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Enrollment, Student } from 'src/app/model';
+import { EnrolService } from 'src/app/services/enrol.service';
 import { StudentService } from 'src/app/services/student.service';
 
 @Component({
@@ -10,7 +11,9 @@ import { StudentService } from 'src/app/services/student.service';
 })
 export class StudentsComponent {
 
-  constructor(private activatedRoute:ActivatedRoute, private studentSvc: StudentService){}
+  constructor(private activatedRoute:ActivatedRoute, 
+              private studentSvc: StudentService,
+              private enrolSvc: EnrolService){}
 
   selectedStudentNum: number = 0
   currentClassName: string = ''
@@ -29,7 +32,9 @@ export class StudentsComponent {
                     .then((v: any) => this.student = v)
   }
 
-  extendEnrollment(enrol: Enrollment){
-    console.info(enrol)
+  extendEnrollment(enrollment: Enrollment){
+    console.info(enrollment)
+    this.enrolSvc.extendEnrollment(enrollment)
+                  .then(() => this.getStudentDetails(this.selectedStudentNum))
   }
 }

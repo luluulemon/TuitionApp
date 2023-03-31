@@ -30,13 +30,14 @@ public class Queries {
     public static String SQL_GET_ENROL_BY_STATUS = 
         "select * from enrollments where status='current' and expiryDate<now() OR status='pending' and startDate<now()";
     public static String SQL_UPDATE_STATUSSS = "update enrollments set status=? where phoneNum=?";
+    public static String SQL_EXTEND_ENROLLMENT = "update enrollments set expiryDate=? where phoneNum=? and classYear=? and className=?";
 
     public static String SQL_ADD_ATTENDANCE = 
         "insert into attendance(classDate, className, phoneNum, classYear) values(?, ?, ?, ?)";
     public static String SQL_GET_ATTENDANCE =
         "select * from attendance where className=? and classDate=?";
 
-    public static String SQL_GET_STUDENT_DETAILS = "select * from students where phoneNum=?";
+    public static String SQL_GET_STUDENT_DETAILS = "select students.studentId, students.name, students.phoneNum, students.joinDate, students.profilePic, students.notes, auth.email from students join auth on students.phoneNum = auth.phoneNum where students.phoneNum=?";
     public static String SQL_GET_STUDENT_ENROLMENTS = "select * from enrollments where phoneNum=?";
     
 

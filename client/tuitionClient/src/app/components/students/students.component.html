@@ -4,12 +4,17 @@
         <mat-card-header>
             <mat-card-title>{{student.name}}</mat-card-title>
         </mat-card-header>
+        <mat-divider></mat-divider>
     
         <mat-card-content>
+            <span>Pic: {{ student.profilePic }}</span><br>
             <span>Student Id: {{ student.studentId}}</span><br>
             <span>Phone Number: {{ student.phoneNum }}</span><br>
-            <span>Email</span><br>
+            <span>Email: {{ student.email }}</span><br>
             <span>Join Date: {{student.joinDate}}</span><br>
+            <div>Notes: {{student.notes}}</div>
+
+            <mat-divider></mat-divider>
 
             <mat-list *ngFor="let enrol of student.enrollments">
                 <div>

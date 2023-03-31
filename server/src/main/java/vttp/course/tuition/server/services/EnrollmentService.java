@@ -66,4 +66,17 @@ public class EnrollmentService {
         enrolRepo.batchUpdateStatus(params);
     }   
 
+
+    public void extendEnrollment(JsonObject enrollment){
+
+        // set expiryDate to end of next month
+        LocalDate newExpiryDate =
+            YearMonth.parse(enrollment.getString("expiryDate")
+                .substring(0,7))
+                .plusMonths(1).atEndOfMonth();
+
+        System.out.println("Check newExpiryDate" + newExpiryDate);
+        enrolRepo.extendEnrollment(newExpiryDate, enrollment);
+    }
+
 }
