@@ -97,9 +97,11 @@ export class ClassDetailsComponent {
     const schedule: 
       Schedule = {  className: this.currentClassName, 
                     classYear: this.currentClassYear, 
-                    classDate: datetime }
+                    classDate: datetime,
+                    repeat: this.scheduleForm.value.repeat
+                  }
     this.classSvc.addSchedule(schedule)
-                .then(v => 
+                .then(() => 
                   { 
                     this.getSchedules()
                     this.updateMsg =  `Added schedule: ${ this.datepipe.transform(new Date(datetime), 'M/d/yy, h:mm a' )}`

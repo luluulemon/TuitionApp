@@ -26,6 +26,7 @@ export interface Schedule{
     className: string
     classYear: number
     classDate: string
+    repeat: string
 }
 
 

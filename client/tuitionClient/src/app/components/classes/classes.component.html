@@ -10,8 +10,9 @@
                 <mat-hint align="end">Select Class Year</mat-hint>
             </mat-form-field>
 
-            <button mat-raised-button *ngIf="!tForm" type="button" style="float: right;" (click)="addClassForm()">+</button>
-            <button mat-raised-button *ngIf="tForm" type="button" style="float: right;" (click)="closeClassForm()">-</button>
+            <button mat-raised-button *ngIf="!tForm" type="button" class="addClassButton" 
+                matTooltip="Add Class"    (click)="addClassForm()">+</button>
+            <button mat-raised-button *ngIf="tForm" type="button" class="addClassButton" (click)="closeClassForm()">-</button>
         </h2>
     </form>
     
@@ -59,8 +60,7 @@
             </mat-card-actions>
         </mat-card>
     </div>
-    <hr>
-
+    <mat-divider></mat-divider>
 
     <mat-list *ngIf="classes">   
         <div *ngFor="let class of classes" class="tuitionClass" >

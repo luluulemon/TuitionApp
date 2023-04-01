@@ -1,6 +1,12 @@
 package vttp.course.tuition.server.services;
 
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
@@ -65,7 +71,51 @@ public class ClassService {
     }
 
     public int addSchedule(JsonObject scheduleJson){
-        return classRepo.addSchedule(scheduleJson);
+        // add schedule for single, whole month, or whole year
+        if(scheduleJson.getString("repeat").equals("No"))
+            return classRepo.addSchedule(scheduleJson);
+        
+        List<Object[]> params = new ArrayList<>();
+        if(scheduleJson.getString("repeat").equals("Month"))
+        {   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime firstSchedule = 
+                LocalDateTime.parse(scheduleJson.getString("classDate"), formatter); 
+
+            LocalDateTime endOfMonth = 
+                firstSchedule.withDayOfMonth(firstSchedule      // set day of month
+                                                .getMonth()
+                                                .length(firstSchedule.toLocalDate().isLeapYear()));
+
+            while(firstSchedule.isBefore(endOfMonth)){
+                // add each schedule until it exceeds end Of Month
+                params.add(new Object[]{ firstSchedule,
+                                            scheduleJson.getString("className"),
+                                            scheduleJson.getString("classYear"),
+                                             } );
+            firstSchedule = firstSchedule.plusDays(7);
+            }
+            classRepo.addSchedules(params);
+        }
+
+        if(scheduleJson.getString("repeat").equals("Year"))
+        {   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime firstSchedule = 
+                LocalDateTime.parse(scheduleJson.getString("classDate"), formatter); 
+
+            LocalDateTime endOfYear = firstSchedule.withDayOfYear(365);
+
+            while(firstSchedule.isBefore(endOfYear)){
+                // add each schedule until it exceeds end Of Year
+                params.add(new Object[]{ firstSchedule,
+                                            scheduleJson.getString("className"),
+                                            scheduleJson.getString("classYear"),
+                                             } );
+            firstSchedule = firstSchedule.plusDays(7);
+            }
+            classRepo.addSchedules(params);
+        }
+
+        return 1;
     }
 
     public JsonArray getSchedules(int classYear, String className){

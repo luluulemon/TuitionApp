@@ -11,6 +11,7 @@ import jakarta.json.JsonObject;
 import static vttp.course.tuition.server.repositories.Queries.*;
 
 import java.time.Year;
+import java.util.List;
 
 
 @Repository
@@ -60,6 +61,10 @@ public class ClassRepository {
                             scheduleJson.getString("classDate"), 
                             scheduleJson.getString("className"),
                             Integer.parseInt( scheduleJson.getString("classYear")) );
+    }
+
+    public void addSchedules(List<Object[]> params){
+        jdbcTemplate.batchUpdate(SQL_ADD_SCHEDULE, params);
     }
 
     public SqlRowSet getSchedules(int classYear, String className){

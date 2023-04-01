@@ -26,7 +26,7 @@ public class Queries {
     public static String SQL_ADD_ENROLLMENT = "insert into enrollments values(?, ?, ?, ?, ?, ?)";
     public static String SQL_GET_EXISTING_ENROLLMENT = "select * from enrollments where phoneNum=? and className=? and expiryDate>=?";
     public static String SQL_GET_ENROLLMENT_BY_CLASS = 
-        "select * from enrollments inner join students on enrollments.phoneNum = students.phoneNum where enrollments.classYear=? and enrollments.className=? and status=?";
+        "select * from enrollments inner join students on enrollments.phoneNum = students.phoneNum where enrollments.classYear=? and enrollments.className=? and status!=?";
     public static String SQL_GET_ENROL_BY_STATUS = 
         "select * from enrollments where status='current' and expiryDate<now() OR status='pending' and startDate<now()";
     public static String SQL_UPDATE_STATUSSS = "update enrollments set status=? where phoneNum=?";

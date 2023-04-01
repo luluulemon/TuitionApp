@@ -6,16 +6,20 @@
     <mat-card-content>
         <mat-list>
             <mat-list-item *ngFor="let s of classStudents" >
-                <div *ngIf="s.present">
-                    <span>Student Id: {{ s.studentId}}, Name: {{ s.name }}  </span>
-                    <span> PRESENT </span>
-                </div>
+                <div >
+                    <div *ngIf="s.present && s.status=='current'">
+                        <span>Student Id: {{ s.studentId}}, Name: {{ s.name }}  </span>
+                        <span> PRESENT </span>
+                    </div>
 
-                <div *ngIf="!s.present" (click)="markAttendance(s.phoneNum)">
-                    Student Id: {{ s.studentId}}, Name: {{ s.name }}
+                    <div *ngIf="!s.present && s.status=='current'" (click)="markAttendance(s.phoneNum)">
+                        Student Id: {{ s.studentId}}, Name: {{ s.name }}
+                    </div>
                 </div>
             </mat-list-item>
         </mat-list>
+
+
     </mat-card-content>
 
     <mat-card-actions>

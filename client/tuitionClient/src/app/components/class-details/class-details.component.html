@@ -5,26 +5,18 @@
         <!-- Tab for marking attendance, editing schedules -->
             <!-- Can only edit future classes -->
         <mat-tab label="Attendance">
-            <div class="schedules">
-                <mat-list *ngIf="schedules" >
-                    <mat-list-item *ngFor="let s of schedules" class="schedule"> 
-                        
-                        <div *ngIf="!compareDate(s)" [routerLink]="['/attendance', currentClassName, s]">
-                            <span>{{s | date: 'EEEE, d/M/yy, h:mm a'}} </span>  
-                        </div>
-                        <div *ngIf="compareDate(s)"> 
-                            <span [routerLink]="['/attendance', currentClassName, currentClassYear, s]">
-                                {{s | date: 'EEEE, d/M/yy, h:mm a'}} 
-                            </span>                       
-                            <mat-icon style="float:right" (click)="openUpdateSchedule(s)">edit </mat-icon> &nbsp;
-                            <mat-icon style="float:right" (click)="deleteSchedule(s)">delete </mat-icon>
-                        </div>
-                    </mat-list-item>
-                </mat-list>
-            </div>
 
-            <button mat-raised-button type="button" (click)="openAddSchedule()">ADD SCHEDULE</button>
+            <h2 style="margin:10px">Scheduled Classes
+                <button mat-raised-button *ngIf="!addSchedule" type="button" style="float:right" 
+                    matTooltip="Add Schedule" (click)="openAddSchedule()">
+                    +</button>
 
+                <button mat-raised-button *ngIf="addSchedule" type="button" style="float:right" 
+                    (click)="closeAddEditSchedule()">-</button>
+            </h2>
+
+
+            <!-- Add Schedules form -->
             <div *ngIf="addSchedule || editSchedule" >
                 <mat-icon (click)="closeAddEditSchedule()" style="float:right">close</mat-icon>
                 <form [formGroup]="scheduleForm">
@@ -68,6 +60,26 @@
                     <mat-icon>edit</mat-icon> EDIT
                     </button>
                 </form>
+            </div>
+            <br>
+            <mat-divider></mat-divider>
+
+            <div class="schedules">
+                <mat-list *ngIf="schedules" >
+                    <mat-list-item *ngFor="let s of schedules" class="schedule"> 
+                        
+                        <div *ngIf="!compareDate(s)" [routerLink]="['/attendance', currentClassName, s]">
+                            <span>{{s | date: 'EEEE, d/M/yy, h:mm a'}} </span>  
+                        </div>
+                        <div *ngIf="compareDate(s)"> 
+                            <span [routerLink]="['/attendance', currentClassName, currentClassYear, s]">
+                                {{s | date: 'EEEE, d/M/yy, h:mm a'}} 
+                            </span>                       
+                            <mat-icon style="float:right" (click)="openUpdateSchedule(s)">edit </mat-icon> &nbsp;
+                            <mat-icon style="float:right" (click)="deleteSchedule(s)">delete </mat-icon>
+                        </div>
+                    </mat-list-item>
+                </mat-list>
             </div>
 
         </mat-tab>
