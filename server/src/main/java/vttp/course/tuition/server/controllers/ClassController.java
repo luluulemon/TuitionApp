@@ -61,7 +61,7 @@ public class ClassController {
         if(updateResult == 0){  
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
                     Json.createObjectBuilder()
-                    .add("Update Msg", "Unable to insert schedule")
+                    .add("Update Msg", "CLASH with other Schedule")
                     .build().toString() ); }
         else{
             return ResponseEntity.ok(

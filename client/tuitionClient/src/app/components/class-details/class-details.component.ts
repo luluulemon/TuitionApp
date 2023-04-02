@@ -94,11 +94,12 @@ export class ClassDetailsComponent {
     }
 
     else{
-    const schedule: 
-      Schedule = {  className: this.currentClassName, 
+    const schedule =
+                  { className: this.currentClassName, 
                     classYear: this.currentClassYear, 
                     classDate: datetime,
-                    repeat: this.scheduleForm.value.repeat
+                    repeat: this.scheduleForm.value.repeat,
+                    schedules: this.schedules     // send to back end to check for repeat
                   }
     this.classSvc.addSchedule(schedule)
                 .then(() => 
@@ -108,6 +109,11 @@ export class ClassDetailsComponent {
                     this.openSnackBar()
                     this.closeAddEditSchedule()
                   })
+                .catch(error => 
+                  { console.error("error: ", error)
+                    this.updateMsg = 'CLASH with other schedule'
+                    this.openSnackBar()
+                  } )
     }
   }
 
