@@ -83,7 +83,15 @@ export class ClassDetailsComponent {
     // try converting date
     let latest_date =this.datepipe.transform(this.scheduleForm.value.scheduleDate, 'yyyy-MM-dd');
     // create SQL datetime string
-    let datetime = `${latest_date} ${this.scheduleForm.value.hour}:${this.scheduleForm.value.minute}:00`
+      // adding zero for single digits: for server DateTimeFormatter
+      let hour = ''
+      if(this.scheduleForm.value.hour<10){  hour = `0${this.scheduleForm.value.hour}` }
+      else{ hour = this.scheduleForm.value.hour }
+
+      let minute = ''
+      if(this.scheduleForm.value.minute<10){  minute = `0${this.scheduleForm.value.minute}`}
+
+    let datetime = `${latest_date} ${hour}:${minute}:00`
     console.info('check datetime entry: ',datetime)
 
     const clash: boolean = 

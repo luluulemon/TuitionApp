@@ -119,7 +119,7 @@ public class ClassService {
                                              } );
             firstSchedule = firstSchedule.plusDays(7);
             }
-            // classRepo.addSchedules(params);
+            classRepo.addSchedules(params);
         }
 
         // if(scheduleJson.getString("repeat").equals("Year"))
