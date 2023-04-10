@@ -44,4 +44,15 @@ public class AttendanceController {
     
         return ResponseEntity.ok(attendJson.toString());
     }
+
+    @GetMapping("/classAttendance/{classYear}/{className}")
+    public ResponseEntity<String> getClassAttendance(
+        @PathVariable String className, @PathVariable int classYear){
+        
+        attendanceSvc.getClassAttendance(classYear, className);
+        
+        return null;
+    }
+
+    
 }

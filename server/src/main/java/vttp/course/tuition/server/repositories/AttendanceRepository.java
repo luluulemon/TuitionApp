@@ -27,5 +27,10 @@ public class AttendanceRepository {
         return jdbcTemplate.queryForRowSet(SQL_GET_ATTENDANCE, className, dateTime);
     }
 
+    public SqlRowSet getClassAttendance(int classYear, String className){
+        return jdbcTemplate.queryForRowSet(SQL_GET_ATTENDANCE_FOR_CLASS, classYear, className);
+    }
+
+
 
 }

@@ -6,7 +6,7 @@
             <!-- Can only edit future classes -->
         <mat-tab label="Attendance">
 
-            <h2 style="margin:10px">Scheduled Classes
+            <h2 style="margin:10px">Scheduled Classes For {{ currentClassName }}
                 <button mat-raised-button *ngIf="!addSchedule" type="button" style="float:right" 
                     matTooltip="Add Schedule" (click)="openAddSchedule()">
                     +</button>
@@ -64,6 +64,11 @@
             <br>
             <mat-divider></mat-divider>
 
+            <div (click)="getClassAttendance()">
+                <h2>Overall Attendance</h2>
+            </div>
+
+            <!-- Show list of Schedules -->
             <div class="schedules">
                 <mat-list *ngIf="schedules" >
                     <mat-list-item *ngFor="let s of schedules" class="schedule"> 

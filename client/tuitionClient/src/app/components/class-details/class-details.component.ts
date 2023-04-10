@@ -7,6 +7,7 @@ import { ClassService } from 'src/app/services/class.service';
 import { EnrolService } from 'src/app/services/enrol.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { StudentService } from 'src/app/services/student.service';
+import { AttendanceService } from 'src/app/services/attendance.service';
 
 
 @Component({
@@ -32,7 +33,8 @@ export class ClassDetailsComponent {
 
   constructor(private fb: FormBuilder, private datepipe: DatePipe,
                 private activatedRoute: ActivatedRoute, private classSvc:ClassService,
-                private enrolSvc: EnrolService, private msgSnackBar: MatSnackBar){}
+                private enrolSvc: EnrolService, private msgSnackBar: MatSnackBar,
+                private attendanceSvc: AttendanceService){}
 
 
   
@@ -195,14 +197,6 @@ export class ClassDetailsComponent {
   }
 
 
-  // studentSearchForm!: FormGroup
-  // addStudentForm!: FormGroup
-  // students: Student[] = []            // for students tab -> add students
-  // studentsDisplay: Student[] = []     // students search table pagination (limit to 5)
-  // columnsToDisplay = ['studentId', 'name', 'phoneNum', 'joinDate'];   // for students tab table
-  // offset: number = 0
-  // nextPageBoolean: boolean = false
-  // addStudentStatement: string = ''
   selectedStudent!: Student
   enrolsColumnsToDisplay = ['studentId', 'name', 'phoneNum','status' ,'expiryDate'];
   enrollments: Enrollment[] = []         // contain enrollments of currentClass
@@ -214,6 +208,11 @@ export class ClassDetailsComponent {
                                 this.enrollments = e
                               })
                     .catch(error => console.error('error in getEnrollments: ', error))
+  }
+
+
+  getClassAttendance(){
+    this.attendanceSvc.getClassAttendance(this.currentClassYear, this.currentClassName)
   }
 
 

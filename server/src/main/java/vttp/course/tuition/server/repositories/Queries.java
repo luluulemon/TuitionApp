@@ -36,6 +36,8 @@ public class Queries {
         "insert into attendance(classDate, className, phoneNum, classYear) values(?, ?, ?, ?)";
     public static String SQL_GET_ATTENDANCE =
         "select * from attendance where className=? and classDate=?";
+    public static String SQL_GET_ATTENDANCE_FOR_CLASS=
+        "select * from attendance where classYear=? and className=?";
 
     public static String SQL_GET_STUDENT_DETAILS = "select students.studentId, students.name, students.phoneNum, students.joinDate, students.profilePic, students.notes, auth.email from students join auth on students.phoneNum = auth.phoneNum where students.phoneNum=?";
     public static String SQL_GET_STUDENT_ENROLMENTS = "select * from enrollments where phoneNum=?";

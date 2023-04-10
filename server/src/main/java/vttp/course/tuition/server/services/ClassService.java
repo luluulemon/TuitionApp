@@ -77,7 +77,7 @@ public class ClassService {
         if(scheduleJson.getString("repeat").equals("No"))
             return classRepo.addSchedule(scheduleJson);
         
-        List<LocalDateTime> currentSchedules = new ArrayList<>();
+        List<LocalDateTime> currentSchedules = new ArrayList<>();   // getting current schedules to check clash
         JsonArray schedules = scheduleJson.getJsonArray("schedules");
         DateTimeFormatter scheduleFormatter = 
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -90,8 +90,8 @@ public class ClassService {
                                     scheduleFormatter) );
           }
         
+        List<Object[]> params = new ArrayList<>();      // List of repeats of Month/Year
 
-        List<Object[]> params = new ArrayList<>();
         if(scheduleJson.getString("repeat").equals("Month"))
         {   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             LocalDateTime firstSchedule = 
@@ -117,28 +117,38 @@ public class ClassService {
                                             scheduleJson.getString("className"),
                                             scheduleJson.getString("classYear"),
                                              } );
-            firstSchedule = firstSchedule.plusDays(7);
+                firstSchedule = firstSchedule.plusDays(7);
             }
             classRepo.addSchedules(params);
         }
 
-        // if(scheduleJson.getString("repeat").equals("Year"))
-        // {   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        //     LocalDateTime firstSchedule = 
-        //         LocalDateTime.parse(scheduleJson.getString("classDate"), formatter); 
+        if(scheduleJson.getString("repeat").equals("Year"))
+        {   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime firstSchedule = 
+                LocalDateTime.parse(scheduleJson.getString("classDate"), formatter); 
 
-        //     LocalDateTime endOfYear = firstSchedule.withDayOfYear(365);
+            LocalDateTime endOfYear = firstSchedule.withDayOfYear(365);
 
-        //     while(firstSchedule.isBefore(endOfYear)){
-        //         // add each schedule until it exceeds end Of Year
-        //         params.add(new Object[]{ firstSchedule,
-        //                                     scheduleJson.getString("className"),
-        //                                     scheduleJson.getString("classYear"),
-        //                                      } );
-        //     firstSchedule = firstSchedule.plusDays(7);
-        //     }
-        //     classRepo.addSchedules(params);
-        // }
+            while(firstSchedule.isBefore(endOfYear)){
+                // check if each schedule clash with current Schedules before adding
+                LocalDateTime sPlusOne = firstSchedule.plusMinutes(lessonDuration);
+                LocalDateTime sMinusOne = firstSchedule.minusMinutes(lessonDuration);
+                for(LocalDateTime s:currentSchedules){
+                    if(s.isBefore(sPlusOne) && s.isAfter(sMinusOne)){
+                        System.out.println("Clash with this: " + s);
+                        return 0;
+                    }
+                }
+
+                // add each schedule until it exceeds end Of Year
+                params.add(new Object[]{ firstSchedule,
+                                            scheduleJson.getString("className"),
+                                            scheduleJson.getString("classYear"),
+                                             } );
+                firstSchedule = firstSchedule.plusDays(7);
+            }
+            classRepo.addSchedules(params);
+        }
 
         return 1;
     }
