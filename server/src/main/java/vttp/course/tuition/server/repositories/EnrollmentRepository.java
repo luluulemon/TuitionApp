@@ -38,7 +38,7 @@ public class EnrollmentRepository {
     }
 
     public SqlRowSet getEnrollmentByClass(int classYear, String className){
-        return jdbcTemplate.queryForRowSet(SQL_GET_ENROLLMENT_BY_CLASS, classYear, className, "expired") ;
+        return jdbcTemplate.queryForRowSet(SQL_GET_ENROLLMENT_BY_CLASS, classYear, className, "pending") ;
     }
 
     public SqlRowSet getEnrollmentForValidation(){

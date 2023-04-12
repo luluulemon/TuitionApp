@@ -200,7 +200,8 @@ export class ClassDetailsComponent {
   selectedStudent!: Student
   enrolsColumnsToDisplay = ['studentId', 'name', 'phoneNum','status' ,'expiryDate'];
   enrollments: Enrollment[] = []         // contain enrollments of currentClass
-
+  allAttendance: any[] = []
+  attendanceColumnsToDisplay: string[] = []
 
   getEnrollments(){
     this.enrolSvc.getEnrollments(this.currentClassYear, this.currentClassName)
@@ -211,8 +212,17 @@ export class ClassDetailsComponent {
   }
 
 
-  getClassAttendance(){
+  getClassAttendance(){   // get table for overall class attendance
     this.attendanceSvc.getClassAttendance(this.currentClassYear, this.currentClassName)
+                        .then((v:any) => {
+                          console.info(v) 
+                          this.allAttendance = v.attendance
+                          this.attendanceColumnsToDisplay = v.scheduleList
+                          // for(let i=1;i<this.attendanceColumnsToDisplay.length;i++){
+                          //   this.attendanceColumnsToDisplay[i] = 
+                          //     this.datepipe.transform(this.attendanceColumnsToDisplay[i], 'MMM-dd, hh:mm a')!;
+                          //}
+                        })
   }
 
 

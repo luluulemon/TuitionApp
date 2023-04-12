@@ -18,8 +18,8 @@ export class AttendanceService {
         return lastValueFrom( this.http.get<Enrollment[]>(`api/attendance/get/${classYear}/${className}/${schedule}`))
     }
 
-    getClassAttendance(classYear: number, className:string){
-        lastValueFrom( this.http.get(`api/attendance/classAttendance/${classYear}/${className}`))
+    getClassAttendance(classYear: number, className:string): any{
+        return lastValueFrom( this.http.get(`api/attendance/classAttendance/${classYear}/${className}`))
     }
 
 

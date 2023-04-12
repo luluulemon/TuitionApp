@@ -49,9 +49,9 @@ public class AttendanceController {
     public ResponseEntity<String> getClassAttendance(
         @PathVariable String className, @PathVariable int classYear){
         
-        attendanceSvc.getClassAttendance(classYear, className);
+        JsonObject allAttendance = attendanceSvc.getClassAttendance(classYear, className);
         
-        return null;
+        return ResponseEntity.ok(allAttendance.toString());
     }
 
     
