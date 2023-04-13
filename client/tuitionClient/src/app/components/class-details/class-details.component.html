@@ -67,12 +67,11 @@
             <div (click)="getClassAttendance()">
                 <h2>Overall Attendance</h2>
             </div>
-            <table mat-table [dataSource]="allAttendance">
-                <!-- <mat-text-column name="name"></mat-text-column> -->
+            <!-- <table mat-table [dataSource]="allAttendance">
                 <mat-text-column *ngFor="let s of attendanceColumnsToDisplay" [name]=s></mat-text-column>
                 <tr mat-header-row *matHeaderRowDef="attendanceColumnsToDisplay"></tr>
                 <tr mat-row *matRowDef="let myRowData; columns: attendanceColumnsToDisplay"></tr>
-            </table>
+            </table> -->
 
             <!-- Show list of Schedules -->
             <div class="schedules">

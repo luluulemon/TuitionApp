@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { DatePipe } from '@angular/common'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -8,6 +8,9 @@ import { EnrolService } from 'src/app/services/enrol.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { StudentService } from 'src/app/services/student.service';
 import { AttendanceService } from 'src/app/services/attendance.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { AttendanceDialogComponent } from './attendance-dialog/attendance-dialog.component';
 
 
 @Component({
@@ -34,7 +37,7 @@ export class ClassDetailsComponent {
   constructor(private fb: FormBuilder, private datepipe: DatePipe,
                 private activatedRoute: ActivatedRoute, private classSvc:ClassService,
                 private enrolSvc: EnrolService, private msgSnackBar: MatSnackBar,
-                private attendanceSvc: AttendanceService){}
+                private attendanceSvc: AttendanceService, private dialog:MatDialog){}
 
 
   
@@ -200,8 +203,8 @@ export class ClassDetailsComponent {
   selectedStudent!: Student
   enrolsColumnsToDisplay = ['studentId', 'name', 'phoneNum','status' ,'expiryDate'];
   enrollments: Enrollment[] = []         // contain enrollments of currentClass
-  allAttendance: any[] = []
-  attendanceColumnsToDisplay: string[] = []
+  // allAttendance: any[] = []
+  // attendanceColumnsToDisplay: string[] = []
 
   getEnrollments(){
     this.enrolSvc.getEnrollments(this.currentClassYear, this.currentClassName)
@@ -216,15 +219,20 @@ export class ClassDetailsComponent {
     this.attendanceSvc.getClassAttendance(this.currentClassYear, this.currentClassName)
                         .then((v:any) => {
                           console.info(v) 
-                          this.allAttendance = v.attendance
-                          this.attendanceColumnsToDisplay = v.scheduleList
-                          // for(let i=1;i<this.attendanceColumnsToDisplay.length;i++){
-                          //   this.attendanceColumnsToDisplay[i] = 
-                          //     this.datepipe.transform(this.attendanceColumnsToDisplay[i], 'MMM-dd, hh:mm a')!;
-                          //}
+                          // this.allAttendance = v.attendance
+                          // this.attendanceColumnsToDisplay = v.scheduleList
+
+                          this.dialog.open(AttendanceDialogComponent, {
+                            data:  { allAttendance : v.attendance,
+                                      attendanceColumnsToDisplay : v.scheduleList,
+                                    }, 
+                            width: '500px',
+                          });
+
                         })
   }
 
 
-
 }
+
+

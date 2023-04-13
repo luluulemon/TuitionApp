@@ -126,20 +126,25 @@ public class AttendanceService {
                 if(enrolMap.get(phoneNum)!=null && enrolMap.get(phoneNum).contains(s)){
                     if(attendanceMap.get(phoneNum)==null || !attendanceMap.get(phoneNum).contains(s)){
                     //if(attendanceMap.get(phoneNum).contains(s)){
-                        attendance.add(s.toString(), "A");
+                        //attendance.add(s.toString(), "A");
+                        attendance.add( s.format(attTableFormatter), "A");
                     }
                     // absent
-                    else{   attendance.add(s.toString(), "X");  }
+                    else{   //attendance.add(s.toString(), "X");  
+                            attendance.add( s.format(attTableFormatter), "X");
+                        }
                 }
                 // not enrolled
-                else{   attendance.add(s.toString(), "NA"); }
+                else{   //attendance.add(s.toString(), "NA"); 
+                        attendance.add( s.format(attTableFormatter), "NA" );
+                    }
             }
             allAttendance.add(attendance.build());
         }
 
         // create scheduleList as JsonArray
         JsonArrayBuilder schedulesJsonArray = Json.createArrayBuilder().add("name");
-        pastScheduleList.stream().forEach( s -> schedulesJsonArray.add(s.toString()));
+        pastScheduleList.stream().forEach( s -> schedulesJsonArray.add(s.format(attTableFormatter)));
         
         return Json.createObjectBuilder()   .add("scheduleList", schedulesJsonArray )
                                             .add("attendance", allAttendance.build())
