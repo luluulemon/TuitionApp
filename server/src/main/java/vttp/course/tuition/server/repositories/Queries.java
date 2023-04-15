@@ -22,6 +22,7 @@ public class Queries {
 
     public static String SQL_GET_STUDENTS = "select * from students";
     public static String SQL_SEARCH_STUDENTS = "select * from students where name like CONCAT(?,'%')";
+    public static String SQL_UPDATE_STUDENT_PIC = "update students set profilePic=? where phoneNum=?";
 
     public static String SQL_ADD_ENROLLMENT = "insert into enrollments values(?, ?, ?, ?, ?, ?)";
     public static String SQL_GET_EXISTING_ENROLLMENT = "select * from enrollments where phoneNum=? and className=? and expiryDate>=?";

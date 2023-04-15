@@ -33,4 +33,8 @@ public class StudentService {
         return              // combine student details with enrollment
             Student.studentWEnrolRsToJson(studentDetailRs, enrolArray.build());
     }
+
+    public void updatePic(String picUrl, int phoneNum){
+        studentRepo.updateStudentPic(picUrl, phoneNum);
+    }
 }

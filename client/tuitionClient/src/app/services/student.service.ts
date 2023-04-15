@@ -14,5 +14,8 @@ export class StudentService {
         return lastValueFrom( this.http.get(`api/student/details/${phoneNum}`))
     }
 
+    addProfilePic(phoneNum: number, pic: FormData):any{
+      return lastValueFrom( this.http.post(`api/student/uploadPic/${phoneNum}`, pic))
+    }
 
 }

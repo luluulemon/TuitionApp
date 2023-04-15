@@ -18,6 +18,7 @@ import { DatePipe } from '@angular/common';
 import { AttendanceComponent } from './components/class-details/attendance/attendance.component';
 import { EnrollmentComponent } from './components/class-details/enrollment/enrollment.component';
 import { AttendanceDialogComponent } from './components/class-details/attendance-dialog/attendance-dialog.component';
+import { StudentDialogComponent } from './components/students/student-dialog/student-dialog.component';
 
 
 const appRoutes:Routes = [
@@ -41,6 +42,7 @@ const appRoutes:Routes = [
     AttendanceComponent,
     EnrollmentComponent,
     AttendanceDialogComponent,
+    StudentDialogComponent,
   ],
   imports: [
     BrowserModule,

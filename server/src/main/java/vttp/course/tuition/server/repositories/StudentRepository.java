@@ -20,4 +20,8 @@ public class StudentRepository {
     public SqlRowSet getStudentEnrollments(int phoneNum){
         return jdbcTemplate.queryForRowSet(SQL_GET_STUDENT_ENROLMENTS, phoneNum);
     }
+
+    public void updateStudentPic(String picUrl, int phoneNum){
+        jdbcTemplate.update(SQL_UPDATE_STUDENT_PIC, picUrl, phoneNum);
+    }
 }

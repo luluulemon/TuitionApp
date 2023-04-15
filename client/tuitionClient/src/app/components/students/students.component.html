@@ -1,20 +1,27 @@
 <div *ngIf="student">
     <mat-card class="mainCardStyle">
 
-        <mat-card-header>
-            <mat-card-title>{{student.name}}</mat-card-title>
+        <!-- Header for name & profilePic -->
+        <mat-card-header>   
+            <mat-card-title-group>
+                <mat-card-title>{{student.name}}</mat-card-title>
+                <mat-card-subtitle>Student Id: {{ student.studentId}}</mat-card-subtitle>
+                <img mat-card-sm-image *ngIf="student.profilePic!='NA'" 
+                    (click)="uploadPic()"   src="{{ student.profilePic }}" >
+                <img mat-card-sm-image *ngIf="student.profilePic=='NA'" 
+                    (click)="uploadPic()"   src="assets/profile_pic.jpeg" >
+            </mat-card-title-group>
         </mat-card-header>
         <mat-divider></mat-divider>
-    
+        
+        <!-- Content: Display details and enrollments -->
         <mat-card-content>
-            <img *ngIf="student.profilePic=='NA'" src="assets/profile_pic.jpeg" alt="">
-
-            <span>Pic: {{ student.profilePic }}</span><br>
-            <span>Student Id: {{ student.studentId}}</span><br>
-            <span>Phone Number: {{ student.phoneNum }}</span><br>
-            <span>Email: {{ student.email }}</span><br>
-            <span>Join Date: {{student.joinDate}}</span><br>
-            <div>Notes: {{student.notes}}</div>
+            <div>
+                <span>Phone Number: {{ student.phoneNum }}</span><br>
+                <span>Email: {{ student.email }}</span><br>
+                <span>Join Date: {{student.joinDate}}</span><br>
+                <div>Notes: {{student.notes}}</div>
+            </div>
 
             <mat-divider></mat-divider>
 
@@ -39,14 +46,6 @@
                 </table>
             </div>
 
-            <!-- <mat-list *ngFor="let enrol of student.enrollments">
-                <div>
-                    <span>{{ enrol.className }}, {{ enrol.classYear}}</span>
-                    <span>Start Date: {{ enrol.startDate}}, Expiry Date: {{ enrol.expiryDate}}</span>
-                    <button mat-raised-button type="button" (click)="extendEnrollment(enrol)">Extend</button>
-                </div>
-
-            </mat-list> -->
         </mat-card-content>
     </mat-card>
 </div>

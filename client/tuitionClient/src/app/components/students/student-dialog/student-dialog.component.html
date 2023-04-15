@@ -1,0 +1,17 @@
+
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Upload Pic</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-actions>
+        <input type="file" accept="image/*" #uploadFile>
+        &nbsp;
+
+        <div>
+            <button mat-button type="button" (click)="uploadPic()">UPLOAD</button>
+            &nbsp;
+            <button mat-button mat-dialog-close>CANCEL</button>
+        </div>
+    </mat-card-actions>
+</mat-card>
