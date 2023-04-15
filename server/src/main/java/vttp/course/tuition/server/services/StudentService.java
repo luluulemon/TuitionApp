@@ -30,7 +30,7 @@ public class StudentService {
         SqlRowSet studentDetailRs = studentRepo.getStudentDetails(phoneNum);
         studentDetailRs.next();
 
-        return
+        return              // combine student details with enrollment
             Student.studentWEnrolRsToJson(studentDetailRs, enrolArray.build());
     }
 }

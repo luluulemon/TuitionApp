@@ -19,6 +19,7 @@ export class StudentsComponent {
   currentClassName: string = ''
   currentClassYear: number = 0
   student!: Student
+  todaysDate: Date = new Date;  // for displaying extend button
 
   ngOnInit(){
     this.selectedStudentNum = this.activatedRoute.snapshot.params['phoneNum']
@@ -29,7 +30,10 @@ export class StudentsComponent {
 
   getStudentDetails(phoneNum: number){
     this.studentSvc.getStudentDetails(phoneNum)
-                    .then((v: any) => this.student = v)
+                    .then((v: any) => {
+                      this.student = v
+                      console.info(v)
+                    })
   }
 
   extendEnrollment(enrollment: Enrollment){

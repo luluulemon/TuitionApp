@@ -67,7 +67,7 @@ public class Enrollment {
             .add("classYear", rs.getInt("classYear"))
             .add("phoneNum", rs.getInt("phoneNum"))
             .add("expiryDate", rs.getString("expiryDate"))
-            .add("studentId", rs.getString("startDate"))
+            .add("startDate", rs.getString("startDate"))
             .build();
     }
 }

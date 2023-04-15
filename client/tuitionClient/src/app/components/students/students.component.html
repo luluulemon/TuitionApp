@@ -7,6 +7,8 @@
         <mat-divider></mat-divider>
     
         <mat-card-content>
+            <img *ngIf="student.profilePic=='NA'" src="assets/profile_pic.jpeg" alt="">
+
             <span>Pic: {{ student.profilePic }}</span><br>
             <span>Student Id: {{ student.studentId}}</span><br>
             <span>Phone Number: {{ student.phoneNum }}</span><br>
@@ -16,13 +18,35 @@
 
             <mat-divider></mat-divider>
 
-            <mat-list *ngFor="let enrol of student.enrollments">
+            <div>
+                <table class="studentDetailsTable">
+                    <tr>
+                        <th>Class Name</th>
+                        <th>Class Year</th>
+                        <th>Start Date</th>
+                        <th>Expiry Date</th>
+                        <th></th>
+                    </tr>
+                    <tr *ngFor="let enrol of student.enrollments">
+                        <td>{{ enrol.className }}</td>
+                        <td> {{ enrol.classYear }} </td>
+                        <td> {{ enrol.startDate }} </td>
+                        <td> {{ enrol.expiryDate}} </td>
+                        <td *ngIf="enrol.status=='current'"> 
+                            <button mat-raised-button type="button" (click)="extendEnrollment(enrol)">Extend</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- <mat-list *ngFor="let enrol of student.enrollments">
                 <div>
                     <span>{{ enrol.className }}, {{ enrol.classYear}}</span>
                     <span>Start Date: {{ enrol.startDate}}, Expiry Date: {{ enrol.expiryDate}}</span>
                     <button mat-raised-button type="button" (click)="extendEnrollment(enrol)">Extend</button>
                 </div>
-            </mat-list>
+
+            </mat-list> -->
         </mat-card-content>
     </mat-card>
 </div>
