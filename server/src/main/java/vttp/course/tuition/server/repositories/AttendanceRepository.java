@@ -31,6 +31,8 @@ public class AttendanceRepository {
         return jdbcTemplate.queryForRowSet(SQL_GET_ATTENDANCE_FOR_CLASS, classYear, className);
     }
 
-
+    public void editPhoneNum(int oldPhoneNum, int newPhoneNum){
+        jdbcTemplate.update(SQL_UPDATE_ATTENDANCE_PHONENUM, newPhoneNum, oldPhoneNum);
+    }
 
 }

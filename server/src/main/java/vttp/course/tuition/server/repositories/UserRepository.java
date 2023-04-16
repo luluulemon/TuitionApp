@@ -50,6 +50,16 @@ public class UserRepository {
         if(result2==0){  throw new UserInsertException("Unable to insert student"); }
     }
 
+
+    public void addOldStudent(JsonObject userJson){
+        jdbcTemplate.update(SQL_ADD_USER, 
+                            userJson.getInt("phoneNum"), 
+                            userJson.getString("name"), 
+                            "student", 
+                            userJson.getString("email"),
+                            userJson.getString("name"));
+    }
+
     public void addAdmin(JsonObject userJson){
         jdbcTemplate.update(SQL_ADD_USER, 
             userJson.getInt("phoneNum"), 
@@ -58,4 +68,11 @@ public class UserRepository {
             userJson.getString("email"),
             userJson.getString("name"));
     }
+
+
+    public void editUserEmail(int phoneNum, String email)
+    {    jdbcTemplate.update(SQL_UPDATE_USER_EMAIL, email, phoneNum);   }
+
+    public void deleteUser(int phoneNum){   jdbcTemplate.update(SQL_DELETE_USER, phoneNum); }
+
 }

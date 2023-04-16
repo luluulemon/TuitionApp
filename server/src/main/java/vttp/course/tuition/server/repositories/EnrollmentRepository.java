@@ -58,4 +58,7 @@ public class EnrollmentRepository {
                             enrolJson.getString("className"));
     }
 
+    public void editPhoneNum(int oldPhoneNum, int newPhoneNum){
+        jdbcTemplate.update(SQL_UPDATE_ENROLLMENT_PHONENUM, newPhoneNum, oldPhoneNum);
+    }
 }

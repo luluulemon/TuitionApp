@@ -12,6 +12,8 @@ public class Queries {
     public static String SQL_ADD_USER = "insert into auth values(?, ?, ?, ?, ?)";
     public static String SQL_ADD_TEACHER = "insert into teachers(name, phoneNum, joinDate) values(?, ?, ?)";
     public static String SQL_ADD_STUDENT = "insert into students(name, phoneNum, joinDate) values(?, ?, ?)";
+    public static String SQL_UPDATE_USER_EMAIL = "update auth set email=? where phoneNum=?";
+    public static String SQL_DELETE_USER = "delete from auth where phoneNum=?";
 
     public static String SQL_ADD_SCHEDULE = "insert into schedules(classDate, className, classYear) values(?, ?, ?)";
     public static String SQL_GET_SCHEDULES = "select * from schedules where classYear=? and className=? order by classDate";
@@ -23,6 +25,8 @@ public class Queries {
     public static String SQL_GET_STUDENTS = "select * from students";
     public static String SQL_SEARCH_STUDENTS = "select * from students where name like CONCAT(?,'%')";
     public static String SQL_UPDATE_STUDENT_PIC = "update students set profilePic=? where phoneNum=?";
+    public static String SQL_UPDATE_STUDENT_NOTES = "update students set notes=? where phoneNum=?";
+    public static String SQL_UPDATE_STUDENT_DETAILS = "update students set phoneNum=?, notes=? where phoneNum=?";
 
     public static String SQL_ADD_ENROLLMENT = "insert into enrollments values(?, ?, ?, ?, ?, ?)";
     public static String SQL_GET_EXISTING_ENROLLMENT = "select * from enrollments where phoneNum=? and className=? and expiryDate>=?";
@@ -39,9 +43,11 @@ public class Queries {
         "select * from attendance where className=? and classDate=?";
     public static String SQL_GET_ATTENDANCE_FOR_CLASS=
         "select * from attendance where classYear=? and className=?";
+    public static String SQL_UPDATE_ATTENDANCE_PHONENUM = "update attendance set phoneNum=? where phoneNum=?";
 
     public static String SQL_GET_STUDENT_DETAILS = "select students.studentId, students.name, students.phoneNum, students.joinDate, students.profilePic, students.notes, auth.email from students join auth on students.phoneNum = auth.phoneNum where students.phoneNum=?";
     public static String SQL_GET_STUDENT_ENROLMENTS = "select * from enrollments where phoneNum=?";
+    public static String SQL_UPDATE_ENROLLMENT_PHONENUM ="update enrollments set phoneNum=? where phoneNum=?";
     
 
     public static String SQL_GET_CLASS_DETAILS =

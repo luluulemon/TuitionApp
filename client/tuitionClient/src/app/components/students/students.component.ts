@@ -82,4 +82,17 @@ export class StudentsComponent {
 
   }
 
+  editStudentDetails(){
+
+    const dialogRef = this.dialog.open(StudentDialogComponent, {
+      data: { selectedStudent: this.student, editDetails: true },
+      width: '350px'
+    })
+
+    // update student details after dialog close
+    dialogRef.afterClosed().subscribe((phoneNum) => {
+      this.getStudentDetails(phoneNum)
+    })
+  }
+
 }

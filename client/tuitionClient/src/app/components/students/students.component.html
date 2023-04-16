@@ -6,27 +6,33 @@
             <mat-card-title-group>
                 <mat-card-title>{{student.name}}</mat-card-title>
                 <mat-card-subtitle>Student Id: {{ student.studentId}}</mat-card-subtitle>
-                <img mat-card-sm-image *ngIf="student.profilePic!='NA'" 
-                    (click)="uploadPic()"   src="{{ student.profilePic }}" >
-                <img mat-card-sm-image *ngIf="student.profilePic=='NA'" 
-                    (click)="uploadPic()"   src="assets/profile_pic.jpeg" >
+                <img mat-card-sm-image *ngIf="student.profilePic!='NA'" matTooltip="Edit Pic"
+                    class="profilePic"  (click)="uploadPic()"   src="{{ student.profilePic }}" >
+                <img mat-card-sm-image *ngIf="student.profilePic=='NA'" matTooltip="Upload Pic"
+                    class="profilePic"  (click)="uploadPic()"   src="assets/profile_pic.jpeg" >
             </mat-card-title-group>
         </mat-card-header>
         <mat-divider></mat-divider>
         
         <!-- Content: Display details and enrollments -->
         <mat-card-content>
-            <div>
-                <span>Phone Number: {{ student.phoneNum }}</span><br>
-                <span>Email: {{ student.email }}</span><br>
-                <span>Join Date: {{student.joinDate}}</span><br>
-                <div>Notes: {{student.notes}}</div>
+            <div class="studentDetails">
+                <div ><span>Phone Number: {{ student.phoneNum }}</span>
+                    <span style="float:right">
+                        <button (click)="editStudentDetails()">
+                            <mat-icon type="button" fontIcon="edit"></mat-icon>
+                        </button>
+                    </span>
+                    <div style="margin-top:5px;"><span>Email: {{ student.email }}</span></div>
+                    <div  style="margin-top:5px;"><span>Join Date: {{student.joinDate}}</span></div>
+                    <div style="margin-top:5px;">Notes: {{student.notes}}</div>
+                </div>
             </div>
 
             <mat-divider></mat-divider>
 
             <div>
-                <table class="studentDetailsTable">
+                <table class="studentEnrolTable">
                     <tr>
                         <th>Class Name</th>
                         <th>Class Year</th>

@@ -20,7 +20,7 @@ public class UserService {
         userRepo.addStudent(userJson);
     }
 
-    public void addAdmin(JsonObject userJson){
-        userRepo.addAdmin(userJson);
-    }
+    public void addAdmin(JsonObject userJson){  userRepo.addAdmin(userJson);    }
+
+    public void editUserEmail(int phoneNum, String email){  userRepo.editUserEmail(phoneNum, email);}
 }
