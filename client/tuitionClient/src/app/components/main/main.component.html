@@ -10,3 +10,46 @@
         <h4>Users and Administration</h4>
     </div>
 </div>
+
+<!-- Content for main: upcoming classes -->
+<div>
+    <mat-card class="scheduleCards">
+        <mat-card-header *ngIf="todaysSchedules.length>0">
+            <mat-card-title>Today's classes</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-header *ngIf="todaysSchedules.length==0">
+            <mat-card-title>No class today</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content *ngIf="todaysSchedules.length>0">
+            <mat-list>
+                <mat-list-item *ngFor="let s of todaysSchedules" class="scheduleItem">
+                    <div> {{ s.className }}, Teacher: {{ s.teacherName }}  </div>
+                    <span>  {{ s.classDate | date: 'EEEE, d/M/yy, h:mm a' }} </span>
+                </mat-list-item>
+            </mat-list>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card  class="scheduleCards">
+        <mat-card-header *ngIf="upcomingSchedules.length>0">
+            <mat-card-title>Upcoming classes</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-header *ngIf="upcomingSchedules.length==0">
+            <mat-card-title>No upcoming classes</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <mat-list>
+                <mat-list-item *ngFor="let s of upcomingSchedules" class="scheduleItem"
+                    [routerLink]="['/attendance', s.ClassName, currentClassYear, s.classDate]">
+                    <div> {{ s.className }}, Teacher: {{ s.teacherName }}  </div>
+                    <span>  {{ s.classDate | date: 'EEEE, d/M/yy, h:mm a' }} </span>
+                </mat-list-item>
+            </mat-list>
+        </mat-card-content>
+    </mat-card>
+
+</div>

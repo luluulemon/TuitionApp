@@ -16,6 +16,7 @@ import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonValue;
+import vttp.course.tuition.server.models.Schedule;
 import vttp.course.tuition.server.models.Student;
 import vttp.course.tuition.server.repositories.ClassRepository;
 
@@ -160,6 +161,31 @@ public class ClassService {
             scheduleArray.add(rs.getString("classDate"));
         }
         return scheduleArray.build();
+    }
+
+    public JsonObject getRecentSchedules(){
+        LocalDate cutOffDate = LocalDate.now().plusDays(7);
+        LocalDate startDate = LocalDate.now();
+        SqlRowSet recentSchedulesRs = classRepo.getRecentSchedules(startDate.toString(), cutOffDate.toString());
+
+        JsonArrayBuilder todaysSchedules = Json.createArrayBuilder();
+        JsonArrayBuilder upcomingSchedules = Json.createArrayBuilder();
+        
+        while(recentSchedulesRs.next()){
+            LocalDateTime schedule = LocalDateTime.parse
+                                        (recentSchedulesRs.getString("classDate"));
+            LocalDateTime endOfToday = LocalDate.now().plusDays(1).atStartOfDay();
+            if(schedule.isBefore(endOfToday))
+            {   todaysSchedules.add( Schedule.rsToSchedule(recentSchedulesRs)); }
+            else
+            {   upcomingSchedules.add( Schedule.rsToSchedule(recentSchedulesRs));   }
+        }
+
+        return Json.createObjectBuilder()
+                    .add("today", todaysSchedules.build())
+                    .add("upcoming", upcomingSchedules.build())
+                    .build();
+
     }
 
     public void updateSchedule(int classYear, String className, JsonObject scheduleJson){

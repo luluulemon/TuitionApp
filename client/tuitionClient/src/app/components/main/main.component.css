@@ -5,3 +5,15 @@
 .mainPage{
     width: 500px;
 }
+
+.scheduleCards{
+    margin: 15px;
+}
+
+.scheduleItem{
+    margin: 8px;
+}
+
+.scheduleItem:hover{
+    background-color: azure;
+}

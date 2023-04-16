@@ -71,12 +71,17 @@ public class ClassController {
         }
     }
 
-    @GetMapping("/getSchedules/{classYear}/{className}")
+    @GetMapping("/getSchedules/{classYear}/{className}")    // Get Schedule for class
     @ResponseBody
     public ResponseEntity<String> getSchedule(
         @PathVariable String className, @PathVariable int classYear){
         JsonArray schedules = classSvc.getSchedules(classYear, className);
         return ResponseEntity.ok(schedules.toString());
+    }
+
+    @GetMapping("/getRecentSchedules")      // get upcoming week schedule for front page
+    public ResponseEntity<String> getRecentSchedule(){
+        return ResponseEntity.ok( classSvc.getRecentSchedules().toString() );
     }
 
     @PutMapping("/updateSchedule/{classYear}/{className}")

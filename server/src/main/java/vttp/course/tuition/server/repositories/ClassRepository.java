@@ -63,12 +63,16 @@ public class ClassRepository {
                             Integer.parseInt( scheduleJson.getString("classYear")) );
     }
 
-    public void addSchedules(List<Object[]> params){
+    public void addSchedules(List<Object[]> params){    // add repeat schedules (repeat month/year)
         jdbcTemplate.batchUpdate(SQL_ADD_SCHEDULE, params);
     }
 
-    public SqlRowSet getSchedules(int classYear, String className){
+    public SqlRowSet getSchedules(int classYear, String className){ // get schedules for class
         return jdbcTemplate.queryForRowSet(SQL_GET_SCHEDULES, classYear, className);
+    }
+
+    public SqlRowSet getRecentSchedules(String startDate, String cutOffDate){
+        return jdbcTemplate.queryForRowSet(SQL_GET_RECENT_SCHEDULES, startDate, cutOffDate);
     }
 
     public void updateSchedule(int classYear, String className,

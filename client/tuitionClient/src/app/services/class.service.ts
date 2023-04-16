@@ -35,6 +35,10 @@ export class ClassService {
     return lastValueFrom(this.http.get<Date[]>(`/api/class/getSchedules/${classYear}/${className}`))
   }
 
+  getRecentSchedules():any{
+    return lastValueFrom(this.http.get('/api/class/getRecentSchedules'))
+  }
+
   updateSchedule(classYear: number, className: string, schedules: any): any{
     return lastValueFrom( this.http.put(`/api/class/updateSchedule/${classYear}/${className}`, schedules))
   }

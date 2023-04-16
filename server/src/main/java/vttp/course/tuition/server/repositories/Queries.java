@@ -17,6 +17,12 @@ public class Queries {
 
     public static String SQL_ADD_SCHEDULE = "insert into schedules(classDate, className, classYear) values(?, ?, ?)";
     public static String SQL_GET_SCHEDULES = "select * from schedules where classYear=? and className=? order by classDate";
+    public static String SQL_GET_RECENT_SCHEDULES = "select schedules.className, schedules.classDate, teachers.name  from schedules join classes on schedules.className=classes.className and schedules.classYear=classes.classYear join teachers on classes.teacherId=teachers.teacherId where classDate>? and classDate<? order by classDate";
+    // select schedules.className, schedules.classDate, teachers.name  from schedules 
+	//  join classes on schedules.className=classes.className and schedules.classYear=classes.classYear
+    //  join teachers on classes.teacherId=teachers.teacherId
+	//  where classDate>now() and classDate<'2023-04-20'
+    //  order by classDate;
     public static String SQL_UPDATE_SCHEDULE = "update schedules set classDate=? where classYear=? and className=? and classDate=?";
     public static String SQL_UPDATE_SCHEDULE_W_ATTENDANCE = "update attendance set classDate=? where classYear=? and className=? and classDate=?";
     public static String SQL_DELETE_SCHEDULE = "delete from schedules where classYear=? and className=? and classDate=?";
