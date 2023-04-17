@@ -45,7 +45,7 @@
 
         <mat-dialog-actions>
             <button mat-button (click)="saveEditDetails()" [disabled]="studentDetailsForm.invalid">SAVE</button>
-            <button mat-button mat-dialog-close="">CLOSE</button>
+            <button mat-button (click)="closeDialog()">CLOSE</button>
         </mat-dialog-actions>
     </form>
 </div>

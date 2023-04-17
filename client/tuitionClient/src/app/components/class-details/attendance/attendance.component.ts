@@ -21,8 +21,11 @@ export class AttendanceComponent {
 
   ngOnInit(){
     this.currentClassName = this.activatedRoute.snapshot.params['className']
+    console.info(this.currentClassName)
     this.currentClassYear = this.activatedRoute.snapshot.params['classYear']
+    console.info(this.currentClassYear)
     this.currentSchedule = this.activatedRoute.snapshot.params['schedule']
+    console.info(this.currentSchedule)
     this.getAttendance()
   }
 

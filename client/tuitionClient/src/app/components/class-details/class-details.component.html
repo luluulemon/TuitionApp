@@ -74,15 +74,22 @@
                 <mat-list *ngIf="schedules" >
                     <mat-list-item *ngFor="let s of schedules" class="schedule"> 
                         
-                        <div *ngIf="!compareDate(s)" [routerLink]="['/attendance', currentClassName, s]">
-                            <span>{{s | date: 'EEEE, d/M/yy, h:mm a'}} </span>  
+                        <!-- for past schedules, cannot edit -->
+                        <div *ngIf="!compareDate(s)" >
+                            <span [routerLink]="['/attendance', currentClassName, currentClassYear, s]">
+                                {{s | date: 'EEEE, d/M/yy, h:mm a'}} 
+                            </span>  
                         </div>
+                        <!-- Include edit button for future schedules -->
                         <div *ngIf="compareDate(s)"> 
                             <span [routerLink]="['/attendance', currentClassName, currentClassYear, s]">
                                 {{s | date: 'EEEE, d/M/yy, h:mm a'}} 
-                            </span>                       
-                            <mat-icon style="float:right" (click)="openUpdateSchedule(s)">edit </mat-icon> &nbsp;
-                            <mat-icon style="float:right" (click)="deleteSchedule(s)">delete </mat-icon>
+                            </span>    
+                            <span style="float:right">                   
+                                <button ><mat-icon  (click)="openUpdateSchedule(s)">edit </mat-icon></button> 
+                                &nbsp;
+                                <button><mat-icon (click)="deleteSchedule(s)">delete </mat-icon></button>
+                            </span>
                         </div>
                     </mat-list-item>
                 </mat-list>
@@ -91,7 +98,7 @@
         </mat-tab>
 
 
-
+        <!-- Details tab -->
         <mat-tab label="Details">
             <mat-card>
                 <mat-card-header>

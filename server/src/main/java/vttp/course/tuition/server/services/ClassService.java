@@ -220,7 +220,6 @@ public class ClassService {
     public JsonObject getClassDetails(int classYear, String className){
         SqlRowSet rs = classRepo.getClassDetails(classYear, className);
         rs.next();  // only one row of data
-        System.out.println("Check name" + rs.getString("name"));
 
         return Json.createObjectBuilder()
                 .add("teacherName", rs.getString("name"))

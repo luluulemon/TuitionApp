@@ -19,12 +19,13 @@
         </mat-card-header>
 
         <mat-card-header *ngIf="todaysSchedules.length==0">
-            <mat-card-title>No class today</mat-card-title>
+            <mat-card-title>No classes today</mat-card-title>
         </mat-card-header>
 
         <mat-card-content *ngIf="todaysSchedules.length>0">
             <mat-list>
-                <mat-list-item *ngFor="let s of todaysSchedules" class="scheduleItem">
+                <mat-list-item *ngFor="let s of todaysSchedules" class="scheduleItem"
+                [routerLink]="['/attendance', s.className, currentClassYear, s.classDate]">
                     <div> {{ s.className }}, Teacher: {{ s.teacherName }}  </div>
                     <span>  {{ s.classDate | date: 'EEEE, d/M/yy, h:mm a' }} </span>
                 </mat-list-item>
@@ -44,7 +45,7 @@
         <mat-card-content>
             <mat-list>
                 <mat-list-item *ngFor="let s of upcomingSchedules" class="scheduleItem"
-                    [routerLink]="['/attendance', s.ClassName, currentClassYear, s.classDate]">
+                    [routerLink]="['/attendance', s.className, currentClassYear, s.classDate]">
                     <div> {{ s.className }}, Teacher: {{ s.teacherName }}  </div>
                     <span>  {{ s.classDate | date: 'EEEE, d/M/yy, h:mm a' }} </span>
                 </mat-list-item>

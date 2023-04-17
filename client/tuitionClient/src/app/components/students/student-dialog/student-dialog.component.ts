@@ -64,27 +64,25 @@ export class StudentDialogComponent {
       emailChanged: this.studentDetailsForm.value.email != this.data.selectedStudent.email,
       notesChanged: this.studentDetailsForm.value.notes != this.data.selectedStudent.notes
     }
-    console.info(newDetails)
+    console.info('Check newDetails: ', newDetails)
 
     // 1. no change
-    if(newDetails.phoneNum==this.data.selectedStudent.phoneNum &&
-      newDetails.email==this.data.selectedStudent.email &&
-      newDetails.notes == this.data.selectedStudent.notes)
+    if(!newDetails.phoneNumChanged &&
+       !newDetails.emailChanged &&
+       !newDetails.notesChanged)
       { console.info('no change');  
-        this.dialogRef.close()
+        this.dialogRef.close(0)
       }
 
     // 2. changes
-    else{ //if(newDetails.phoneNum!=this.data.selectedStudent.phoneNum){
+    else{ 
       this.studentSvc.saveEditDetails(this.data.selectedStudent.phoneNum ,newDetails)
                       .then(() => this.dialogRef.close(newDetails.phoneNum))
     }  
+  }
 
-    // // 3. email & notes
-    // else 
-    // { console.info('update notes only')
-    //   this.studentSvc.saveEditNotes(this.data.selectedStudent.phoneNum, newDetails.notes)
-    // }
+  closeDialog(){
+    this.dialogRef.close(0)
   }
 
 

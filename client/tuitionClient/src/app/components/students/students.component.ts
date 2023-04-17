@@ -91,7 +91,9 @@ export class StudentsComponent {
 
     // update student details after dialog close
     dialogRef.afterClosed().subscribe((phoneNum) => {
-      this.getStudentDetails(phoneNum)
+      console.info(phoneNum)
+      if(phoneNum!=0)
+        this.getStudentDetails(phoneNum)
     })
   }
 
