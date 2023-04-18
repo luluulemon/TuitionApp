@@ -27,24 +27,4 @@
 
 
 /* Others */
-.tuitionClass{
-    padding: 5px;
-}
-
-.tuitionClass:hover{
-    background-color: bisque;
-}
-
-.classPage{
-    width: 500px;
-}
-
-.addClassForm{
-    margin: 20px;
-    padding: 10px;
-}
-
-.addClassButton{
-    float: right;
-    margin-top: 20px;
-}
+.jokeCard{  margin: 15px;   }

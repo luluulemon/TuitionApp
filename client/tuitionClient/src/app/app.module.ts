@@ -19,6 +19,7 @@ import { AttendanceComponent } from './components/class-details/attendance/atten
 import { EnrollmentComponent } from './components/class-details/enrollment/enrollment.component';
 import { AttendanceDialogComponent } from './components/class-details/attendance-dialog/attendance-dialog.component';
 import { StudentDialogComponent } from './components/students/student-dialog/student-dialog.component';
+import { DadJokeComponent } from './components/dad-joke/dad-joke.component';
 
 
 const appRoutes:Routes = [
@@ -28,7 +29,9 @@ const appRoutes:Routes = [
   { path: 'classDetails/:className/:classYear', component: ClassDetailsComponent },
   { path: 'attendance/:className/:classYear/:schedule', component: AttendanceComponent },
   { path: 'enrollment/:className/:classYear', component: EnrollmentComponent},
-  { path: 'users', component: UsersComponent }
+  { path: 'users', component: UsersComponent },
+  { path: 'jokes', component: DadJokeComponent  },
+  { path: '**', redirectTo: '/', pathMatch: 'full'}
 ]
 
 @NgModule({
@@ -43,6 +46,7 @@ const appRoutes:Routes = [
     EnrollmentComponent,
     AttendanceDialogComponent,
     StudentDialogComponent,
+    DadJokeComponent,
   ],
   imports: [
     BrowserModule,
