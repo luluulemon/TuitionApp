@@ -20,6 +20,7 @@ import { EnrollmentComponent } from './components/class-details/enrollment/enrol
 import { AttendanceDialogComponent } from './components/class-details/attendance-dialog/attendance-dialog.component';
 import { StudentDialogComponent } from './components/students/student-dialog/student-dialog.component';
 import { DadJokeComponent } from './components/dad-joke/dad-joke.component';
+import { AddUserDialogComponent } from './components/users/add-user-dialog/add-user-dialog.component';
 
 
 const appRoutes:Routes = [
@@ -47,6 +48,7 @@ const appRoutes:Routes = [
     AttendanceDialogComponent,
     StudentDialogComponent,
     DadJokeComponent,
+    AddUserDialogComponent,
   ],
   imports: [
     BrowserModule,

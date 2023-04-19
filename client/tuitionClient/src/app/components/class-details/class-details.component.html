@@ -1,150 +1,178 @@
-<div class="mainPage">
-    
-    <mat-tab-group animationDuration="0ms">
+<mat-drawer-container class="mainPage">
 
-        <!-- Tab for marking attendance, editing schedules -->
-            <!-- Can only edit future classes -->
-        <mat-tab label="Attendance">
-
-            <h2 style="margin:10px">Scheduled Classes For {{ currentClassName }}
-                <button mat-raised-button *ngIf="!addSchedule" type="button" style="float:right" 
-                    matTooltip="Add Schedule" (click)="openAddSchedule()">
-                    +</button>
-
-                <button mat-raised-button *ngIf="addSchedule" type="button" style="float:right" 
-                    (click)="closeAddEditSchedule()">-</button>
-            </h2>
-
-
-            <!-- Add Schedules form -->
-            <div *ngIf="addSchedule || editSchedule" >
-                <mat-icon (click)="closeAddEditSchedule()" style="float:right">close</mat-icon>
-                <form [formGroup]="scheduleForm">
-        
-                    <mat-form-field class="example-full-width" appearance="fill">
-                        <mat-label>Choose a date</mat-label>
-                        <input matInput  [matDatepicker]="picker" 
-                            [min]="todaysDate"    formControlName="scheduleDate">
-                        <mat-hint>MM/DD/YYYY</mat-hint>
-                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                    <br>
-        
-                    <mat-form-field>
-                        <mat-label>Hour</mat-label>
-                        <input matInput type="number" min="0" max="23" formControlName="hour">
-                    </mat-form-field>
-                    <mat-form-field>
-                        <mat-label>Minutes</mat-label>
-                        <input matInput type="number" min="0" max="59" formControlName="minute">
-                    </mat-form-field>
-                    <br>
-        
-                    <mat-form-field appearance="fill" *ngIf="addSchedule">
-                        <mat-label>Repeat Schedule</mat-label>
-                        <mat-select formControlName="repeat">
-                        <mat-option  value="No">No Repeat</mat-option>
-                        <mat-option  value="Month">For the month</mat-option>
-                        <mat-option  value="Year">For whole year</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <br>
-        
-                    <button type="button" mat-raised-button color="primary" *ngIf="addSchedule"
-                        [disabled]="scheduleForm.invalid"   (click)="saveSchedule()">
-                        <mat-icon>save</mat-icon> SAVE
-                    </button>
-                    <button type="button" mat-raised-button color="primary" *ngIf="editSchedule"
-                    [disabled]="scheduleForm.invalid"   (click)="updateSchedule()">
-                    <mat-icon>edit</mat-icon> EDIT
-                    </button>
-                </form>
+    <!-- Menu Bars -->
+    <mat-drawer #drawer>
+        <div class="sideBar">
+            <div [routerLink]="['classes']" class="menu">
+                Class
             </div>
-            <br>
-            <mat-divider></mat-divider>
-
-            <div (click)="getClassAttendance()">
-                <h2>Overall Attendance</h2>
+            <div [routerLink]="['users']" class="menu">
+                Users and Administration
             </div>
-
-
-            <!-- Show list of Schedules -->
-            <div class="schedules">
-                <mat-list *ngIf="schedules" >
-                    <mat-list-item *ngFor="let s of schedules" class="schedule"> 
-                        
-                        <!-- for past schedules, cannot edit -->
-                        <div *ngIf="!compareDate(s)" >
-                            <span [routerLink]="['/attendance', currentClassName, currentClassYear, s]">
-                                {{s | date: 'EEEE, d/M/yy, h:mm a'}} 
-                            </span>  
-                        </div>
-                        <!-- Include edit button for future schedules -->
-                        <div *ngIf="compareDate(s)"> 
-                            <span [routerLink]="['/attendance', currentClassName, currentClassYear, s]">
-                                {{s | date: 'EEEE, d/M/yy, h:mm a'}} 
-                            </span>    
-                            <span style="float:right">                   
-                                <button ><mat-icon  (click)="openUpdateSchedule(s)">edit </mat-icon></button> 
-                                &nbsp;
-                                <button><mat-icon (click)="deleteSchedule(s)">delete </mat-icon></button>
-                            </span>
-                        </div>
-                    </mat-list-item>
-                </mat-list>
+            <div [routerLink]="['jokes']" class="menu">
+                Dad Jokes
             </div>
+        </div>
+    </mat-drawer>
+    <div class="topBar">
+        <button mat-raised-button (click)="drawer.toggle()" class="drawerButton">
+            <mat-icon>list</mat-icon></button>
+        &nbsp;
+        <img style="height:50px" src="/assets/newton_lab.png" alt="" class="logo">
+        <span style="font-size: 30px;">NewtonLab Tuition </span>
+    </div>
 
-        </mat-tab>
 
 
-        <!-- Details tab -->
-        <mat-tab label="Details">
-            <mat-card>
-                <mat-card-header>
-                    <mat-card-title>Class Details</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    <div> Teacher: <span *ngIf="classDetails"> {{ classDetails.teacherName }} </span></div>
-                    <div> No. of Students: {{ enrollments.length }}</div>
-                    <div *ngIf="classStartDate"> Start date: <span >{{ classStartDate | date:'EEEE, d/M/yy, h:mm a' }} </span></div>
-                    <div *ngIf="!classStartDate"> Start date: <span > NA </span></div>
-                    <div> Total sessions: <span> {{ totalSessions }} </span> </div>
-                </mat-card-content>
-            </mat-card>
-            <div *ngIf="enrollments">
+    <!-- Start of content -->
+    <div class="mainPage">
+        
+        <mat-tab-group animationDuration="0ms">
+
+            <!-- Tab for marking attendance, editing schedules -->
+                <!-- Can only edit future classes -->
+            <mat-tab label="Attendance">
+
+                <h2 style="margin:10px">Scheduled Classes For {{ currentClassName }}
+                    <button mat-raised-button *ngIf="!addSchedule" type="button" style="float:right" 
+                        matTooltip="Add Schedule" (click)="openAddSchedule()">
+                        +</button>
+
+                    <button mat-raised-button *ngIf="addSchedule" type="button" style="float:right" 
+                        (click)="closeAddEditSchedule()">-</button>
+                </h2>
+
+
+                <!-- Add Schedules form -->
+                <div *ngIf="addSchedule || editSchedule" >
+                    <mat-icon (click)="closeAddEditSchedule()" style="float:right">close</mat-icon>
+                    <form [formGroup]="scheduleForm">
+            
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Choose a date</mat-label>
+                            <input matInput  [matDatepicker]="picker" 
+                                [min]="todaysDate"    formControlName="scheduleDate">
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <br>
+            
+                        <mat-form-field>
+                            <mat-label>Hour</mat-label>
+                            <input matInput type="number" min="0" max="23" formControlName="hour">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Minutes</mat-label>
+                            <input matInput type="number" min="0" max="59" formControlName="minute">
+                        </mat-form-field>
+                        <br>
+            
+                        <mat-form-field appearance="fill" *ngIf="addSchedule">
+                            <mat-label>Repeat Schedule</mat-label>
+                            <mat-select formControlName="repeat">
+                            <mat-option  value="No">No Repeat</mat-option>
+                            <mat-option  value="Month">For the month</mat-option>
+                            <mat-option  value="Year">For whole year</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <br>
+            
+                        <button type="button" mat-raised-button color="primary" *ngIf="addSchedule"
+                            [disabled]="scheduleForm.invalid"   (click)="saveSchedule()">
+                            <mat-icon>save</mat-icon> SAVE
+                        </button>
+                        <button type="button" mat-raised-button color="primary" *ngIf="editSchedule"
+                        [disabled]="scheduleForm.invalid"   (click)="updateSchedule()">
+                        <mat-icon>edit</mat-icon> EDIT
+                        </button>
+                    </form>
+                </div>
+                <br>
+                <mat-divider></mat-divider>
+
+                <div (click)="getClassAttendance()">
+                    <h2>Overall Attendance</h2>
+                </div>
+
+
+                <!-- Show list of Schedules -->
+                <div class="schedules">
+                    <mat-list *ngIf="schedules" >
+                        <mat-list-item *ngFor="let s of schedules" class="schedule"> 
+                            
+                            <!-- for past schedules, cannot edit -->
+                            <div *ngIf="!compareDate(s)" >
+                                <span [routerLink]="['/attendance', currentClassName, currentClassYear, s]">
+                                    {{s | date: 'EEEE, d/M/yy, h:mm a'}} 
+                                </span>  
+                            </div>
+                            <!-- Include edit button for future schedules -->
+                            <div *ngIf="compareDate(s)"> 
+                                <span [routerLink]="['/attendance', currentClassName, currentClassYear, s]">
+                                    {{s | date: 'EEEE, d/M/yy, h:mm a'}} 
+                                </span>    
+                                <span style="float:right">                   
+                                    <button ><mat-icon  (click)="openUpdateSchedule(s)">edit </mat-icon></button> 
+                                    &nbsp;
+                                    <button><mat-icon (click)="deleteSchedule(s)">delete </mat-icon></button>
+                                </span>
+                            </div>
+                        </mat-list-item>
+                    </mat-list>
+                </div>
+
+            </mat-tab>
+
+
+            <!-- 2nd Tab: Details tab -->
+            <mat-tab label="Details">
                 <mat-card>
                     <mat-card-header>
-                            <mat-card-title>Class Students</mat-card-title> &nbsp;
-                            <button type="button" mat-raised-button color="primary" 
-                                [routerLink]="['/enrollment/', currentClassName, currentClassYear]">
-                                    <mat-icon>add</mat-icon>
-                                    ADD STUDENT
-                            </button>
+                        <mat-card-title>Class Details</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
-                        <table mat-table [dataSource]="enrollments">
-                            <mat-text-column name="studentId"></mat-text-column>
-                            <mat-text-column name="name"></mat-text-column>
-                            <mat-text-column name="phoneNum"></mat-text-column>
-                            <mat-text-column name="status"></mat-text-column>
-                            <mat-text-column name="expiryDate"></mat-text-column>
-                            <tr mat-header-row *matHeaderRowDef="enrolsColumnsToDisplay"></tr>
-                            <tr mat-row *matRowDef="let myRowData; columns: enrolsColumnsToDisplay"
-                            [routerLink]="['/students', myRowData.phoneNum, currentClassName, currentClassYear]"></tr>
-                        </table>
-
+                        <div> Teacher: <span *ngIf="classDetails"> {{ classDetails.teacherName }} </span></div>
+                        <div> No. of Students: {{ enrollments.length }}</div>
+                        <div *ngIf="classStartDate"> Start date: <span >{{ classStartDate | date:'EEEE, d/M/yy, h:mm a' }} </span></div>
+                        <div *ngIf="!classStartDate"> Start date: <span > NA </span></div>
+                        <div> Total sessions: <span> {{ totalSessions }} </span> </div>
                     </mat-card-content>
                 </mat-card>
-            </div>
-        </mat-tab> 
+                <div *ngIf="enrollments">
+                    <mat-card>
+                        <mat-card-header style="display:flex; justify-content: space-between;">
+                                <mat-card-title>Class Students</mat-card-title> &nbsp;
+                                <button type="button" mat-raised-button color="primary" 
+                                    [routerLink]="['/enrollment/', currentClassName, currentClassYear]">
+                                        <mat-icon>add</mat-icon>
+                                </button>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <table mat-table [dataSource]="enrollments">
+                                <mat-text-column name="studentId"></mat-text-column>
+                                <mat-text-column name="name"></mat-text-column>
+                                <mat-text-column name="phoneNum"></mat-text-column>
+                                <mat-text-column name="status"></mat-text-column>
+                                <mat-text-column name="expiryDate"></mat-text-column>
+                                <tr mat-header-row *matHeaderRowDef="enrolsColumnsToDisplay"></tr>
+                                <tr mat-row *matRowDef="let myRowData; columns: enrolsColumnsToDisplay"
+                                [routerLink]="['/students', myRowData.phoneNum, currentClassName, currentClassYear]"></tr>
+                            </table>
+
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </mat-tab> 
 
 
-    </mat-tab-group>
-    
-    <div class="mainButtonGroup">
-        <button mat-raised-button type="button" [routerLink]="['/classes']">BACK TO CLASSES</button>
-        &nbsp;
-        <button mat-raised-button type="button" [routerLink]="['']">BACK TO MAIN</button>
+        </mat-tab-group>
+        
+        <div class="mainButtonGroup">
+            <button mat-raised-button type="button" [routerLink]="['/classes']">BACK TO CLASSES</button>
+            &nbsp;
+            <button mat-raised-button type="button" [routerLink]="['']">BACK TO MAIN</button>
+        </div>
     </div>
-</div>
+
+</mat-drawer-container>

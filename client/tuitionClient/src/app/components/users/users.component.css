@@ -1,4 +1,35 @@
-.newUserForm{
+/* Menu and Page Dimensions */
+.mainPage{  width: 600px;   }
+.sideBar{   width: 175px;   }
+.topBar{    background-color: bisque;   }
+.drawerButton{
+    margin-left: 15px;
+    margin-bottom: 20px;
+}
+.logo{ 
+    margin-bottom: -12px;
+    margin-right: -5px;
+    margin-top: 10px;
+}
+.menu {
+    font-size: 1rem;
+    text-align: left;
+    height: 40px;
+    padding-top: 18px;
+    padding-left: 15px;
+    display: block;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+}
+.menu:hover {
+    font-weight: bold;
+    background-color: azure;
+}
+/* Menu ends here */
+
+
+
+/* Others */
+.searchUsersCard{
     margin: 20px;
     padding: 10px;
 }

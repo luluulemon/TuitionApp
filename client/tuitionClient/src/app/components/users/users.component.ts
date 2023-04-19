@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'src/app/model';
 import { UserService } from 'src/app/services/user.service';
+import { AddUserDialogComponent } from './add-user-dialog/add-user-dialog.component';
 
 @Component({
   selector: 'app-users',
@@ -11,36 +13,56 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class UsersComponent {
 
-  form!: FormGroup
-  newUserSelect: boolean = false
-  insertMsg: string = ''
+  userSearchForm!: FormGroup
+  usersTable: any[] = []
+  columnsToDisplay = ['name', 'type', 'phoneNum', 'email']
+  // newUserSelect: boolean = false
+  // insertMsg: string = ''
 
   constructor(private fb:FormBuilder, private userSvc: UserService,
-              private msgSnackBar: MatSnackBar){}
+              private msgSnackBar: MatSnackBar, private dialog:MatDialog){}
 
-  ngOnInit(){}
+  ngOnInit(){
+    this.createSearchForm()
+  }
 
-  newUser(){  
-    this.newUserSelect = true;
-    this.createForm()  }
-  userUnselect(){ this.newUserSelect = false; }
 
-  createForm(){
-    this.form = this.fb.group({
-      name: this.fb.control<string>('', Validators.required),
-      phoneNum: this.fb.control([Validators.required, Validators.pattern('[0-9]*')]),
-      email: this.fb.control<string>('', [Validators.required, Validators.email]),
-      type: this.fb.control<string>('', Validators.required)
+  newUser(){
+    const dialogRef = this.dialog.open(AddUserDialogComponent, {
+        width: '400px'
+      })
+
+    dialogRef.afterClosed().subscribe((msg) => {
+      console.info(msg)
+      if(msg)
+        this.msgSnackBar.open( msg, 'X', { duration: 7000 } )
     })
   }
 
-  saveUser(){
-    console.info(this.form.value)
-    const newUser: User = this.form.value
-    this.userSvc.addUser(newUser)
-                  .then(v => {console.info(v)
-                    this.msgSnackBar.open( v['Insert Msg'], 'X', { duration: 7000 } )
-                  })
-    this.createForm();
+  createSearchForm(){
+    this.userSearchForm = this.fb.group({
+      searchName: this.fb.control<string>('')
+    })
   }
+
+  searchUsers(){
+    console.info(this.userSearchForm.value)
+    this.userSvc.searchUser(this.userSearchForm.value.searchName)
+                          .then(v => {
+                            console.info(v)
+                            this.usersTable = v
+                          })
+  }
+
+  displayUser(user: any){ console.info(user)  }
+ 
+  // saveUser(){
+  //   console.info(this.form.value)
+  //   const newUser: User = this.form.value
+  //   this.userSvc.addUser(newUser)
+  //                 .then(v => {console.info(v)
+  //                   this.msgSnackBar.open( v['Insert Msg'], 'X', { duration: 7000 } )
+  //                 })
+  //   this.createForm();
+  // }
 }

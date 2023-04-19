@@ -2,6 +2,7 @@ package vttp.course.tuition.server.repositories;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,5 +75,9 @@ public class UserRepository {
     {    jdbcTemplate.update(SQL_UPDATE_USER_EMAIL, email, phoneNum);   }
 
     public void deleteUser(int phoneNum){   jdbcTemplate.update(SQL_DELETE_USER, phoneNum); }
+
+    public SqlRowSet searchUser(String searchName){
+        return jdbcTemplate.queryForRowSet(SQL_SEARCH_USER, searchName);
+    }
 
 }

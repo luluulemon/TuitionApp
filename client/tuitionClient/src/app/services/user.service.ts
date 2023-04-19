@@ -14,4 +14,8 @@ export class UserService{
     addUser(newUser: User):Promise<any>{
         return lastValueFrom( this.http.post('/api/user/addUser', newUser))
     }
+
+    searchUser(searchName: string):Promise<any[]>{
+        return lastValueFrom( this.http.get<any[]>(`/api/user/searchUser/${searchName}`))
+    }
 }

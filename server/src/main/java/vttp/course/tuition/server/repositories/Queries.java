@@ -14,6 +14,7 @@ public class Queries {
     public static String SQL_ADD_STUDENT = "insert into students(name, phoneNum, joinDate) values(?, ?, ?)";
     public static String SQL_UPDATE_USER_EMAIL = "update auth set email=? where phoneNum=?";
     public static String SQL_DELETE_USER = "delete from auth where phoneNum=?";
+    public static String SQL_SEARCH_USER = "select * from auth where name like CONCAT(?,'%')";
 
     public static String SQL_ADD_SCHEDULE = "insert into schedules(classDate, className, classYear) values(?, ?, ?)";
     public static String SQL_GET_SCHEDULES = "select * from schedules where classYear=? and className=? order by classDate";
