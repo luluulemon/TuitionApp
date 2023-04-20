@@ -95,7 +95,7 @@ public class ClassRepository {
 
     public void deleteSchedule(int classYear, String className, String dateTime){
         jdbcTemplate.update(SQL_DELETE_SCHEDULE, classYear, className, dateTime);
-        jdbcTemplate.update(SQL_DELETE_SCHEDULE_W_ATTENDANCE, dateTime);
+        jdbcTemplate.update(SQL_DELETE_SCHEDULE_W_ATTENDANCE, classYear, className, dateTime);
     }
 
     public SqlRowSet getStudents(){

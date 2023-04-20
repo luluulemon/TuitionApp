@@ -6,13 +6,25 @@
     <mat-card-content>
         <mat-list>
             <mat-list-item *ngFor="let s of classStudents" >
-                <div >
-                    <div *ngIf="s.present && s.status=='current'">
+                <div *ngIf="!isPastSchedule">
+                    <div *ngIf="s.present && s.status=='current'" style="display:flex; justify-content: space-between;">
                         <span>Student Id: {{ s.studentId}}, Name: {{ s.name }}  </span>
                         <span> PRESENT </span>
                     </div>
 
                     <div *ngIf="!s.present && s.status=='current'" (click)="markAttendance(s.phoneNum)">
+                        Student Id: {{ s.studentId}}, Name: {{ s.name }}
+                    </div>
+                </div>
+                <!-- Grey out for past schedules -->
+                <div *ngIf="isPastSchedule">
+                    <div *ngIf="s.present && s.status=='current'" 
+                        style="color: #808080; display:flex; justify-content: space-between;">
+                        <span >Student Id: {{ s.studentId}}, Name: {{ s.name }}  </span>
+                        <span> PRESENT </span>
+                    </div>
+
+                    <div *ngIf="!s.present && s.status=='current'" style="color: #808080">
                         Student Id: {{ s.studentId}}, Name: {{ s.name }}
                     </div>
                 </div>

@@ -97,6 +97,9 @@ public class ClassController {
     @ResponseBody
     public void deleteSchedule(
         @PathVariable int classYear, @PathVariable String className, @PathVariable String dateTime){
+        System.out.println("CHeck year: " + classYear);
+        System.out.println("CHeck name: " + className);
+        System.out.println("CHeck date: " + dateTime);
         classSvc.deleteSchedule(classYear, className, dateTime);
     }
 

@@ -18,6 +18,7 @@ export class AttendanceComponent {
   currentClassYear: number = 0    // store current classYear
   currentSchedule: string = ''    // store current schedule
   classStudents: Enrollment[] = []
+  isPastSchedule: boolean = true;
 
   ngOnInit(){
     this.currentClassName = this.activatedRoute.snapshot.params['className']
@@ -26,6 +27,13 @@ export class AttendanceComponent {
     console.info(this.currentClassYear)
     this.currentSchedule = this.activatedRoute.snapshot.params['schedule']
     console.info(this.currentSchedule)
+
+    // Set boolean to check if schedule is before today --> cannot mark attendance for past schedule
+    let scheduleDate:Date = new Date( this.currentSchedule)  
+    let today:Date = new Date()
+    today.setHours(0,0,0,0)
+    if(scheduleDate>today){  this.isPastSchedule=false}
+
     this.getAttendance()
   }
 

@@ -95,6 +95,7 @@ export class ClassDetailsComponent {
 
       let minute = ''
       if(this.scheduleForm.value.minute<10){  minute = `0${this.scheduleForm.value.minute}`}
+      else{ minute = this.scheduleForm.value.minute }
 
     let datetime = `${latest_date} ${hour}:${minute}:00`
     console.info('check datetime entry: ',datetime)
@@ -219,8 +220,6 @@ export class ClassDetailsComponent {
     this.attendanceSvc.getClassAttendance(this.currentClassYear, this.currentClassName)
                         .then((v:any) => {
                           console.info(v) 
-                          // this.allAttendance = v.attendance
-                          // this.attendanceColumnsToDisplay = v.scheduleList
 
                           this.dialog.open(AttendanceDialogComponent, {
                             data:  { allAttendance : v.attendance,

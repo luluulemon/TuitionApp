@@ -104,7 +104,7 @@ public class ClassService {
                                                 .length(firstSchedule.toLocalDate().isLeapYear()));
 
             while(firstSchedule.isBefore(endOfMonth)){
-                // get if new Schedule clashes with existing ( +- 1 hr )
+                // check if new Schedule clashes with existing ( +- 1 hr )
                 LocalDateTime sPlusOne = firstSchedule.plusMinutes(lessonDuration);
                 LocalDateTime sMinusOne = firstSchedule.minusMinutes(lessonDuration);
                 for(LocalDateTime s:currentSchedules){
