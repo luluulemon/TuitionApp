@@ -3,13 +3,13 @@
     <!-- Menu Bars -->
     <mat-drawer #drawer>
         <div class="sideBar">
-            <div [routerLink]="['classes']" class="menu">
+            <div [routerLink]="['/classes']" class="menu">
                 Class
             </div>
-            <div [routerLink]="['users']" class="menu">
+            <div [routerLink]="['/users']" class="menu">
                 Users and Administration
             </div>
-            <div [routerLink]="['jokes']" class="menu">
+            <div [routerLink]="['/jokes']" class="menu">
                 Dad Jokes
             </div>
         </div>
@@ -41,7 +41,7 @@
         </mat-card-content>
 
         <mat-card-actions>
-            <button mat-raised-button [routerLink]="['']">BACK</button>
+            <button mat-raised-button [routerLink]="['/main']">BACK</button>
             &nbsp;
             <button mat-raised-button (click)="ngOnInit()">GET MORE</button>
         </mat-card-actions>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
+import vttp.course.tuition.server.services.EmailService;
 import vttp.course.tuition.server.services.UserInsertException;
 import vttp.course.tuition.server.services.UserService;
 
@@ -27,21 +28,30 @@ public class UserController {
     @Autowired
     private UserService userSvc;
 
+    @Autowired
+    private EmailService emailSvc;
+
     @PostMapping("addUser")
     @ResponseBody
     public ResponseEntity<String> addUser(@RequestBody String newUser){
         JsonReader reader = Json.createReader(new StringReader(newUser));
         JsonObject userJson = reader.readObject(); 
 
-        try{
+        try{        // Add to auth & teachers. Send password to new user
             if(userJson.getString("type").equals("teacher"))
-            {   userSvc.addTeacher(userJson);   }
+            {   userSvc.addTeacher(userJson);   
+                emailSvc.sendSimpleMessage(userJson.getString("email"), 
+                "NewtonLab: Welcome %s".formatted(userJson.getString("name")), 
+                "Password: %s\n\nPlease change your password on login".formatted(userJson.getString("name"))
+            );
+            }
 
             if(userJson.getString("type").equals("student"))
             {   userSvc.addStudent(userJson);   }
 
             if(userJson.getString("type").equals("admin"))
             {   userSvc.addAdmin(userJson);     }
+
         }
         catch(UserInsertException e){   
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
@@ -60,5 +70,12 @@ public class UserController {
     @GetMapping("/searchUser/{searchName}")
     public ResponseEntity<String> searchUser(@PathVariable String searchName){
         return ResponseEntity.ok(userSvc.searchUser(searchName).toString() );
+    }
+
+
+    @GetMapping("/email")   // test endpoint
+    public void testEmail(){
+        emailSvc.sendSimpleMessage("chen_luwei@yahoo.com.sg", "Test only", "Test Msg");
+        System.out.println("Sent email");
     }
 }

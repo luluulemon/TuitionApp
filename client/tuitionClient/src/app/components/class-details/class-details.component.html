@@ -3,13 +3,13 @@
     <!-- Menu Bars -->
     <mat-drawer #drawer>
         <div class="sideBar">
-            <div [routerLink]="['classes']" class="menu">
+            <div [routerLink]="['/classes']" class="menu">
                 Class
             </div>
-            <div [routerLink]="['users']" class="menu">
+            <div [routerLink]="['/users']" class="menu">
                 Users and Administration
             </div>
-            <div [routerLink]="['jokes']" class="menu">
+            <div [routerLink]="['/jokes']" class="menu">
                 Dad Jokes
             </div>
         </div>
@@ -171,7 +171,7 @@
         <div class="mainButtonGroup">
             <button mat-raised-button type="button" [routerLink]="['/classes']">BACK TO CLASSES</button>
             &nbsp;
-            <button mat-raised-button type="button" [routerLink]="['']">BACK TO MAIN</button>
+            <button mat-raised-button type="button" [routerLink]="['/main']">BACK TO MAIN</button>
         </div>
     </div>
 

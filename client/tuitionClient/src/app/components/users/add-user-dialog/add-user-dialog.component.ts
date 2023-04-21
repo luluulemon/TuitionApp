@@ -42,7 +42,6 @@ export class AddUserDialogComponent {
     this.userSvc.addUser(newUser)
                   .then(v => {console.info(v)
                     this.dialogRef.close(v['Insert Msg'])
-                    // this.msgSnackBar.open( v['Insert Msg'], 'X', { duration: 7000 } )
                   })
     this.createForm();
   }

@@ -21,10 +21,12 @@ import { AttendanceDialogComponent } from './components/class-details/attendance
 import { StudentDialogComponent } from './components/students/student-dialog/student-dialog.component';
 import { DadJokeComponent } from './components/dad-joke/dad-joke.component';
 import { AddUserDialogComponent } from './components/users/add-user-dialog/add-user-dialog.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 const appRoutes:Routes = [
-  { path: '', component: MainComponent  },
+  { path: '', component:LoginComponent},
+  { path: 'main', component: MainComponent  },
   { path: 'classes', component: ClassesComponent},
   { path: 'students/:phoneNum/:className/:classYear', component: StudentsComponent },
   { path: 'classDetails/:className/:classYear', component: ClassDetailsComponent },
@@ -49,6 +51,7 @@ const appRoutes:Routes = [
     StudentDialogComponent,
     DadJokeComponent,
     AddUserDialogComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

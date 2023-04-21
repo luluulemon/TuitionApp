@@ -2,6 +2,8 @@ package vttp.course.tuition.server.repositories;
 
 public class Queries {
     
+    public static String SQL_GET_PASSWORD = "select password from auth where email=?";
+
     public static String SQL_GET_TEACHERS = "select * from teachers";
 
     public static String SQL_GET_TEACHERID_FROM_NUM = "select teacherId from teachers where phoneNum=?";
