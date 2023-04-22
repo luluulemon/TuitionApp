@@ -42,15 +42,18 @@ public class UserController {
             {   userSvc.addTeacher(userJson);   
                 emailSvc.sendSimpleMessage(userJson.getString("email"), 
                 "NewtonLab: Welcome %s".formatted(userJson.getString("name")), 
-                "Password: %s\n\nPlease change your password on login".formatted(userJson.getString("name"))
-            );
+                "Password: %s\n\nPlease change your password on login".formatted(userJson.getString("name")));
             }
 
             if(userJson.getString("type").equals("student"))
             {   userSvc.addStudent(userJson);   }
 
             if(userJson.getString("type").equals("admin"))
-            {   userSvc.addAdmin(userJson);     }
+            {   userSvc.addAdmin(userJson);     
+                emailSvc.sendSimpleMessage(userJson.getString("email"), 
+                "NewtonLab: Welcome %s".formatted(userJson.getString("name")), 
+                "Password: %s\n\nPlease change your password on login".formatted(userJson.getString("name")));
+            }
 
         }
         catch(UserInsertException e){   

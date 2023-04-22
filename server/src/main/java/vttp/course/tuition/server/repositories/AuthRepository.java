@@ -17,7 +17,6 @@ public class AuthRepository {
     public Optional<Boolean> login(String email, String password){
         
         SqlRowSet rs = jdbcTemplate.queryForRowSet(SQL_GET_PASSWORD, email);
-
         if(rs.next())      // get into data row -> shd hav only one row
         {   return Optional.of( password.equals(rs.getString("password")) );    }
 
