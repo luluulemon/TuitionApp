@@ -1,12 +1,14 @@
 <h1 mat-dialog-title>Overall Attendance</h1>
-<div mat-dialog-content>
+<div mat-dialog-content *ngIf="data.allAttendance.length>0">
     <table mat-table [dataSource]="data.allAttendance">
 
         <mat-text-column *ngFor="let s of data.attendanceColumnsToDisplay" [name]=s></mat-text-column>
         <tr mat-header-row *matHeaderRowDef="data.attendanceColumnsToDisplay"></tr>
         <tr mat-row *matRowDef="let myRowData; columns: data.attendanceColumnsToDisplay"></tr>
     </table>
-
+</div>
+<div mat-dialog-content *ngIf="data.allAttendance.length==0">
+  <h2> No schedules yet </h2>
 </div>
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close>Close</button>

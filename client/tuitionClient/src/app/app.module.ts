@@ -22,6 +22,7 @@ import { StudentDialogComponent } from './components/students/student-dialog/stu
 import { DadJokeComponent } from './components/dad-joke/dad-joke.component';
 import { AddUserDialogComponent } from './components/users/add-user-dialog/add-user-dialog.component';
 import { LoginComponent } from './components/login/login.component';
+import { ScheduleDialogComponent } from './components/class-details/schedule-dialog/schedule-dialog.component';
 
 
 const appRoutes:Routes = [
@@ -52,6 +53,7 @@ const appRoutes:Routes = [
     DadJokeComponent,
     AddUserDialogComponent,
     LoginComponent,
+    ScheduleDialogComponent,
   ],
   imports: [
     BrowserModule,

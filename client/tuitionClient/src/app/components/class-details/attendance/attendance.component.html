@@ -12,7 +12,7 @@
                         <span> PRESENT </span>
                     </div>
 
-                    <div *ngIf="!s.present && s.status=='current'" (click)="markAttendance(s.phoneNum)">
+                    <div *ngIf="!s.present && s.status=='current'" (click)="markAttendance(s.phoneNum)" class="unmarkedAttendance">
                         Student Id: {{ s.studentId}}, Name: {{ s.name }}
                     </div>
                 </div>

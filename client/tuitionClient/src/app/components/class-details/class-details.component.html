@@ -12,6 +12,9 @@
             <div [routerLink]="['/jokes']" class="menu">
                 Dad Jokes
             </div>
+            <div [routerLink]="['']" class="menu">
+                Log Out
+            </div>
         </div>
     </mat-drawer>
     <div class="topBar">
@@ -35,7 +38,7 @@
 
                 <h2 style="margin:10px">Scheduled Classes For {{ currentClassName }}
                     <button mat-raised-button *ngIf="!addSchedule" type="button" style="float:right" 
-                        matTooltip="Add Schedule" (click)="openAddSchedule()">
+                        matTooltip="Add Schedule" (click)="saveSchedule()">
                         +</button>
 
                     <button mat-raised-button *ngIf="addSchedule" type="button" style="float:right" 
