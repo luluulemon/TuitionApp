@@ -18,7 +18,8 @@ export class ScheduleDialogComponent {
         addSchedule: boolean,
         editSchedule: boolean,
         schedule: any,
-        scheduleOldDateTime: Date },  // schedule to edit
+        scheduleOldDateTime: Date,
+        editIndex: number },  // schedule to edit
     private fb: FormBuilder, private datepipe: DatePipe, private classSvc: ClassService) {}
 
 
@@ -30,7 +31,7 @@ export class ScheduleDialogComponent {
     else{ this.createEditForm() }
   }
 
-  createAddForm(){             // form for add & edit schedule
+  createAddForm(){             // form for add schedule
     this.scheduleForm = this.fb.group({
       scheduleDate: this.fb.control('', Validators.required),
       hour: this.fb.control<number>(0, Validators.required),
@@ -39,7 +40,7 @@ export class ScheduleDialogComponent {
     })
   }
 
-  createEditForm(){
+  createEditForm(){          // form for edit schedule
     this.scheduleForm = this.fb.group({
       scheduleDate: this.fb.control(this.data.schedule, Validators.required),
       hour: this.fb.control<number>(this.data.schedule.getHours(), Validators.required),
@@ -66,10 +67,9 @@ export class ScheduleDialogComponent {
     console.info('check datetime entry: ',datetime)
 
     const clash: boolean = 
-        this.classSvc.checkClashingSchedules(datetime, this.data.allSchedules)  // check clashing schedules
-    if(clash){ 
-      this.dialogRef.close('CLASH with other schedule')     
-    }
+      this.classSvc.checkClashingSchedules(datetime, this.data.allSchedules, -1)   // check clashing schedules
+        
+    if(clash){ this.dialogRef.close('CLASH with other schedule')     }
 
     else{
     const schedule =
@@ -108,7 +108,7 @@ export class ScheduleDialogComponent {
   let updateDateTime = { oldDateTime: this.data.scheduleOldDateTime, 
     newDateTime: `${latest_date} ${hour}:${minute}:00`}
   
-  const clash: boolean = this.classSvc.checkClashingSchedules(updateDateTime.newDateTime, this.data.allSchedules)
+  const clash: boolean = this.classSvc.checkClashingSchedules(updateDateTime.newDateTime, this.data.allSchedules, this.data.editIndex)
     if(clash){  this.dialogRef.close('CLASH with other schedule')    }
 
     else{

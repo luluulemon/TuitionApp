@@ -96,7 +96,7 @@ export class ClassDetailsComponent {
       });
     
     dialogRef.afterClosed().subscribe((Msg) => {
-      console.info(Msg)
+      console.info(Msg)       // displays either CLASH or change in schedule
       if(Msg=='CLASH with other schedule'){
         this.updateMsg =  Msg
         this.openSnackBar()
@@ -107,56 +107,11 @@ export class ClassDetailsComponent {
         this.openSnackBar()
       }
     })
-    
-    
-
-    // // try converting date
-    // let latest_date =this.datepipe.transform(this.scheduleForm.value.scheduleDate, 'yyyy-MM-dd');
-    // // create SQL datetime string
-    //   // adding zero for single digits: for server DateTimeFormatter
-    //   let hour = ''
-    //   if(this.scheduleForm.value.hour<10){  hour = `0${this.scheduleForm.value.hour}` }
-    //   else{ hour = this.scheduleForm.value.hour }
-
-    //   let minute = ''
-    //   if(this.scheduleForm.value.minute<10){  minute = `0${this.scheduleForm.value.minute}`}
-    //   else{ minute = this.scheduleForm.value.minute }
-
-    // let datetime = `${latest_date} ${hour}:${minute}:00`
-    // console.info('check datetime entry: ',datetime)
-
-    // const clash: boolean = 
-    //     this.classSvc.checkClashingSchedules(datetime, this.schedules)  // check clashing schedules
-    // if(clash){      
-    //   this.updateMsg = 'CLASH WITH OTHER SCHEDULE'
-    //   this.openSnackBar()
-    // }
-
-    // else{
-    // const schedule =
-    //               { className: this.currentClassName, 
-    //                 classYear: this.currentClassYear, 
-    //                 classDate: datetime,
-    //                 repeat: this.scheduleForm.value.repeat,
-    //                 schedules: this.schedules     // send to back end to check for repeat
-    //               }
-    // this.classSvc.addSchedule(schedule)
-    //             .then(() => 
-    //               { 
-    //                 this.getSchedules()
-    //                 this.updateMsg =  `Added schedule: ${ this.datepipe.transform(new Date(datetime), 'M/d/yy, h:mm a' )}`
-    //                 this.openSnackBar()
-    //                 this.closeAddEditSchedule()
-    //               })
-    //             .catch(error => 
-    //               { console.error("error: ", error)
-    //                 this.updateMsg = 'CLASH with other schedule'
-    //                 this.openSnackBar()
-    //               } )
-    // }
   }
 
-  openUpdateSchedule(s: Date){ 
+
+
+  openUpdateSchedule(s: Date, index:number){ 
     this.scheduleOldDateTime = s    // store old schedule on snackBar update
     // let schedule = new Date(s)
     this.scheduleForm = this.fb.group({
@@ -171,13 +126,13 @@ export class ClassDetailsComponent {
                 currentClassYear: this.currentClassYear,
                 editSchedule: true,
                 schedule: new Date(s),
-                scheduleOldDateTime: s
+                scheduleOldDateTime: s,
+                editIndex: index
               }, 
       width: '500px',
     });
 
     dialogRef.afterClosed().subscribe((Msg) => {
-      console.info(Msg)
       if(Msg=='CLASH with other schedule'){
         this.updateMsg =  Msg
         this.openSnackBar()
@@ -192,39 +147,7 @@ export class ClassDetailsComponent {
 
   scheduleOldDateTime: Date = new Date  // to use for updateSchedule below
 
-  updateSchedule(){       // set up form input to required SQL input format
-    let latest_date =this.datepipe.transform(this.scheduleForm.value.scheduleDate, 'yyyy-MM-dd');
 
-      // adding zero for single digits: for server DateTimeFormatter
-      let hour = ''
-      if(this.scheduleForm.value.hour<10){  hour = `0${this.scheduleForm.value.hour}` }
-      else{ hour = this.scheduleForm.value.hour }
-
-      let minute = ''
-      if(this.scheduleForm.value.minute<10){  minute = `0${this.scheduleForm.value.minute}`}
-      else{ minute = this.scheduleForm.value.minute }
-
-
-    let updateDateTime = { oldDateTime: this.scheduleOldDateTime, 
-      newDateTime: `${latest_date} ${hour}:${minute}:00`}
-    
-    const clash: boolean = this.classSvc.checkClashingSchedules(updateDateTime.newDateTime, this.schedules)
-    if(clash){
-      this.updateMsg = 'CLASH WITH OTHER SCHEDULE'
-      this.openSnackBar()
-    }
-
-    else{
-    this.classSvc.updateSchedule(this.currentClassYear, this.currentClassName, updateDateTime)
-                  .then(() => { this.getSchedules()
-                                this.updateMsg = 
-                                  `updated ${ this.datepipe.transform(new Date(this.scheduleOldDateTime), 'M/d/yy, h:mm a' )} 
-                                    to ${ this.datepipe.transform( updateDateTime.newDateTime, 'M/d/yy, h:mm a' )}`
-                                this.editSchedule = false
-                                this.openSnackBar()
-                              })
-    }
-  }
 
   deleteSchedule(s: Date){  
     this.classSvc.deleteSchedule(this.currentClassYear, this.currentClassName, s)

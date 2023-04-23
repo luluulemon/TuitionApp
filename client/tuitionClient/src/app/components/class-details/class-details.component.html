@@ -28,7 +28,7 @@
 
 
     <!-- Start of content -->
-    <div class="mainPage">
+    <div class="mainContents">
         
         <mat-tab-group animationDuration="0ms">
 
@@ -36,7 +36,7 @@
                 <!-- Can only edit future classes -->
             <mat-tab label="Attendance">
 
-                <h2 style="margin:10px">Scheduled Classes For {{ currentClassName }}
+                <h2 style="margin-top: 10px; width:95%">Scheduled Classes For {{ currentClassName }}
                     <button mat-raised-button *ngIf="!addSchedule" type="button" style="float:right" 
                         matTooltip="Add Schedule" (click)="saveSchedule()">
                         +</button>
@@ -47,7 +47,7 @@
 
 
                 <!-- Add Schedules form -->
-                <div *ngIf="addSchedule || editSchedule" >
+                <!-- <div *ngIf="addSchedule || editSchedule" >
                     <mat-icon (click)="closeAddEditSchedule()" style="float:right">close</mat-icon>
                     <form [formGroup]="scheduleForm">
             
@@ -90,19 +90,19 @@
                         <mat-icon>edit</mat-icon> EDIT
                         </button>
                     </form>
-                </div>
+                </div> -->
                 <br>
                 <mat-divider></mat-divider>
 
                 <div (click)="getClassAttendance()">
-                    <button mat-raised-button><h2>Show Overall Attendance</h2></button>
+                    <button mat-button class="overallAttendance"><h2>Show Overall Attendance</h2></button>
                 </div>
 
 
                 <!-- Show list of Schedules -->
                 <div class="schedules">
                     <mat-list *ngIf="schedules" >
-                        <mat-list-item *ngFor="let s of schedules" class="schedule"> 
+                        <mat-list-item *ngFor="let s of schedules, let idx=index" class="schedule"> 
                             
                             <!-- for past schedules, cannot edit -->
                             <div *ngIf="!compareDate(s)" >
@@ -116,7 +116,7 @@
                                     {{s | date: 'EEEE, d/M/yy, h:mm a'}} 
                                 </span>    
                                 <span style="float:right">                   
-                                    <button ><mat-icon  (click)="openUpdateSchedule(s)">edit </mat-icon></button> 
+                                    <button ><mat-icon  (click)="openUpdateSchedule(s, idx)">edit </mat-icon></button> 
                                     &nbsp;
                                     <button><mat-icon (click)="deleteSchedule(s)">delete </mat-icon></button>
                                 </span>

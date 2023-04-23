@@ -49,8 +49,7 @@ COPY --from=springboot /app/target/server-0.0.1-SNAPSHOT.jar server.jar
 ENV PORT=8080
 # ENV DB_SERVER=containers-us-west-26.railway.app
 # ENV DB_PORT=5475
-ENV SPRING_DATASOURCE_USERNAME=root
-ENV SPRING_DATASOURCE_PASSWORD=rootroot
+
 ENV SPRING_DATASOURCE_URL=jdbc:mysql://containers-us-west-26.railway.app:5475/tuition
 
 EXPOSE ${PORT}
