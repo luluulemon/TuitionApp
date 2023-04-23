@@ -6,6 +6,7 @@ import { Enrollment, Student } from 'src/app/model';
 import { EnrolService } from 'src/app/services/enrol.service';
 import { StudentService } from 'src/app/services/student.service';
 import { StudentDialogComponent } from './student-dialog/student-dialog.component';
+import { TeacherService } from 'src/app/services/teacher.service';
 
 @Component({
   selector: 'app-students',
@@ -17,33 +18,30 @@ export class StudentsComponent {
   constructor(private activatedRoute:ActivatedRoute, 
               private studentSvc: StudentService,
               private enrolSvc: EnrolService,
-              private fb:FormBuilder, private dialog: MatDialog){}
+              private fb:FormBuilder, private dialog: MatDialog,
+              private teacherSvc: TeacherService){}
 
   selectedStudentNum: number = 0
   currentClassName: string = ''
   currentClassYear: number = 0
   student!: Student
-  profilePicForm!: FormGroup
-  // todaysDate: Date = new Date;  // for displaying extend button
-  
+
+
   @ViewChild('uploadFile')
   imageFile!: ElementRef
-
 
 
   ngOnInit(){
     this.selectedStudentNum = this.activatedRoute.snapshot.params['phoneNum']
     this.currentClassName = this.activatedRoute.snapshot.params['className']
     this.currentClassYear = this.activatedRoute.snapshot.params['classYear']
-    this.getStudentDetails(this.selectedStudentNum)
-    this.createProfilePicForm()
+    // this.userType = this.activatedRoute.snapshot.params['type']
+    // if(this.userType=='teacher'){  console.info('teacher')   
+    //   this.getTeacherDetails(this.selectedStudentNum)
+    // }
+    this.getStudentDetails(this.selectedStudentNum)  
   }
 
-  createProfilePicForm(){
-    this.profilePicForm = this.fb.group({
-      'image-file': this.fb.control('')
-    })
-  }
 
   getStudentDetails(phoneNum: number){
     this.studentSvc.getStudentDetails(phoneNum)
@@ -53,25 +51,24 @@ export class StudentsComponent {
                     })
   }
 
+  // getTeacherDetails(phoneNum: number){
+  //   this.teacherSvc.getTeacherDetails(phoneNum)
+  //                   .then(v => {
+  //                     this.teacher = v
+  //                     console.info(v)
+  //                   })
+  // }
+
   extendEnrollment(enrollment: Enrollment){
     console.info(enrollment)
     this.enrolSvc.extendEnrollment(enrollment)
                   .then(() => this.getStudentDetails(this.selectedStudentNum))
   }
 
-  addProfilePic(){
-    const formData = new FormData()
-    formData.set('image', this.imageFile.nativeElement.files[0])
-    this.studentSvc.addProfilePic(this.selectedStudentNum, formData)
-                        .then(()=> this.getStudentDetails(this.selectedStudentNum))
-  }
 
   uploadPic(){
-    // const formData = new FormData()
-    // formData.set('image', this.imageFile.nativeElement.files[0])
-
     const dialogRef = this.dialog.open(StudentDialogComponent, { 
-        data: { selectedStudent: this.student },
+        data: { selectedStudent: this.student   },
         width: '500px'
       })
 
@@ -79,11 +76,10 @@ export class StudentsComponent {
         console.info('Check subscription')
         this.getStudentDetails(this.selectedStudentNum)
       })
-
   }
 
-  editStudentDetails(){
 
+  editStudentDetails(){
     const dialogRef = this.dialog.open(StudentDialogComponent, {
       data: { selectedStudent: this.student, editDetails: true },
       width: '350px'

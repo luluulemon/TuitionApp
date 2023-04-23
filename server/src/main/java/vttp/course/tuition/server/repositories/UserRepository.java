@@ -13,7 +13,6 @@ import static vttp.course.tuition.server.repositories.Queries.*;
 
 import java.util.Date;
 
-import vttp.course.tuition.server.services.UserInsertException;
 
 @Repository
 public class UserRepository {
@@ -59,6 +58,15 @@ public class UserRepository {
                             "student", 
                             userJson.getString("email"),
                             userJson.getString("name"));
+    }
+
+    public void addExistingTeacher(JsonObject userJson, String password){
+        jdbcTemplate.update(SQL_ADD_USER, 
+                            userJson.getInt("phoneNum"), 
+                            userJson.getString("name"), 
+                            "teacher", 
+                            userJson.getString("email"),
+                            password);
     }
 
     public void addAdmin(JsonObject userJson){

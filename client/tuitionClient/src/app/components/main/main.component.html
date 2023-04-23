@@ -12,16 +12,18 @@
             <div [routerLink]="['/jokes']" class="menu">
                 Dad Jokes
             </div>
+            <div [routerLink]="['/password']" class="menu">
+                Change password
+            </div>
             <div [routerLink]="['']" class="menu">
                 Log Out
             </div>
         </div>
-
     </mat-drawer>
 
     <div class="topBar">
-        <button mat-raised-button (click)="drawer.toggle()" class="drawerButton">
-            <mat-icon>list</mat-icon></button>
+        <button mat-button (click)="drawer.toggle()" class="drawerButton">
+            <mat-icon class="drawerIcon" >list</mat-icon></button>
         &nbsp;
         <img style="height:50px" src="/assets/newton_lab.png" alt="" class="logo">
         <span style="font-size: 30px;">NewtonLab Tuition </span>
@@ -30,7 +32,7 @@
 
 
     <!-- Content for main: upcoming classes -->
-    <div>
+    <div class="mainContents">
         <mat-card class="scheduleCards">
             <mat-card-header *ngIf="todaysSchedules.length>0">
                 <mat-card-title>Today's classes</mat-card-title>

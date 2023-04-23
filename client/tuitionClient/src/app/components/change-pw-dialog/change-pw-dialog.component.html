@@ -1,0 +1,41 @@
+<div class="pwPage">
+    <mat-card>
+        <mat-card-header>
+        <mat-card-title>  
+            <div >Change Password</div>
+        </mat-card-title>
+        </mat-card-header>
+        
+        <mat-card-content>
+        <form [formGroup]="changePwForm">
+            <mat-form-field>
+            <input matInput type="password" placeholder="Enter Password" formControlName="password" required>
+            <mat-error *ngIf="changePwForm.controls['password'].invalid">Please enter a valid password.</mat-error>
+            <mat-icon matSuffix>lock</mat-icon>    
+            </mat-form-field>
+            
+            <mat-form-field>
+            <input matInput type="password" placeholder="Enter New Password" name="password" formControlName="newPassword" required>
+            <mat-error *ngIf="changePwForm.controls['newPassword'].invalid">Please enter a password.</mat-error>
+            <mat-icon matSuffix>lock</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
+            <input matInput type="password" placeholder="Repeat New Password" name="password" formControlName="repeatNewPassword" required>
+            <mat-error *ngIf="changePwForm.controls['repeatNewPassword'].invalid">Please enter a password.</mat-error>
+            <mat-icon matSuffix>lock</mat-icon>
+            </mat-form-field>
+            
+            <!-- <mat-checkbox [(ngModel)]="rememberMe" name="rememberMe">Remember Me</mat-checkbox> -->
+            
+            <button class="loginButton" mat-button type="button" (click)="changePw()" [disabled]="changePwForm.invalid">
+                CHANGE PASSWORD </button>
+            &nbsp;
+            <button mat-button [routerLink]="['/main']"> CANCEL </button>
+        </form>
+        
+        <mat-error *ngIf="ErrorMsg">{{ ErrorMsg }}</mat-error>
+        </mat-card-content>
+        
+    </mat-card>
+</div>

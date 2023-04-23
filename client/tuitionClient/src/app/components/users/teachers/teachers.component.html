@@ -1,14 +1,14 @@
-<div *ngIf="student">
+<div *ngIf="teacher">
     <mat-card class="mainCardStyle">
 
         <!-- Header for name & profilePic -->
         <mat-card-header>   
             <mat-card-title-group>
-                <mat-card-title>{{student.name}}</mat-card-title>
-                <mat-card-subtitle>Student Id: {{ student.studentId}}</mat-card-subtitle>
-                <img mat-card-sm-image *ngIf="student.profilePic!='NA'" matTooltip="Edit Pic"
-                    class="profilePic"  (click)="uploadPic()"   src="{{ student.profilePic }}" >
-                <img mat-card-sm-image *ngIf="student.profilePic=='NA'" matTooltip="Upload Pic"
+                <mat-card-title>{{teacher.name}}</mat-card-title>
+                <mat-card-subtitle>Teacher Id: {{ teacher.studentId}}</mat-card-subtitle>
+                <img mat-card-sm-image *ngIf="teacher.profilePic!='NA'" matTooltip="Edit Pic"
+                    class="profilePic"  (click)="uploadPic()"   src="{{ teacher.profilePic }}" >
+                <img mat-card-sm-image *ngIf="teacher.profilePic=='NA'" matTooltip="Upload Pic"
                     class="profilePic"  (click)="uploadPic()"   src="assets/profile_pic.jpeg" >
             </mat-card-title-group>
         </mat-card-header>
@@ -17,15 +17,14 @@
         <!-- Content: Display details and enrollments -->
         <mat-card-content>
             <div class="studentDetails">
-                <div ><span>Phone Number: {{ student.phoneNum }}</span>
+                <div ><span>Phone Number: {{ teacher.phoneNum }}</span>
                     <span style="float:right">
-                        <button (click)="editStudentDetails()">
+                        <button (click)="editTeacherDetails()">
                             <mat-icon type="button" fontIcon="edit"></mat-icon>
                         </button>
                     </span>
-                    <div style="margin-top:5px;"><span>Email: {{ student.email }}</span></div>
-                    <div  style="margin-top:5px;"><span>Join Date: {{student.joinDate}}</span></div>
-                    <div style="margin-top:5px;">Notes: {{student.notes}}</div>
+                    <div style="margin-top:5px;"><span>Email: {{ teacher.email }}</span></div>
+                    <div  style="margin-top:5px;"><span>Join Date: {{teacher.joinDate}}</span></div>
                 </div>
             </div>
 
@@ -36,18 +35,11 @@
                     <tr>
                         <th>Class Name</th>
                         <th>Class Year</th>
-                        <th>Start Date</th>
-                        <th>Expiry Date</th>
                         <th></th>
                     </tr>
-                    <tr *ngFor="let enrol of student.enrollments">
-                        <td>{{ enrol.className }}</td>
-                        <td> {{ enrol.classYear }} </td>
-                        <td> {{ enrol.startDate }} </td>
-                        <td> {{ enrol.expiryDate}} </td>
-                        <td *ngIf="enrol.status=='current'"> 
-                            <button mat-raised-button type="button" (click)="extendEnrollment(enrol)">Extend</button>
-                        </td>
+                    <tr *ngFor="let class of teacher.classes">
+                        <td> {{ class.className }}</td>
+                        <td> {{ class.classYear }} </td>
                     </tr>
                 </table>
             </div>
@@ -55,8 +47,6 @@
         </mat-card-content>
     </mat-card>
 </div>
-
-
 
 <div>
     <button mat-raised-button type="button" *ngIf="currentClassName"

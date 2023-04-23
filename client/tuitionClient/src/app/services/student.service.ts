@@ -23,14 +23,5 @@ export class StudentService {
       return lastValueFrom( this.http.put(`api/student/editDetails/${oldPhoneNum}`, newDetails))
     }
 
-    // saveEditNotes(phoneNum:number, notes:string){
-    //   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    //   const requestParams: HttpParams = new HttpParams()
-    //                         .set('notes', notes)
-
-    //   //const body = { 'notes': notes}
-
-    //   lastValueFrom( this.http.get(`api/student/editNotes/${phoneNum}`, { headers:headers, params: requestParams} ))
-    // }
 
 }

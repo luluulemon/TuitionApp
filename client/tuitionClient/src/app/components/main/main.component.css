@@ -2,14 +2,23 @@
 /* Menu and Page Dimensions */
 .mainPage{  width: 600px;   }
 .sideBar{   width: 175px;   }
-.topBar{    background-color: bisque;   }
+.topBar{    
+    background-color: #413C58;
+    color: white
+   }
 .drawerButton{
     margin-left: 15px;
     margin-bottom: 20px;
 }
+.drawerIcon{
+    color: white; 
+    font-size: 50px; 
+    height:auto; 
+    width:auto;
+}
+mat-drawer{  background-color: #f2dda4;}
 .logo{ 
     margin-bottom: -12px;
-    margin-right: -5px;
     margin-top: 10px;
 }
 .menu {
@@ -23,14 +32,15 @@
 }
 .menu:hover {
     font-weight: bold;
-    background-color: azure;
+    background-color: #e7efc5;
 }
 
 
 /* Others */
 .scheduleCards{
     margin: 15px;
+    background-color: #bfd7b5;
 }
-
+.mainContents{  background-color: #e7efc5;}
 .scheduleItem{  margin: 8px;    }
-.scheduleItem:hover{    background-color: azure;    }
+.scheduleItem:hover{    background-color: #a3c4bc;    }

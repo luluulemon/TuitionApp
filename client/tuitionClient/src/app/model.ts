@@ -39,6 +39,7 @@ export interface Student{
     profilePic: string
     notes: string
     enrollments: Enrollment[]
+    classes: any[]
 }
 
 export interface Enrollment{

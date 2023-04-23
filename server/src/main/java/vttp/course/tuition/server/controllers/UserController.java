@@ -37,29 +37,29 @@ public class UserController {
         JsonReader reader = Json.createReader(new StringReader(newUser));
         JsonObject userJson = reader.readObject(); 
 
-        try{        // Add to auth & teachers. Send password to new user
+        try{        // Add to auth & teachers
             if(userJson.getString("type").equals("teacher"))
-            {   userSvc.addTeacher(userJson);   
-                emailSvc.sendSimpleMessage(userJson.getString("email"), 
-                "NewtonLab: Welcome %s".formatted(userJson.getString("name")), 
-                "Password: %s\n\nPlease change your password on login".formatted(userJson.getString("name")));
-            }
+            {   userSvc.addTeacher(userJson);   }
 
             if(userJson.getString("type").equals("student"))
             {   userSvc.addStudent(userJson);   }
 
             if(userJson.getString("type").equals("admin"))
-            {   userSvc.addAdmin(userJson);     
-                emailSvc.sendSimpleMessage(userJson.getString("email"), 
-                "NewtonLab: Welcome %s".formatted(userJson.getString("name")), 
-                "Password: %s\n\nPlease change your password on login".formatted(userJson.getString("name")));
-            }
+            {   userSvc.addAdmin(userJson);     }
 
         }
         catch(UserInsertException e){   
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
                                 .body(Json.createObjectBuilder().add("Insert Msg", e.getMessage())
                                 .build().toString());
+        }
+
+        // Send password to new user        // send email for teacher/admin
+        if(userJson.getString("type").equals("admin") ||          
+            userJson.getString("type").equals("teacher")    )
+        {   emailSvc.sendSimpleMessage(userJson.getString("email"), 
+            "NewtonLab: Welcome %s".formatted(userJson.getString("name")), 
+            "Password: %s\n\nPlease change your password on login".formatted(userJson.getString("name")));
         }
 
         return ResponseEntity.ok( 

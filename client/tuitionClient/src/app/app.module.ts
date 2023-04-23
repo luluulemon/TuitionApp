@@ -23,17 +23,24 @@ import { DadJokeComponent } from './components/dad-joke/dad-joke.component';
 import { AddUserDialogComponent } from './components/users/add-user-dialog/add-user-dialog.component';
 import { LoginComponent } from './components/login/login.component';
 import { ScheduleDialogComponent } from './components/class-details/schedule-dialog/schedule-dialog.component';
+import { TeachersComponent } from './components/users/teachers/teachers.component';
+import { TeacherDialogComponent } from './components/users/teachers/teacher-dialog/teacher-dialog.component';
+import { ChangePwDialogComponent } from './components/change-pw-dialog/change-pw-dialog.component';
 
 
 const appRoutes:Routes = [
   { path: '', component:LoginComponent},
   { path: 'main', component: MainComponent  },
+  { path: 'main/:email', component: MainComponent },
   { path: 'classes', component: ClassesComponent},
   { path: 'students/:phoneNum/:className/:classYear', component: StudentsComponent },
+  { path: 'students/:phoneNum', component: StudentsComponent},
+  { path: 'teachers/:phoneNum', component: TeachersComponent  },
   { path: 'classDetails/:className/:classYear', component: ClassDetailsComponent },
   { path: 'attendance/:className/:classYear/:schedule', component: AttendanceComponent },
   { path: 'enrollment/:className/:classYear', component: EnrollmentComponent},
   { path: 'users', component: UsersComponent },
+  { path: 'password', component: ChangePwDialogComponent },
   { path: 'jokes', component: DadJokeComponent  },
   { path: '**', redirectTo: '/', pathMatch: 'full'}
 ]
@@ -54,6 +61,9 @@ const appRoutes:Routes = [
     AddUserDialogComponent,
     LoginComponent,
     ScheduleDialogComponent,
+    TeachersComponent,
+    TeacherDialogComponent,
+    ChangePwDialogComponent,
   ],
   imports: [
     BrowserModule,

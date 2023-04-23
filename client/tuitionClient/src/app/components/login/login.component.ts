@@ -29,16 +29,18 @@ export class LoginComponent {
   }
 
   login(){
-    console.info(this.loginForm.value)
     let loginObj = {  email: this.loginForm.value.email,
                       password: this.loginForm.value.password }
 
     lastValueFrom (this.http.post('api/auth/login', loginObj) )
-                                  .then(() => this.router.navigate(['main']))
+                                  .then(() => {     // set current user in localStorage
+                                    const JSONstring = JSON.stringify(this.loginForm.value.email)
+                                    localStorage.setItem("currentUser", JSONstring)
+                                    this.router.navigate(['main', this.loginForm.value.email])
+                                  })
                                   .catch(error => {
                                     console.error(error)
                                     this.loginError = true;
-
                                   })
   }
 }

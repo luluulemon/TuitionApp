@@ -3,6 +3,7 @@ package vttp.course.tuition.server.repositories;
 public class Queries {
     
     public static String SQL_GET_PASSWORD = "select password from auth where email=?";
+    public static String SQL_UPDATE_PASSWORD = "update auth set password=? where email=?";
 
     public static String SQL_GET_TEACHERS = "select * from teachers";
 
@@ -58,9 +59,17 @@ public class Queries {
     public static String SQL_GET_STUDENT_ENROLMENTS = "select * from enrollments where phoneNum=?";
     public static String SQL_UPDATE_ENROLLMENT_PHONENUM ="update enrollments set phoneNum=? where phoneNum=?";
     
+    public static String SQL_GET_TEACHER_DETAILS = 
+        "select teachers.teacherId, teachers.name, teachers.phoneNum, teachers.joinDate, teachers.profilePic, auth.email from teachers join auth on teachers.phoneNum = auth.phoneNum where teachers.phoneNum=?";
+    public static String SQL_GET_TEACHER_CLASSES = 
+        "select classes.className, classes.classYear from teachers join classes on teachers.teacherId = classes.teacherId where teachers.phoneNum=?";
+    public static String SQL_UPDATE_TEACHER_PIC = "update teachers set profilePic=? where phoneNum=?";
+    public static String SQL_UPDATE_TEACHER_DETAILS = "update teachers set phoneNum=? where phoneNum=?";
+    public static String SQL_GET_TEACHER_PASSWORD = "select password from auth where phoneNum=?";
 
     public static String SQL_GET_CLASS_DETAILS =
         "select teachers.name from classes join teachers on classes.teacherId=teachers.teacherId where classYear=? and className=?";
+    
 
         //"select teachers.name, count(schedules.classDate) as totalSessions, min(schedules.classDate) as startDate from classes join teachers on classes.teacherId=teachers.teacherId join schedules on classes.className=schedules.className where classes.className=? and schedules.classDate<now()";
     //select teachers.name, count(schedules.classDate) from classes join teachers on classes.teacherId=teachers.teacherId 

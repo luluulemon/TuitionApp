@@ -12,7 +12,8 @@ import { StudentService } from 'src/app/services/student.service';
 export class StudentDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<StudentDialogComponent>,
-                @Inject(MAT_DIALOG_DATA) public data: {selectedStudent: Student, editDetails: boolean },
+                @Inject(MAT_DIALOG_DATA) public data: {selectedStudent: Student, 
+                                                        editDetails: boolean  },
               private studentSvc:StudentService,
               private fb:FormBuilder ) {}
 
@@ -30,12 +31,12 @@ export class StudentDialogComponent {
     }
     else{ formData.set('oldKey', 'NA' ) }
 
-
     this.studentSvc.addProfilePic(this.data.selectedStudent.phoneNum, formData)
                       .then(()=> {
                         this.dialogRef.close()
                         console.info('Changed pic')
                       })
+    
   }
 
   // For student details edit dialog from here
@@ -81,10 +82,7 @@ export class StudentDialogComponent {
     }  
   }
 
-  closeDialog(){
-    this.dialogRef.close(0)
-  }
-
+  closeDialog(){  this.dialogRef.close(0) }
 
 
 }

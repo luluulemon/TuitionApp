@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'src/app/model';
 import { UserService } from 'src/app/services/user.service';
 import { AddUserDialogComponent } from './add-user-dialog/add-user-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -20,7 +21,8 @@ export class UsersComponent {
   // insertMsg: string = ''
 
   constructor(private fb:FormBuilder, private userSvc: UserService,
-              private msgSnackBar: MatSnackBar, private dialog:MatDialog){}
+              private msgSnackBar: MatSnackBar, private dialog:MatDialog,
+              private router: Router){}
 
   ngOnInit(){
     this.createSearchForm()
@@ -54,7 +56,13 @@ export class UsersComponent {
                           })
   }
 
-  displayUser(user: any){ console.info(user)  }
+  displayUser(user: any){ 
+    console.info(user)
+    if(user.type=='student')
+    { this.router.navigate(['/students', user.phoneNum]) }
+    else
+    { this.router.navigate(['teachers', user.phoneNum])}
+  }
  
   // saveUser(){
   //   console.info(this.form.value)
