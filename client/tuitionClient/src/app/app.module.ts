@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { GoogleMapsModule } from '@angular/google-maps'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +27,8 @@ import { ScheduleDialogComponent } from './components/class-details/schedule-dia
 import { TeachersComponent } from './components/users/teachers/teachers.component';
 import { TeacherDialogComponent } from './components/users/teachers/teacher-dialog/teacher-dialog.component';
 import { ChangePwDialogComponent } from './components/change-pw-dialog/change-pw-dialog.component';
+import { LocationComponent } from './components/location/location.component';
+
 
 
 const appRoutes:Routes = [
@@ -40,6 +43,7 @@ const appRoutes:Routes = [
   { path: 'attendance/:className/:classYear/:schedule', component: AttendanceComponent },
   { path: 'enrollment/:className/:classYear', component: EnrollmentComponent},
   { path: 'users', component: UsersComponent },
+  { path: 'location', component: LocationComponent },
   { path: 'password', component: ChangePwDialogComponent },
   { path: 'jokes', component: DadJokeComponent  },
   { path: '**', redirectTo: '/', pathMatch: 'full'}
@@ -64,6 +68,7 @@ const appRoutes:Routes = [
     TeachersComponent,
     TeacherDialogComponent,
     ChangePwDialogComponent,
+    LocationComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,7 +77,8 @@ const appRoutes:Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    GoogleMapsModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

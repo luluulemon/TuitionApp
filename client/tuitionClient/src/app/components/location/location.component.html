@@ -1,0 +1,65 @@
+<div class="backgroundDiv">
+    <mat-drawer-container class="mainPage">
+        <mat-drawer #drawer>
+
+            <div class="sideBar">
+                <div style="font-size:40px; height:80px; padding-top: 30px; 
+                padding-left:30px; font-style:italic;">
+                    Welcome
+                </div>
+                <mat-divider></mat-divider>
+
+                <div [routerLink]="['/main']" class="menu">
+                    <span>Main</span> 
+                </div>
+                <div [routerLink]="['/classes']" class="menu">
+                    Class
+                </div>
+                <div [routerLink]="['/users']" class="menu">
+                    Users and Administration
+                </div>
+                <div [routerLink]="['/jokes']" class="menu">
+                    Dad Jokes
+                </div>
+                <div [routerLink]="['/location']" class="menu">
+                    Location
+                </div>
+                <div [routerLink]="['/password']" class="menu">
+                    Change password
+                </div>
+                <div [routerLink]="['']" class="menu">
+                    Log Out
+                </div>
+            </div>
+        </mat-drawer>
+
+        <div class="topBar">
+            <button mat-button (click)="drawer.toggle()" class="drawerButton">
+                <mat-icon class="drawerIcon" >list</mat-icon></button>
+            &nbsp;
+            <img  src="/assets/newton_lab.png" alt="" class="logo">
+            <span style="font-size: 30px; font-family: Comic Sans MS;">NewtonLab Tuition </span>
+        </div>
+
+    
+        <div style="display:block; margin:30px;">
+            <div style="font-size:30px"><strong>Location</strong> </div>
+            <br>
+            <iframe
+            height="350vh"
+            width="auto"
+            frameborder="0" style="border:0"
+            referrerpolicy="no-referrer-when-downgrade"
+            [src]="sanitizer.bypassSecurityTrustResourceUrl(this.gmap)"
+            >
+            </iframe>
+            <br>
+            <div>
+                <h3><strong> Address: </strong>
+                <span>638 Jurong West Street 61, #08-88, Singapore 640638</span>
+                </h3>
+            </div>
+
+        </div>
+    </mat-drawer-container>
+</div>
