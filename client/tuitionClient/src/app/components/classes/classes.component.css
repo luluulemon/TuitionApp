@@ -1,14 +1,40 @@
+.backgroundDiv {
+    top: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex; justify-content: center; align-items: center;
+    background-color: bisque;
+    background-image: linear-gradient(to bottom right, #a3c4bc, #bfd7b5);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+
+
+
 /* Menu and Page Dimensions */
-.mainPage{  width: 600px;   }
-.sideBar{   width: 175px;   }
-.topBar{    background-color: bisque;   }
+.mainPage{  width: 600px;   height: 65%;    }
+.sideBar{   width: 300px;   }
+.topBar{    
+    background-color: #413C58;
+    color: white
+   }
 .drawerButton{
     margin-left: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 20px;    
 }
+.drawerIcon{
+    color: white; 
+    font-size: 50px; 
+    height:auto; 
+    width:auto;
+}
+/* mat-drawer{  background-color: #f2dda4;} */
 .logo{ 
     margin-bottom: -12px;
-    margin-right: -5px;
     margin-top: 10px;
 }
 .menu {
@@ -22,9 +48,8 @@
 }
 .menu:hover {
     font-weight: bold;
-    background-color: azure;
+    background-color: #e7efc5;
 }
-
 
 /* Others */
 .tuitionClass{
@@ -32,11 +57,12 @@
 }
 
 .tuitionClass:hover{
-    background-color: bisque;
+    background-color: #e7efc5;
 }
 
 .classPage{
     width: 500px;
+    margin:20px;
 }
 
 .addClassForm{

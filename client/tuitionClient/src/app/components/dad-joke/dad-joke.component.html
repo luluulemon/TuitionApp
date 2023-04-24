@@ -1,56 +1,68 @@
-<mat-drawer-container class="mainPage">
+<div class="backgroundDiv">
+    <mat-drawer-container class="mainPage">
 
-    <!-- Menu Bars -->
-    <mat-drawer #drawer>
-        <div class="sideBar">
-            <div [routerLink]="['/classes']" class="menu">
-                Class
-            </div>
-            <div [routerLink]="['/users']" class="menu">
-                Users and Administration
-            </div>
-            <div [routerLink]="['/jokes']" class="menu">
-                Dad Jokes
-            </div>
-            <div [routerLink]="['']" class="menu">
-                Log out
-            </div>
-        </div>
-    </mat-drawer>
-    <div class="topBar">
-        <button mat-raised-button (click)="drawer.toggle()" class="drawerButton">
-            <mat-icon>list</mat-icon></button>
-        &nbsp;
-        <img style="height:50px" src="/assets/newton_lab.png" alt="" class="logo">
-        <span style="font-size: 30px;">NewtonLab Tuition </span>
-    </div>
-    <!-- End of menu bars -->
+        <!-- Menu Bars -->
+        <mat-drawer #drawer>
+            <div class="sideBar">
+                <div style="font-size:40px; height:80px; padding-top: 30px; 
+                padding-left:30px; font-style:italic;">
+                    Welcome
+                </div>
+                <mat-divider></mat-divider>
 
-
-    <mat-card class="jokeCard">
-
-        <mat-card-header>
-            <mat-card-title>Dad Joke of the Day</mat-card-title>
-        </mat-card-header>
-
-        <mat-card-content>
-            <div>
-                {{ dadJokeOfTheDay.setup }}
+                <div [routerLink]="['/main']" class="menu">
+                    <span>Main</span> 
+                </div>
+                <div [routerLink]="['/classes']" class="menu">
+                    Class
+                </div>
+                <div [routerLink]="['/users']" class="menu">
+                    Users and Administration
+                </div>
+                <div [routerLink]="['/jokes']" class="menu">
+                    Dad Jokes
+                </div>
+                <div [routerLink]="['/password']" class="menu">
+                    Change password
+                </div>
+                <div [routerLink]="['']" class="menu">
+                    Log Out
+                </div>
             </div>
-            
-            <div>
-                {{ dadJokeOfTheDay.punchline }}
-            </div>
-        </mat-card-content>
-
-        <mat-card-actions>
-            <button mat-raised-button [routerLink]="['/main']">BACK</button>
+        </mat-drawer>
+        <div class="topBar">
+            <button mat-button (click)="drawer.toggle()" class="drawerButton">
+                <mat-icon class="drawerIcon">list</mat-icon></button>
             &nbsp;
-            <button mat-raised-button (click)="ngOnInit()">GET MORE</button>
-        </mat-card-actions>
+            <img style="height:50px" src="/assets/newton_lab.png" alt="" class="logo">
+            <span style="font-size: 30px;">NewtonLab Tuition </span>
+        </div>
+        <!-- End of menu bars -->
 
-    </mat-card>
+        <div class="jokeDiv">
+            <mat-card class="jokeCard">
 
-</mat-drawer-container>
+                <mat-card-header>
+                    <mat-card-title>Dad Joke of the Day</mat-card-title>
+                </mat-card-header>
 
+                <mat-card-content>
+                    <div>
+                        {{ dadJokeOfTheDay.setup }}
+                    </div>
+                    
+                    <div>
+                        {{ dadJokeOfTheDay.punchline }}
+                    </div>
+                </mat-card-content>
 
+                <mat-card-actions>
+                    <button mat-raised-button [routerLink]="['/main']">BACK</button>
+                    &nbsp;
+                    <button mat-raised-button (click)="ngOnInit()">GET MORE</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </mat-drawer-container>
+
+</div>

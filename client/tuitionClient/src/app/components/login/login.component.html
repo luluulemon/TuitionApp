@@ -1,37 +1,47 @@
 <div class="loginPage">
-    <mat-card>
-        <mat-card-header>
-        <mat-card-title>
-
+    <div>   
+        <div>
             <img style="height:50px" src="/assets/newton_lab.png" alt="" class="logo">
             <span style="font-size: 30px;">NewtonLab Tuition </span>
-  
-            <div >Sign In</div>
-        </mat-card-title>
-        </mat-card-header>
-        
-        <mat-card-content>
-        <form [formGroup]="loginForm">
-            <mat-form-field>
-            <input matInput type="email" placeholder="Email" name="email" formControlName="email" required>
-            <mat-error *ngIf="loginForm.controls['email'].invalid">Please enter a valid email.</mat-error>
-            <mat-icon matSuffix>email</mat-icon>    
-            </mat-form-field>
+        </div>
+
+        <mat-card>
+            <mat-card-header>
+
+                <mat-card-title>
+                    <div style="margin-left: 40px;">Sign In</div>
+                </mat-card-title>
+            </mat-card-header>
             
-            <mat-form-field>
-            <input matInput type="password" placeholder="Password" name="password" formControlName="password" required>
-            <mat-error *ngIf="loginForm.controls['password'].invalid">Please enter a password.</mat-error>
-            <mat-icon matSuffix>lock</mat-icon>
-            </mat-form-field>
+            <mat-card-content>
+            <form [formGroup]="loginForm">
+                <mat-form-field>
+                <input matInput type="email" placeholder="Email" name="email" formControlName="email" required>
+                <mat-error *ngIf="loginForm.controls['email'].invalid">Please enter a valid email.</mat-error>
+                <mat-icon matSuffix>email</mat-icon>    
+                </mat-form-field>
+                
+                <mat-form-field>
+                <input matInput type="password" placeholder="Password" name="password" formControlName="password" required>
+                <mat-error *ngIf="loginForm.controls['password'].invalid">Please enter a password.</mat-error>
+                <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+                
+                <!-- <mat-checkbox [(ngModel)]="rememberMe" name="rememberMe">Remember Me</mat-checkbox> -->
+                
+                <button class="loginButton" mat-raised-button type="button" (click)="login()">
+                    Login</button>
+            </form>
             
-            <!-- <mat-checkbox [(ngModel)]="rememberMe" name="rememberMe">Remember Me</mat-checkbox> -->
+            <mat-error *ngIf="loginError">Invalid email or password.</mat-error>
+            </mat-card-content>
             
-            <button class="loginButton" mat-raised-button type="button" (click)="login()">
-                Login</button>
-        </form>
-        
-        <mat-error *ngIf="loginError">Invalid email or password.</mat-error>
-        </mat-card-content>
-        
-    </mat-card>
+        </mat-card>
+        <div>
+            <div>Email: admin@gmail.com</div>
+            <div>Password: admin</div>
+        </div>
+    </div> 
+
+
 </div>

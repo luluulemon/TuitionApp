@@ -43,7 +43,7 @@ export class ChangePwDialogComponent {
             this.snackbar.open( v.msg, 'X') 
             this.router.navigate(['main'])
           })
-        .catch((error:any) => this.ErrorMsg = error.msg)
+        .catch((error:any) => this.ErrorMsg = error.error.msg)
     }
   }
 

@@ -1,0 +1,8 @@
+mat-form-field, mat-dialog-actions, h1 {
+    width: 80%;
+    display: block;
+    margin: auto;
+}
+mat-dialog-content{
+    padding: 5px;
+}

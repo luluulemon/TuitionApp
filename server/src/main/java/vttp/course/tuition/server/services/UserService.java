@@ -16,6 +16,10 @@ public class UserService {
     @Autowired
     private UserRepository userRepo;
 
+    public boolean searchEmail(String email){
+        return userRepo.searchEmail(email);
+    }
+
     public void addTeacher(JsonObject userJson) throws UserInsertException{
         userRepo.addTeacher(userJson);
     }

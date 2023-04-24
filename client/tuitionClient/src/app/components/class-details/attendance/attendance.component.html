@@ -1,50 +1,86 @@
-<mat-card class="mainCardStyle">
-    <mat-card-header>
-        <mat-card-title>Attendance</mat-card-title>
-    </mat-card-header>
-
-    <mat-card-content>
-        <mat-list>
-            <mat-list-item *ngFor="let s of classStudents" >
-                <div *ngIf="!isPastSchedule">
-                    <div *ngIf="s.present && s.status=='current'" style="display:flex; justify-content: space-between;">
-                        <span>Student Id: {{ s.studentId}}, Name: {{ s.name }}  </span>
-                        <span> PRESENT </span>
-                    </div>
-
-                    <div *ngIf="!s.present && s.status=='current'" (click)="markAttendance(s.phoneNum)" class="unmarkedAttendance">
-                        Student Id: {{ s.studentId}}, Name: {{ s.name }}
-                    </div>
+<div class="backgroundDiv">
+    <mat-drawer-container class="mainPage">
+        <!-- Menu Bars -->
+        <mat-drawer #drawer>
+            <div class="sideBar">
+                <div style="font-size:40px; height:80px; padding-top: 30px; padding-left:30px">
+                    Welcome
                 </div>
-                <!-- Grey out for past schedules -->
-                <div *ngIf="isPastSchedule">
-                    <div *ngIf="s.present && s.status=='current'" 
-                        style="color: #808080; display:flex; justify-content: space-between;">
-                        <span >Student Id: {{ s.studentId}}, Name: {{ s.name }}  </span>
-                        <span> PRESENT </span>
-                    </div>
+                <mat-divider></mat-divider>
 
-                    <div *ngIf="!s.present && s.status=='current'" style="color: #808080">
-                        Student Id: {{ s.studentId}}, Name: {{ s.name }}
-                    </div>
+                <div [routerLink]="['/main']" class="menu">
+                    <span>Main</span> 
                 </div>
-            </mat-list-item>
-        </mat-list>
+                <div [routerLink]="['/classes']" class="menu">
+                    Class
+                </div>
+                <div [routerLink]="['/users']" class="menu">
+                    Users and Administration
+                </div>
+                <div [routerLink]="['/jokes']" class="menu">
+                    Dad Jokes
+                </div>
+                <div [routerLink]="['/password']" class="menu">
+                    Change password
+                </div>
+                <div [routerLink]="['']" class="menu">
+                    Log Out
+                </div>
+            </div>
+        </mat-drawer>
+        <div class="topBar">
+            <button mat-button (click)="drawer.toggle()" class="drawerButton">
+                <mat-icon class="drawerIcon">list</mat-icon></button>
+            &nbsp;
+            <img style="height:50px" src="/assets/newton_lab.png" alt="" class="logo">
+            <span style="font-size: 30px;">NewtonLab Tuition </span>
+        </div>
+        <!-- End of menu bars -->
 
+        <!-- Start of attendance -->
+        <mat-card class="mainCardStyle">
+            <mat-card-header>
+                <mat-card-title>Attendance</mat-card-title>
+            </mat-card-header>
 
-    </mat-card-content>
+            <mat-card-content>
+                <mat-list>
+                    <mat-list-item *ngFor="let s of classStudents" >
+                        <div *ngIf="!isPastSchedule">
+                            <div *ngIf="s.present && s.status=='current'" style="display:flex; justify-content: space-between;">
+                                <span>Student Id: {{ s.studentId}}, Name: {{ s.name }}  </span>
+                                <span> PRESENT </span>
+                            </div>
 
-    <mat-card-actions>
-        <button mat-raised-button [routerLink]="['/classDetails', currentClassName, currentClassYear]">
-            BACK TO {{ currentClassName }} 
-        </button>
-        &nbsp;
-        <button mat-raised-button [routerLink]="['/main']">BACK TO MAIN</button>
-    </mat-card-actions>
+                            <div *ngIf="!s.present && s.status=='current'" (click)="markAttendance(s.phoneNum)" class="unmarkedAttendance">
+                                Student Id: {{ s.studentId}}, Name: {{ s.name }}
+                            </div>
+                        </div>
+                        <!-- Grey out for past schedules -->
+                        <div *ngIf="isPastSchedule">
+                            <div *ngIf="s.present && s.status=='current'" 
+                                style="color: #808080; display:flex; justify-content: space-between;">
+                                <span >Student Id: {{ s.studentId}}, Name: {{ s.name }}  </span>
+                                <span> PRESENT </span>
+                            </div>
 
+                            <div *ngIf="!s.present && s.status=='current'" style="color: #808080">
+                                Student Id: {{ s.studentId}}, Name: {{ s.name }}
+                            </div>
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button [routerLink]="['/classDetails', currentClassName, currentClassYear]">
+                    BACK TO {{ currentClassName }} 
+                </button>
+                &nbsp;
+                <button mat-raised-button [routerLink]="['/main']">BACK TO MAIN</button>
+            </mat-card-actions>
+        </mat-card>
 
-
-</mat-card>
-
+    </mat-drawer-container>
+</div>
 
 

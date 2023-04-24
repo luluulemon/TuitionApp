@@ -1,77 +1,87 @@
-<mat-drawer-container class="mainPage">
-    <mat-drawer #drawer>
+<div class="backgroundDiv">
+    <mat-drawer-container class="mainPage">
+        <mat-drawer #drawer>
 
-        <div class="sideBar">
+            <div class="sideBar">
+                <div style="font-size:40px; height:80px; padding-top: 30px; 
+                padding-left:30px; font-style:italic;">
+                    Welcome
+                </div>
+                <mat-divider></mat-divider>
 
-            <div [routerLink]="['/classes']" class="menu">
-                Class
+                <div [routerLink]="['/main']" class="menu">
+                    <span>Main</span> 
+                </div>
+                <div [routerLink]="['/classes']" class="menu">
+                    Class
+                </div>
+                <div [routerLink]="['/users']" class="menu">
+                    Users and Administration
+                </div>
+                <div [routerLink]="['/jokes']" class="menu">
+                    Dad Jokes
+                </div>
+                <div [routerLink]="['/password']" class="menu">
+                    Change password
+                </div>
+                <div [routerLink]="['']" class="menu">
+                    Log Out
+                </div>
             </div>
-            <div [routerLink]="['/users']" class="menu">
-                Users and Administration
-            </div>
-            <div [routerLink]="['/jokes']" class="menu">
-                Dad Jokes
-            </div>
-            <div [routerLink]="['/password']" class="menu">
-                Change password
-            </div>
-            <div [routerLink]="['']" class="menu">
-                Log Out
-            </div>
+        </mat-drawer>
+
+        <div class="topBar">
+            <button mat-button (click)="drawer.toggle()" class="drawerButton">
+                <mat-icon class="drawerIcon" >list</mat-icon></button>
+            &nbsp;
+            <img  src="/assets/newton_lab.png" alt="" class="logo">
+            <span style="font-size: 30px; font-family: Comic Sans MS;">NewtonLab Tuition </span>
         </div>
-    </mat-drawer>
-
-    <div class="topBar">
-        <button mat-button (click)="drawer.toggle()" class="drawerButton">
-            <mat-icon class="drawerIcon" >list</mat-icon></button>
-        &nbsp;
-        <img style="height:50px" src="/assets/newton_lab.png" alt="" class="logo">
-        <span style="font-size: 30px;">NewtonLab Tuition </span>
-    </div>
-    
+        
 
 
-    <!-- Content for main: upcoming classes -->
-    <div class="mainContents">
-        <mat-card class="scheduleCards">
-            <mat-card-header *ngIf="todaysSchedules.length>0">
-                <mat-card-title>Today's classes</mat-card-title>
-            </mat-card-header>
+        <!-- Content for main: upcoming classes -->
+        <div class="mainContents">
+            <mat-card class="scheduleCards">
+                <mat-card-header *ngIf="todaysSchedules.length>0">
+                    <mat-card-title>Today's classes</mat-card-title>
+                </mat-card-header>
 
-            <mat-card-header *ngIf="todaysSchedules.length==0">
-                <mat-card-title>No classes today</mat-card-title>
-            </mat-card-header>
+                <mat-card-header *ngIf="todaysSchedules.length==0">
+                    <mat-card-title>No classes today</mat-card-title>
+                </mat-card-header>
 
-            <mat-card-content *ngIf="todaysSchedules.length>0">
-                <mat-list>
-                    <mat-list-item *ngFor="let s of todaysSchedules" class="scheduleItem"
-                    [routerLink]="['/attendance', s.className, currentClassYear, s.classDate]">
-                        <div> {{ s.className }}, Teacher: {{ s.teacherName }}  </div>
-                        <span>  {{ s.classDate | date: 'EEEE, d/M/yy, h:mm a' }} </span>
-                    </mat-list-item>
-                </mat-list>
-            </mat-card-content>
-        </mat-card>
-
-        <mat-card  class="scheduleCards">
-            <mat-card-header *ngIf="upcomingSchedules.length>0">
-                <mat-card-title>Upcoming classes</mat-card-title>
-            </mat-card-header>
-
-            <mat-card-header *ngIf="upcomingSchedules.length==0">
-                <mat-card-title>No upcoming classes</mat-card-title>
-            </mat-card-header>
-
-            <mat-card-content>
-                <mat-list>
-                    <mat-list-item *ngFor="let s of upcomingSchedules" class="scheduleItem"
+                <mat-card-content *ngIf="todaysSchedules.length>0">
+                    <mat-list>
+                        <mat-list-item *ngFor="let s of todaysSchedules" class="scheduleItem"
                         [routerLink]="['/attendance', s.className, currentClassYear, s.classDate]">
-                        <div> {{ s.className }}, Teacher: {{ s.teacherName }}  </div>
-                        <span>  {{ s.classDate | date: 'EEEE, d/M/yy, h:mm a' }} </span>
-                    </mat-list-item>
-                </mat-list>
-            </mat-card-content>
-        </mat-card>
-    </div>
+                            <div> {{ s.className }}, Teacher: {{ s.teacherName }}  </div>
+                            <span>  {{ s.classDate | date: 'EEEE, d/M/yy, h:mm a' }} </span>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
 
-</mat-drawer-container>
+            <mat-card  class="scheduleCards">
+                <mat-card-header *ngIf="upcomingSchedules.length>0">
+                    <mat-card-title>Upcoming classes</mat-card-title>
+                </mat-card-header>
+
+                <mat-card-header *ngIf="upcomingSchedules.length==0">
+                    <mat-card-title>No upcoming classes</mat-card-title>
+                </mat-card-header>
+
+                <mat-card-content>
+                    <mat-list>
+                        <mat-list-item *ngFor="let s of upcomingSchedules" class="scheduleItem"
+                            [routerLink]="['/attendance', s.className, currentClassYear, s.classDate]">
+                            <div> {{ s.className }}, Teacher: {{ s.teacherName }}  </div>
+                            <span>  {{ s.classDate | date: 'EEEE, d/M/yy, h:mm a' }} </span>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+    </mat-drawer-container>
+</div>

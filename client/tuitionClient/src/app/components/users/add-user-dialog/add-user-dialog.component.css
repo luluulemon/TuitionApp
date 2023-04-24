@@ -1,0 +1,13 @@
+/* mat-card {
+    width: 80%;
+    margin: 10% auto;
+    border-radius: 8px;
+} */
+mat-form-field, mat-checkbox, mat-card-actions, mat-card-header {
+    width: 80%;
+    display: block;
+    margin: auto;
+}
+mat-card-content {
+    margin-top: 20px;
+}

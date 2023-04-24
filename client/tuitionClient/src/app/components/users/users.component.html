@@ -1,71 +1,89 @@
-<mat-drawer-container class="mainPage">
+<div class="backgroundDiv">
+    <mat-drawer-container class="mainPage">
 
-    <!-- Menu Bars -->
-    <mat-drawer #drawer>
-        <div class="sideBar">
-            <div [routerLink]="['/classes']" class="menu">
-                Class
-            </div>
-            <div [routerLink]="['/users']" class="menu">
-                Users and Administration
-            </div>
-            <div [routerLink]="['/jokes']" class="menu">
-                Dad Jokes
-            </div>
-            <div [routerLink]="['']" class="menu">
-                Log Out
-            </div>
-        </div>
-    </mat-drawer>
-    <div class="topBar">
-        <button mat-raised-button (click)="drawer.toggle()" class="drawerButton">
-            <mat-icon>list</mat-icon></button>
-        &nbsp;
-        <img style="height:50px" src="/assets/newton_lab.png" alt="" class="logo">
-        <span style="font-size: 30px;">NewtonLab Tuition </span>
-    </div>
-
-
-    <!-- Start of searh & add Users -->
-    <mat-card class="searchUsersCard">
-        <mat-card-header style="display:flex; justify-content: space-between;">
-            <mat-card-title>Search User</mat-card-title>
-            <button mat-raised-button (click)="newUser()" matTooltip="Add New User" >
-                +
-            </button>
-
-        </mat-card-header>
+        <!-- Menu Bars -->
+        <mat-drawer #drawer>
+            <div class="sideBar">
+                <div class="sideBar">
+                    <div style="font-size:40px; height:80px; padding-top: 30px; 
+                    padding-left:30px; font-style:italic;">
+                        Welcome
+                    </div>
+                    <mat-divider></mat-divider>
     
-        <mat-card-content>
-            <form [formGroup]="userSearchForm">
-                <div style="font-size: 10px">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Search User</mat-label>
-                        <input matInput type="text" formControlName="searchName">
-                    </mat-form-field>
-                    &nbsp;
-                    <button type="button" mat-raised-button (click)="searchUsers()">
-                        <mat-icon>search</mat-icon>
-                        SEARCH
-                    </button>
+                    <div [routerLink]="['/main']" class="menu">
+                        <span>Main</span> 
+                    </div>
+                    <div [routerLink]="['/classes']" class="menu">
+                        Class
+                    </div>
+                    <div [routerLink]="['/users']" class="menu">
+                        Users and Administration
+                    </div>
+                    <div [routerLink]="['/jokes']" class="menu">
+                        Dad Jokes
+                    </div>
+                    <div [routerLink]="['/password']" class="menu">
+                        Change password
+                    </div>
+                    <div [routerLink]="['']" class="menu">
+                        Log Out
+                    </div>
                 </div>
-            </form>
+            </div>
+        </mat-drawer>
+        <div class="topBar">
+            <button mat--button (click)="drawer.toggle()" class="drawerButton">
+                <mat-icon class="drawerIcon">list</mat-icon></button>
+            &nbsp;
+            <img style="height:50px" src="/assets/newton_lab.png" alt="" class="logo">
+            <span style="font-size: 30px;">NewtonLab Tuition </span>
+        </div>
 
-            <table mat-table *ngIf="usersTable.length>0" [dataSource]="usersTable">
-                <mat-text-column name="type"></mat-text-column>
-                <mat-text-column name="name"></mat-text-column>
-                <mat-text-column name="phoneNum"></mat-text-column>
-                <mat-text-column name="email"></mat-text-column>
-                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-                <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"
-                (click)="displayUser(myRowData)"></tr>
-            </table>
 
-        </mat-card-content>
-    </mat-card>
+        <!-- Start of searh & add Users -->
+        <div class="searchUsersCard">
+            <mat-card >
+                <mat-card-header style="display:flex; justify-content: space-between;">
+                    <mat-card-title>Search User</mat-card-title>
+                    <button mat-raised-button (click)="newUser()" matTooltip="Add New User" >
+                        +
+                    </button>
 
-    <br>
-    <button mat-raised-button type="button" [routerLink]="['/main']">BACK TO MAIN</button>
-    <br>
+                </mat-card-header>
+            
+                <mat-card-content>
+                    <form [formGroup]="userSearchForm">
+                        <div style="font-size: 10px">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Search User</mat-label>
+                                <input matInput type="text" formControlName="searchName">
+                            </mat-form-field>
+                            &nbsp;
+                            <button type="button" mat-raised-button (click)="searchUsers()">
+                                <mat-icon>search</mat-icon>
+                                SEARCH
+                            </button>
+                        </div>
+                    </form>
 
-</mat-drawer-container>
+                    <table mat-table *ngIf="usersTable.length>0" [dataSource]="usersTable">
+                        <mat-text-column name="type"></mat-text-column>
+                        <mat-text-column name="name"></mat-text-column>
+                        <mat-text-column name="phoneNum"></mat-text-column>
+                        <mat-text-column name="email"></mat-text-column>
+                        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                        <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"
+                        (click)="displayUser(myRowData)"></tr>
+                    </table>
+
+                </mat-card-content>
+            </mat-card>
+
+            <br>
+            <button mat-raised-button type="button" [routerLink]="['/main']">BACK TO MAIN</button>
+            <br>
+        </div>
+    </mat-drawer-container>
+
+</div>

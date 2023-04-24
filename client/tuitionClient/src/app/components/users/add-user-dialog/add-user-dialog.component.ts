@@ -21,7 +21,7 @@ export class AddUserDialogComponent {
 
     
   addUserForm!: FormGroup;
-
+  ErrorMsg: string = ''
   
   ngOnInit(){
     this.createForm()
@@ -42,6 +42,9 @@ export class AddUserDialogComponent {
     this.userSvc.addUser(newUser)
                   .then(v => {console.info(v)
                     this.dialogRef.close(v['Insert Msg'])
+                  })
+                  .catch(error => {console.info(error.error)
+                    this.ErrorMsg = error.error['Insert Msg']
                   })
     this.createForm();
   }

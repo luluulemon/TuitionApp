@@ -88,4 +88,8 @@ public class UserRepository {
         return jdbcTemplate.queryForRowSet(SQL_SEARCH_USER, searchName);
     }
 
+    public boolean searchEmail(String email){
+        return jdbcTemplate.queryForRowSet(SQL_GET_EMAIL, email).next();
+    }
+
 }

@@ -36,6 +36,14 @@ public class UserController {
     public ResponseEntity<String> addUser(@RequestBody String newUser){
         JsonReader reader = Json.createReader(new StringReader(newUser));
         JsonObject userJson = reader.readObject(); 
+        System.out.println("Check email: " + userJson.getString("email"));
+
+        if(userSvc.searchEmail(userJson.getString("email")) )
+        {   
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
+            .body(Json.createObjectBuilder().add("Insert Msg", "Email already exists")
+            .build().toString());
+        }
 
         try{        // Add to auth & teachers
             if(userJson.getString("type").equals("teacher"))

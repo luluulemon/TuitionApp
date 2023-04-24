@@ -19,30 +19,27 @@
 <!-- Edit details portion -->
 <div *ngIf="data.editDetails">
     
-    <h2 mat-dialog-title>Edit details</h2>
+    <h1 mat-dialog-title>Edit details</h1>
     
-    <div >
+    <mat-dialog-content>    
         <form  [formGroup]="teacherDetailsForm" action="">
+            <mat-form-field>
+                <mat-label>Phone Number:</mat-label>
+                <input matInput type="number" formControlName="phoneNum">
+                <mat-hint align="end">Enter Phone Number</mat-hint>
+                <mat-error *ngIf="teacherDetailsForm.get('phoneNum')!.invalid">Phone number is required</mat-error>
+            </mat-form-field>   <br>
 
-            <mat-dialog-content>
-                <mat-form-field>
-                    <mat-label>Phone Number:</mat-label>
-                    <input matInput type="number" formControlName="phoneNum">
-                    <mat-hint align="end">Enter Phone Number</mat-hint>
-                    <mat-error *ngIf="teacherDetailsForm.get('phoneNum')!.invalid">Phone number is required</mat-error>
-                </mat-form-field>   <br>
-
-                <mat-form-field>
-                    <mat-label>Email</mat-label>
-                    <input matInput type="text" formControlName="email" style="width:100%">
-                    <mat-hint align="end">Enter Email</mat-hint>
-                </mat-form-field>   <br>
-            </mat-dialog-content>
-
-            <mat-dialog-actions>
-                <button mat-button (click)="saveEditDetails()" [disabled]="teacherDetailsForm.invalid">SAVE</button>
-                <button mat-button mat-dialog-close="0"  >CLOSE</button>
-            </mat-dialog-actions>
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input matInput type="text" formControlName="email" style="width:100%">
+                <mat-hint align="end">Enter Email</mat-hint>
+            </mat-form-field>   <br>
         </form>
-    </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button (click)="saveEditDetails()" [disabled]="teacherDetailsForm.invalid">SAVE</button>
+        <button mat-button mat-dialog-close="0"  >CLOSE</button>
+    </mat-dialog-actions>
+        
 </div>

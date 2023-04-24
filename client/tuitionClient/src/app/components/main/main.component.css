@@ -1,14 +1,30 @@
+.backgroundDiv {
+    top: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex; justify-content: center; align-items: center;
+    background-color: bisque;
+    background-image: linear-gradient(to bottom right, #a3c4bc, #bfd7b5);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+
+
 
 /* Menu and Page Dimensions */
-.mainPage{  width: 600px;   }
-.sideBar{   width: 175px;   }
+.mainPage{  width: 600px;   height: 65%;    }
+.sideBar{   width: 300px;   }
 .topBar{    
     background-color: #413C58;
     color: white
    }
 .drawerButton{
     margin-left: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 20px;    
 }
 .drawerIcon{
     color: white; 
@@ -16,10 +32,11 @@
     height:auto; 
     width:auto;
 }
-mat-drawer{  background-color: #f2dda4;}
+/* mat-drawer{  background-color: #f2dda4;} */
 .logo{ 
     margin-bottom: -12px;
     margin-top: 10px;
+    height:50px;
 }
 .menu {
     font-size: 1rem;
@@ -39,8 +56,6 @@ mat-drawer{  background-color: #f2dda4;}
 /* Others */
 .scheduleCards{
     margin: 15px;
-    background-color: #bfd7b5;
 }
-.mainContents{  background-color: #e7efc5;}
 .scheduleItem{  margin: 8px;    }
 .scheduleItem:hover{    background-color: #a3c4bc;    }

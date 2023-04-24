@@ -4,6 +4,7 @@ public class Queries {
     
     public static String SQL_GET_PASSWORD = "select password from auth where email=?";
     public static String SQL_UPDATE_PASSWORD = "update auth set password=? where email=?";
+    public static String SQL_GET_EMAIL = "select * from auth where email=?";
 
     public static String SQL_GET_TEACHERS = "select * from teachers";
 

@@ -1,12 +1,24 @@
+.backgroundDiv {
+    top: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex; justify-content: center; align-items: center;
+    background-color: #e7efc5;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+
 .mainCardStyle{
     margin: 20px;
     padding: 10px;
     width: 600px;
 }
 
-.studentDetails{
-    margin:15px;
-}
+.studentDetails{    margin:15px;}
 
 .studentEnrolTable{
     width: 100%;
@@ -19,3 +31,5 @@ td {
 }
 
 .profilePic:hover{  transform: scale(1.1);  }
+
+

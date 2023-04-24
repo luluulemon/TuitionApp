@@ -35,9 +35,7 @@ export class TeachersComponent {
 
   uploadPic(){
     const dialogRef = this.dialog.open(TeacherDialogComponent, { 
-      data: { selectedTeacher: this.teacher, 
-              
-            },
+      data: { selectedTeacher: this.teacher  },
       width: '500px'
     })
 
@@ -50,7 +48,7 @@ export class TeachersComponent {
   editTeacherDetails(){
     const dialogRef = this.dialog.open(TeacherDialogComponent, {
       data: { selectedTeacher: this.teacher, editDetails: true },
-      width: '350px'
+      width: '400px'
     })
 
     // update student details after dialog close

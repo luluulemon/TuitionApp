@@ -44,7 +44,7 @@
                 [disabled]="scheduleForm.invalid"   (click)="saveSchedule()">
                 <mat-icon>save</mat-icon> SAVE
             </button>
-            <button type="button" mat-raised-button color="primary" *ngIf="data.editSchedule"
+            <button type="button" mat-button  *ngIf="data.editSchedule"
             [disabled]="scheduleForm.invalid"   (click)="updateSchedule()">
             <mat-icon>edit</mat-icon> EDIT
             </button>
