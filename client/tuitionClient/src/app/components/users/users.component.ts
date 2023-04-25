@@ -60,22 +60,12 @@ export class UsersComponent {
   }
 
   displayUser(user: any){ 
-    console.info(user)
     if(user.type=='student')
-    { this.router.navigate(['/students', user.phoneNum]) }
-    if(user.type=='admin')
-    { }
-    else
+    { console.info('inside student if')
+      this.router.navigate(['/students', user.phoneNum]) }
+    else if(user.type=='teacher')
     { this.router.navigate(['teachers', user.phoneNum])}
   }
  
-  // saveUser(){
-  //   console.info(this.form.value)
-  //   const newUser: User = this.form.value
-  //   this.userSvc.addUser(newUser)
-  //                 .then(v => {console.info(v)
-  //                   this.msgSnackBar.open( v['Insert Msg'], 'X', { duration: 7000 } )
-  //                 })
-  //   this.createForm();
-  // }
+
 }

@@ -51,13 +51,6 @@ export class StudentsComponent {
                     })
   }
 
-  // getTeacherDetails(phoneNum: number){
-  //   this.teacherSvc.getTeacherDetails(phoneNum)
-  //                   .then(v => {
-  //                     this.teacher = v
-  //                     console.info(v)
-  //                   })
-  // }
 
   extendEnrollment(enrollment: Enrollment){
     console.info(enrollment)

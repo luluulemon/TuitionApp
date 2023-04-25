@@ -20,6 +20,9 @@
                 <div [routerLink]="['/jokes']" class="menu">
                     Dad Jokes
                 </div>
+                <div [routerLink]="['/location']" class="menu">
+                    Location
+                </div>
                 <div [routerLink]="['/password']" class="menu">
                     Change password
                 </div>
@@ -111,7 +114,7 @@
                         <mat-card>
                             <mat-card-header style="display:flex; justify-content: space-between;">
                                     <mat-card-title>Class Students</mat-card-title> &nbsp;
-                                    <button type="button" mat-raised-button
+                                    <button type="button" mat-raised-button matTooltip="Add student to class"
                                         [routerLink]="['/enrollment/', currentClassName, currentClassYear]">
                                             +
                                     </button>
