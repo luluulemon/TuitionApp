@@ -66,7 +66,7 @@
 
                     <!-- Show list of Schedules -->
                     <div class="schedules">
-                        <mat-list *ngIf="schedules" >
+                        <mat-list *ngIf="schedules" class="scheduleList">
                             <mat-list-item *ngFor="let s of schedules, let idx=index" class="schedule"> 
                                 
                                 <!-- for past schedules, cannot edit -->
@@ -81,9 +81,9 @@
                                         {{s | date: 'EEEE, d/M/yy, h:mm a'}} 
                                     </span>    
                                     <span style="float:right">                   
-                                        <button ><mat-icon  (click)="openUpdateSchedule(s, idx)">edit </mat-icon></button> 
+                                        <button mat-button (click)="openUpdateSchedule(s, idx)"><mat-icon  >edit </mat-icon></button> 
                                         &nbsp;
-                                        <button><mat-icon (click)="deleteSchedule(s)">delete </mat-icon></button>
+                                        <button mat-button (click)="deleteSchedule(s)"><mat-icon>delete </mat-icon></button>
                                     </span>
                                 </div>
                             </mat-list-item>

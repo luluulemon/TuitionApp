@@ -18,7 +18,7 @@ export class UsersComponent {
   usersTable: any[] = []
   columnsToDisplay = ['name', 'type', 'phoneNum', 'email']
   // newUserSelect: boolean = false
-  // insertMsg: string = ''
+  errorMsg: string = ''
 
   constructor(private fb:FormBuilder, private userSvc: UserService,
               private msgSnackBar: MatSnackBar, private dialog:MatDialog,
@@ -54,6 +54,9 @@ export class UsersComponent {
                             console.info(v)
                             this.usersTable = v
                           })
+                          .catch(error => {
+                            if(error.status==404)
+                            this.errorMsg = 'No user found' })
   }
 
   displayUser(user: any){ 

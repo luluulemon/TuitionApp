@@ -42,8 +42,8 @@
 
 
         <!-- Start of main class Page -->
+        <div style="display:flex; justify-content: center;">    
         <div class="classPage">
-            
             <form [formGroup]="classYearForm">
                 <h2><span>Classes</span> &nbsp;   
                     <mat-form-field>
@@ -60,7 +60,6 @@
                 </h2>
             </form>
             
-
             <div *ngIf="tForm">
                 <mat-card class="addClassForm">
                     <mat-card-header>
@@ -119,6 +118,6 @@
 
             <button mat-raised-button type="button" [routerLink]="['/main']">BACK TO MAIN</button>
         </div>
-
+        </div>
     </mat-drawer-container>
 </div>

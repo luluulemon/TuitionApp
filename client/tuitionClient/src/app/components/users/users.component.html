@@ -79,7 +79,8 @@
                         <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"
                         (click)="displayUser(myRowData)"></tr>
                     </table>
-
+                    
+                    <mat-error *ngIf="errorMsg">{{errorMsg}}</mat-error>
                 </mat-card-content>
             </mat-card>
 

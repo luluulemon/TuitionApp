@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import jakarta.json.Json;
+import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 import vttp.course.tuition.server.services.EmailService;
@@ -80,6 +82,10 @@ public class UserController {
 
     @GetMapping("/searchUser/{searchName}")
     public ResponseEntity<String> searchUser(@PathVariable String searchName){
+        JsonArray usersArray = userSvc.searchUser(searchName);
+
+        if(usersArray.size()==0){   return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);  }
+        
         return ResponseEntity.ok(userSvc.searchUser(searchName).toString() );
     }
 
