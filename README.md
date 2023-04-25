@@ -1,8 +1,8 @@
-### App for marking attendance
+# App for marking attendance
 
 ---
 
-# Setup
+## Setup
 Use S3 and SQL
 
 Variables:
@@ -10,9 +10,10 @@ Variables:
 2. SECRET_KEY
 3. SPRING_DATASOURCE_USERNAME
 4. SPRING_DATASOURCE_PASSWORD
+5. SPRING_MAIL_PASSWORD / HOST / PORT / USERNAME
 ---
 
-# Usage
+## Usage
 
 FrontPage shows upcoming lessons
 
