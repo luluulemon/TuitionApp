@@ -63,6 +63,8 @@ export class UsersComponent {
     console.info(user)
     if(user.type=='student')
     { this.router.navigate(['/students', user.phoneNum]) }
+    if(user.type=='admin')
+    { }
     else
     { this.router.navigate(['teachers', user.phoneNum])}
   }
